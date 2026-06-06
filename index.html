@@ -619,7 +619,9 @@ function showTab(name) {
   document.querySelectorAll('.tab').forEach((tab,i)=>{
     tab.classList.toggle('active',['monitor','history','crashes','guide'][i]===name);
   });
-  if(name==='history' && DATA) renderHistory();
+  if(name==='history' && DATA) {
+    setTimeout(() => renderHistory(), 50);
+  }
 }
 
 boot();

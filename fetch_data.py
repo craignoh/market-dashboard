@@ -37,28 +37,29 @@ def fred_history(series_id, days=45):
     return []
 
 def get_put_call():
-    urls = [
-        "https://cdn.cboe.com/api/global/us_indices/daily_prices/PCR_TOTAL_History.csv",
-        "https://www.cboe.com/publish/scheduledtask/mktdata/cboesymboldata/options_put_call_ratios.csv",
-    ]
+    url = "https://www.cboe.com/publish/scheduledtask/mktdata/cboesymboldata/options_put_call_ratios.csv"
     headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"}
-    for url in urls:
-        try:
-            r = requests.get(url, headers=headers, timeout=15)
-            r.raise_for_status()
-            lines = r.text.strip().splitlines()
-            print(f"  [PC] Got {len(lines)} lines from {url[:50]}")
-            for line in reversed(lines):
-                parts = line.split(",")
-                if len(parts) >= 2:
-                    try:
-                        val = float(parts[-1])
-                        if 0.2 < val < 5.0:
-                            return round(val, 2)
-                    except ValueError:
-                        continue
-        except Exception as e:
-            print(f"  [WARN] Put/Call {url[:50]}: {e}")
+    try:
+        r = requests.get(url, headers=headers, timeout=15)
+        r.raise_for_status()
+        lines = r.text.strip().splitlines()
+        # 헤더 출력해서 구조 파악
+        print(f"  [PC] Header: {lines[0]}")
+        print(f"  [PC] Last line: {lines[-1]}")
+        # 마지막 데이터 줄에서 모든 컬럼 시도
+        for line in reversed(lines[1:]):
+            parts = line.split(",")
+            print(f"  [PC] Parts: {parts}")
+            for part in reversed(parts):
+                try:
+                    val = float(part.strip())
+                    if 0.2 < val < 5.0:
+                        return round(val, 2)
+                except ValueError:
+                    continue
+            break  # 마지막 줄만 확인
+    except Exception as e:
+        print(f"  [ERROR] Put/Call: {e}")
     return None
 
 def fear_greed_latest():

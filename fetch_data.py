@@ -38,42 +38,42 @@ def fred_history(series_id, days=40):
     return []
 
 def yf_download(symbol, days=45):
-    """
-    Yahoo Finance 비공식 v8 API — 헤더 추가로 차단 우회
-    """
     end   = int(datetime.utcnow().timestamp())
     start = int((datetime.utcnow() - timedelta(days=days)).timestamp())
-    url   = f"https://query1.finance.yahoo.com/v8/finance/chart/{symbol}"
-    params = {"period1": start, "period2": end, "interval": "1d"}
-    headers = {
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
-        "Accept": "application/json",
-        "Accept-Language": "en-US,en;q=0.9",
-        "Referer": "https://finance.yahoo.com/",
-        "Origin":  "https://finance.yahoo.com",
-    }
-    try:
-        r = requests.get(url, params=params, headers=headers, timeout=20)
-        r.raise_for_status()
-        data = r.json()
-        chart = data["chart"]["result"][0]
-        timestamps = chart["timestamp"]
-        closes     = chart["indicators"]["quote"][0]["close"]
-        result = []
-        for ts, c in zip(timestamps, closes):
-            if c is not None:
-                date = datetime.utcfromtimestamp(ts).strftime("%Y-%m-%d")
-                result.append({"date": date, "value": round(float(c), 2)})
-        return result
-    except Exception as e:
-        print(f"  [ERROR] YF {symbol}: {e}")
+    
+    # v8 먼저 시도
+    for base_url in [
+        f"https://query1.finance.yahoo.com/v8/finance/chart/{symbol}",
+        f"https://query2.finance.yahoo.com/v8/finance/chart/{symbol}",
+    ]:
+        params = {"period1": start, "period2": end, "interval": "1d"}
+        headers = {
+            "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
+            "Accept": "*/*",
+            "Accept-Language": "en-US,en;q=0.9",
+            "Referer": "https://finance.yahoo.com",
+        }
+        try:
+            r = requests.get(base_url, params=params, headers=headers, timeout=20)
+            if r.status_code == 200:
+                data  = r.json()
+                chart = data["chart"]["result"][0]
+                timestamps = chart["timestamp"]
+                closes     = chart["indicators"]["quote"][0]["close"]
+                result = []
+                for ts, c in zip(timestamps, closes):
+                    if c is not None:
+                        date = datetime.utcfromtimestamp(ts).strftime("%Y-%m-%d")
+                        result.append({"date": date, "value": round(float(c), 2)})
+                if result:
+                    print(f"  OK {symbol}: {len(result)} days, latest={result[-1]['value']}")
+                    return result
+        except Exception as e:
+            print(f"  [WARN] {base_url} {symbol}: {e}")
+        time.sleep(2)
+    
+    print(f"  [ERROR] All attempts failed for {symbol}")
     return []
-
-def yf_latest(symbol):
-    data = yf_download(symbol, days=7)
-    if data:
-        return data[-1]["value"]
-    return None
 
 def fear_greed_latest():
     try:
@@ -101,22 +101,28 @@ def main():
     print(f"[{datetime.utcnow().isoformat()}] Fetching market indicators...")
     today = datetime.utcnow().strftime("%Y-%m-%d")
 
-    print("  Fetching indices via Yahoo Finance v8 API...")
+    print("  Fetching NASDAQ (^IXIC)...")
     nasdaq_h = yf_download("^IXIC", 45)
-    time.sleep(1)
-    sp500_h  = yf_download("^GSPC", 45)
-    time.sleep(1)
-    djia_h   = yf_download("^DJI",  45)
-    time.sleep(1)
-    vix_h    = yf_download("^VIX",  45)
-    time.sleep(1)
+    time.sleep(3)
+
+    print("  Fetching S&P 500 (^GSPC)...")
+    sp500_h = yf_download("^GSPC", 45)
+    time.sleep(3)
+
+    print("  Fetching DJIA (^DJI)...")
+    djia_h = yf_download("^DJI", 45)
+    time.sleep(3)
+
+    print("  Fetching VIX (^VIX)...")
+    vix_h = yf_download("^VIX", 45)
+    time.sleep(3)
 
     nasdaq = nasdaq_h[-1]["value"] if nasdaq_h else None
     sp500  = sp500_h[-1]["value"]  if sp500_h  else None
     djia   = djia_h[-1]["value"]   if djia_h   else None
     vix    = vix_h[-1]["value"]    if vix_h    else None
 
-    print(f"  NASDAQ={nasdaq}, SP500={sp500}, DJIA={djia}, VIX={vix}")
+    print(f"  Results: NASDAQ={nasdaq}, SP500={sp500}, DJIA={djia}, VIX={vix}")
 
     print("  Fetching FRED series...")
     fed_rate  = fred_latest("FEDFUNDS")
@@ -138,7 +144,6 @@ def main():
     yc_h   = [{"date": d["date"], "value": round(d["value"] - t2_map[d["date"]], 3)}
                for d in t10_h if d["date"] in t2_map]
 
-    # 리스크 점수
     risk = 0
     if vix:
         if vix > 45: risk += 30

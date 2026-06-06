@@ -1,6 +1,5 @@
 import json
 import os
-import time
 from datetime import datetime, timedelta
 import requests
 
@@ -22,7 +21,7 @@ def fred_latest(series_id):
         print(f"  [ERROR] FRED {series_id}: {e}")
     return None
 
-def fred_history(series_id, days=40):
+def fred_history(series_id, days=45):
     if not FRED_API_KEY:
         return []
     start = (datetime.utcnow() - timedelta(days=days)).strftime("%Y-%m-%d")
@@ -35,44 +34,6 @@ def fred_history(series_id, days=40):
                 for o in r.json().get("observations", []) if o["value"] != "."]
     except Exception as e:
         print(f"  [ERROR] FRED history {series_id}: {e}")
-    return []
-
-def yf_download(symbol, days=45):
-    end   = int(datetime.utcnow().timestamp())
-    start = int((datetime.utcnow() - timedelta(days=days)).timestamp())
-    
-    # v8 먼저 시도
-    for base_url in [
-        f"https://query1.finance.yahoo.com/v8/finance/chart/{symbol}",
-        f"https://query2.finance.yahoo.com/v8/finance/chart/{symbol}",
-    ]:
-        params = {"period1": start, "period2": end, "interval": "1d"}
-        headers = {
-            "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
-            "Accept": "*/*",
-            "Accept-Language": "en-US,en;q=0.9",
-            "Referer": "https://finance.yahoo.com",
-        }
-        try:
-            r = requests.get(base_url, params=params, headers=headers, timeout=20)
-            if r.status_code == 200:
-                data  = r.json()
-                chart = data["chart"]["result"][0]
-                timestamps = chart["timestamp"]
-                closes     = chart["indicators"]["quote"][0]["close"]
-                result = []
-                for ts, c in zip(timestamps, closes):
-                    if c is not None:
-                        date = datetime.utcfromtimestamp(ts).strftime("%Y-%m-%d")
-                        result.append({"date": date, "value": round(float(c), 2)})
-                if result:
-                    print(f"  OK {symbol}: {len(result)} days, latest={result[-1]['value']}")
-                    return result
-        except Exception as e:
-            print(f"  [WARN] {base_url} {symbol}: {e}")
-        time.sleep(2)
-    
-    print(f"  [ERROR] All attempts failed for {symbol}")
     return []
 
 def fear_greed_latest():
@@ -101,30 +62,25 @@ def main():
     print(f"[{datetime.utcnow().isoformat()}] Fetching market indicators...")
     today = datetime.utcnow().strftime("%Y-%m-%d")
 
-    print("  Fetching NASDAQ (^IXIC)...")
-    nasdaq_h = yf_download("^IXIC", 45)
-    time.sleep(3)
-
-    print("  Fetching S&P 500 (^GSPC)...")
-    sp500_h = yf_download("^GSPC", 45)
-    time.sleep(3)
-
-    print("  Fetching DJIA (^DJI)...")
-    djia_h = yf_download("^DJI", 45)
-    time.sleep(3)
-
-    print("  Fetching VIX (^VIX)...")
-    vix_h = yf_download("^VIX", 45)
-    time.sleep(3)
+    # FRED 지수 시리즈
+    # NASDAQCOM  = 나스닥 종합지수
+    # SP500      = S&P 500
+    # DJIA       = 다우존스
+    # VIXCLS     = VIX 종가
+    print("  Fetching indices via FRED...")
+    nasdaq_h = fred_history("NASDAQCOM", 45)
+    sp500_h  = fred_history("SP500",     45)
+    djia_h   = fred_history("DJIA",      45)
+    vix_h    = fred_history("VIXCLS",    45)
 
     nasdaq = nasdaq_h[-1]["value"] if nasdaq_h else None
     sp500  = sp500_h[-1]["value"]  if sp500_h  else None
     djia   = djia_h[-1]["value"]   if djia_h   else None
     vix    = vix_h[-1]["value"]    if vix_h    else None
 
-    print(f"  Results: NASDAQ={nasdaq}, SP500={sp500}, DJIA={djia}, VIX={vix}")
+    print(f"  NASDAQ={nasdaq}, SP500={sp500}, DJIA={djia}, VIX={vix}")
 
-    print("  Fetching FRED series...")
+    print("  Fetching FRED indicators...")
     fed_rate  = fred_latest("FEDFUNDS")
     hy_spread = fred_latest("BAMLH0A0HYM2")
     t2y       = fred_latest("DGS2")
@@ -136,10 +92,10 @@ def main():
     fg_h = fear_greed_history(35)
 
     print("  Fetching FRED history...")
-    tnx_h = fred_history("DGS10", 40)
+    tnx_h = fred_history("DGS10",        40)
     hy_h  = fred_history("BAMLH0A0HYM2", 40)
-    t2_h  = fred_history("DGS2",  40)
-    t10_h = fred_history("DGS10", 40)
+    t2_h  = fred_history("DGS2",         40)
+    t10_h = fred_history("DGS10",        40)
     t2_map = {d["date"]: d["value"] for d in t2_h}
     yc_h   = [{"date": d["date"], "value": round(d["value"] - t2_map[d["date"]], 3)}
                for d in t10_h if d["date"] in t2_map]

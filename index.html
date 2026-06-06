@@ -336,7 +336,7 @@ function renderMonitor() {
     {lbl:'기준금리 (Fed)',val:fmtNum(s.fed_rate)+'%', color:'c-muted', sub:''},
     {lbl:'HY 스프레드',  val:fmtNum(s.hy_spread)+'%', color:hyColor, sub:s.hy_spread>6?'위험':s.hy_spread>4?'주의':s.hy_spread?'안정':''},
     {lbl:'수익률 곡선',  val:fmtNum(s.yield_curve)+'%', color:ycColor, sub:s.yield_curve<0?'역전 중':s.yield_curve<0.2?'주의':'정상'},
-    {lbl:'Put/Call Ratio',val:fmtNum(s.put_call), color:'c-muted', sub:''},
+    ...(s.put_call != null ? [{lbl:'Put/Call Ratio',val:fmtNum(s.put_call), color:'c-muted', sub:''}] : []),
   ].map(c=>`
     <div class="metric-card">
       <div class="metric-lbl">${c.lbl}</div>

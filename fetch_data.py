@@ -4,18 +4,15 @@ from datetime import datetime, timedelta
 import requests
 
 FRED_API_KEY = os.environ.get("FRED_API_KEY", "")
-FRED_BASE = "https://api.stlouisfed.org/fred/series/observations"
+AV_API_KEY   = os.environ.get("ALPHAVANTAGE_API_KEY", "")
+FRED_BASE    = "https://api.stlouisfed.org/fred/series/observations"
+AV_BASE      = "https://www.alphavantage.co/query"
 
 def fred_latest(series_id):
     if not FRED_API_KEY:
         return None
-    params = {
-        "series_id": series_id,
-        "api_key": FRED_API_KEY,
-        "file_type": "json",
-        "sort_order": "desc",
-        "limit": 5,
-    }
+    params = {"series_id": series_id, "api_key": FRED_API_KEY,
+              "file_type": "json", "sort_order": "desc", "limit": 5}
     try:
         r = requests.get(FRED_BASE, params=params, timeout=15)
         r.raise_for_status()
@@ -30,59 +27,51 @@ def fred_history(series_id, days=40):
     if not FRED_API_KEY:
         return []
     start = (datetime.utcnow() - timedelta(days=days)).strftime("%Y-%m-%d")
-    params = {
-        "series_id": series_id,
-        "api_key": FRED_API_KEY,
-        "file_type": "json",
-        "sort_order": "asc",
-        "observation_start": start,
-    }
+    params = {"series_id": series_id, "api_key": FRED_API_KEY,
+              "file_type": "json", "sort_order": "asc", "observation_start": start}
     try:
         r = requests.get(FRED_BASE, params=params, timeout=15)
         r.raise_for_status()
         return [{"date": o["date"], "value": float(o["value"])}
-                for o in r.json().get("observations", [])
-                if o["value"] != "."]
+                for o in r.json().get("observations", []) if o["value"] != "."]
     except Exception as e:
         print(f"  [ERROR] FRED history {series_id}: {e}")
     return []
 
-def stooq_history(ticker, days=40):
-    """stooq.com — yfinance 대체, 자동화 환경에서 안정적"""
-    end = datetime.utcnow().strftime("%Y%m%d")
-    start = (datetime.utcnow() - timedelta(days=days)).strftime("%Y%m%d")
-    url = f"https://stooq.com/q/d/l/?s={ticker}&d1={start}&d2={end}&i=d"
-    headers = {"User-Agent": "Mozilla/5.0"}
+def av_daily(symbol, days=40):
+    """Alpha Vantage daily adjusted close"""
+    if not AV_API_KEY:
+        print(f"  [WARN] No AV key, skipping {symbol}")
+        return []
+    params = {"function": "TIME_SERIES_DAILY", "symbol": symbol,
+              "outputsize": "compact", "apikey": AV_API_KEY}
     try:
-        r = requests.get(url, headers=headers, timeout=15)
+        r = requests.get(AV_BASE, params=params, timeout=20)
         r.raise_for_status()
-        lines = r.text.strip().splitlines()
+        data = r.json()
+        if "Time Series (Daily)" not in data:
+            print(f"  [WARN] AV no data for {symbol}: {data.get('Note') or data.get('Information') or ''}")
+            return []
+        ts = data["Time Series (Daily)"]
+        cutoff = (datetime.utcnow() - timedelta(days=days)).strftime("%Y-%m-%d")
         result = []
-        for line in lines[1:]:
-            parts = line.split(",")
-            if len(parts) >= 5 and parts[4] != "null":
-                try:
-                    result.append({
-                        "date": parts[0],
-                        "value": round(float(parts[4]), 2)
-                    })
-                except ValueError:
-                    continue
+        for date in sorted(ts.keys()):
+            if date >= cutoff:
+                result.append({"date": date, "value": round(float(ts[date]["4. close"]), 2)})
         return result
     except Exception as e:
-        print(f"  [ERROR] stooq {ticker}: {e}")
+        print(f"  [ERROR] AV {symbol}: {e}")
     return []
 
-def stooq_latest(ticker):
-    data = stooq_history(ticker, days=7)
+def av_latest(symbol):
+    data = av_daily(symbol, days=7)
     if data:
         return data[-1]["value"]
     return None
 
 def fear_greed_latest():
     try:
-        r = requests.get(
-            "https://api.alternative.me/fng/?limit=1&format=json", timeout=15)
+        r = requests.get("https://api.alternative.me/fng/?limit=1&format=json", timeout=15)
         r.raise_for_status()
         d = r.json()["data"][0]
         return {"value": int(d["value"]), "classification": d["value_classification"]}
@@ -92,18 +81,12 @@ def fear_greed_latest():
 
 def fear_greed_history(days=35):
     try:
-        r = requests.get(
-            f"https://api.alternative.me/fng/?limit={days}&format=json", timeout=15)
+        r = requests.get(f"https://api.alternative.me/fng/?limit={days}&format=json", timeout=15)
         r.raise_for_status()
         items = r.json()["data"]
-        return [
-            {
-                "date": datetime.utcfromtimestamp(int(i["timestamp"])).strftime("%Y-%m-%d"),
-                "value": int(i["value"]),
-                "classification": i["value_classification"],
-            }
-            for i in reversed(items)
-        ]
+        return [{"date": datetime.utcfromtimestamp(int(i["timestamp"])).strftime("%Y-%m-%d"),
+                 "value": int(i["value"]), "classification": i["value_classification"]}
+                for i in reversed(items)]
     except Exception as e:
         print(f"  [ERROR] Fear&Greed history: {e}")
     return []
@@ -112,35 +95,34 @@ def main():
     print(f"[{datetime.utcnow().isoformat()}] Fetching market indicators...")
     today = datetime.utcnow().strftime("%Y-%m-%d")
 
-    # stooq 티커: ^NDX=나스닥, ^SPX=S&P500, ^DJI=다우, ^VIX=VIX
-    print("  Fetching indices via stooq...")
-    nasdaq = stooq_latest("^nasdaq")
-    sp500  = stooq_latest("^spx500")
-    djia   = stooq_latest("^dji")
-    vix    = stooq_latest("vix.cboe")
+    # Alpha Vantage 티커
+    # ^IXIC=나스닥 / ^GSPC=S&P500 / ^DJI=다우 / ^VIX=VIX
+    print("  Fetching indices via Alpha Vantage...")
+    nasdaq_h = av_daily("QQQ",  40)   # 나스닥 추종 ETF (^IXIC 대체)
+    sp500_h  = av_daily("SPY",  40)   # S&P500 추종 ETF
+    djia_h   = av_daily("DIA",  40)   # 다우 추종 ETF
+    vix_h    = av_daily("VIXY", 40)   # VIX 추종 ETF
+
+    nasdaq = nasdaq_h[-1]["value"] if nasdaq_h else None
+    sp500  = sp500_h[-1]["value"]  if sp500_h  else None
+    djia   = djia_h[-1]["value"]   if djia_h   else None
+    vix    = vix_h[-1]["value"]    if vix_h    else None
 
     print("  Fetching FRED series...")
     fed_rate  = fred_latest("FEDFUNDS")
     hy_spread = fred_latest("BAMLH0A0HYM2")
     t2y       = fred_latest("DGS2")
     t10y      = fred_latest("DGS10")
-
     yield_curve = round(t10y - t2y, 3) if t10y and t2y else None
-    ten_yr = t10y
 
     print("  Fetching Fear & Greed...")
-    fg = fear_greed_latest()
+    fg   = fear_greed_latest()
+    fg_h = fear_greed_history(35)
 
-    print("  Fetching 35-day history...")
-    nasdaq_h = stooq_history("^nasdaq", 40)
-    sp500_h  = stooq_history("^spx500", 40)
-    djia_h   = stooq_history("^dji", 40)
-    vix_h    = stooq_history("vix.cboe", 40)
-    tnx_h    = fred_history("DGS10", 40)
-    hy_h     = fred_history("BAMLH0A0HYM2", 40)
-    fg_h     = fear_greed_history(35)
-
-    t2_h  = fred_history("DGS2", 40)
+    print("  Fetching FRED history...")
+    tnx_h = fred_history("DGS10", 40)
+    hy_h  = fred_history("BAMLH0A0HYM2", 40)
+    t2_h  = fred_history("DGS2",  40)
     t10_h = fred_history("DGS10", 40)
     t2_map = {d["date"]: d["value"] for d in t2_h}
     yc_h   = [{"date": d["date"], "value": round(d["value"] - t2_map[d["date"]], 3)}
@@ -179,28 +161,15 @@ def main():
         "updated_at": today,
         "updated_kst": (datetime.utcnow() + timedelta(hours=9)).strftime("%Y-%m-%d %H:%M KST"),
         "snapshot": {
-            "nasdaq":      nasdaq,
-            "sp500":       sp500,
-            "djia":        djia,
-            "vix":         vix,
-            "ten_yr":      ten_yr,
-            "fed_rate":    fed_rate,
-            "hy_spread":   hy_spread,
-            "yield_curve": yield_curve,
-            "fear_greed":  fg,
-            "put_call":    None,
+            "nasdaq": nasdaq, "sp500": sp500, "djia": djia, "vix": vix,
+            "ten_yr": t10y, "fed_rate": fed_rate, "hy_spread": hy_spread,
+            "yield_curve": yield_curve, "fear_greed": fg, "put_call": None,
         },
         "risk_score": risk,
         "risk_label": risk_label,
         "history": {
-            "nasdaq":      nasdaq_h,
-            "sp500":       sp500_h,
-            "djia":        djia_h,
-            "vix":         vix_h,
-            "tnx":         tnx_h,
-            "hy_spread":   hy_h,
-            "yield_curve": yc_h,
-            "fear_greed":  fg_h,
+            "nasdaq": nasdaq_h, "sp500": sp500_h, "djia": djia_h, "vix": vix_h,
+            "tnx": tnx_h, "hy_spread": hy_h, "yield_curve": yc_h, "fear_greed": fg_h,
         },
     }
 
@@ -209,7 +178,7 @@ def main():
         json.dump(output, f, indent=2, ensure_ascii=False)
 
     print(f"  Done. Risk: {risk}/100 ({risk_label})")
-    print(f"  NASDAQ={nasdaq}, SP500={sp500}, VIX={vix}")
+    print(f"  NASDAQ={nasdaq}, SP500={sp500}, DJIA={djia}, VIX={vix}")
 
 if __name__ == "__main__":
     main()

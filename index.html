@@ -384,7 +384,7 @@ let selCrash = null;
 // ── Boot ─────────────────────────────────────────────────────────────────
 async function boot() {
   try {
-    const r = await fetch('data/indicators.json?v=' + Date.now());
+    const r = await fetch('./data/indicators.json?v=' + Date.now());
     DATA = await r.json();
   } catch(e) {
     document.getElementById('loader').innerHTML =

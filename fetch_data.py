@@ -57,7 +57,24 @@ def fear_greed_history(days=35):
     except Exception as e:
         print(f"  [ERROR] Fear&Greed history: {e}")
     return []
-
+def get_put_call():
+    """CBOE 일별 Put/Call 비율"""
+    try:
+        url = "https://cdn.cboe.com/api/global/us_indices/daily_prices/PCR_TOTAL_History.csv"
+        headers = {"User-Agent": "Mozilla/5.0"}
+        r = requests.get(url, headers=headers, timeout=15)
+        r.raise_for_status()
+        lines = r.text.strip().splitlines()
+        for line in reversed(lines):
+            parts = line.split(",")
+            if len(parts) >= 2:
+                try:
+                    return round(float(parts[1]), 2)
+                except ValueError:
+                    continue
+    except Exception as e:
+        print(f"  [ERROR] Put/Call: {e}")
+    return None
 def main():
     print(f"[{datetime.utcnow().isoformat()}] Fetching market indicators...")
     today = datetime.utcnow().strftime("%Y-%m-%d")
@@ -86,6 +103,10 @@ def main():
     t2y       = fred_latest("DGS2")
     t10y      = fred_latest("DGS10")
     yield_curve = round(t10y - t2y, 3) if t10y and t2y else None
+
+    print("  Fetching Put/Call ratio...")
+    put_call = get_put_call()
+    print(f"  Put/Call={put_call}")
 
     print("  Fetching Fear & Greed...")
     fg   = fear_greed_latest()
@@ -134,7 +155,7 @@ def main():
         "snapshot": {
             "nasdaq": nasdaq, "sp500": sp500, "djia": djia, "vix": vix,
             "ten_yr": t10y, "fed_rate": fed_rate, "hy_spread": hy_spread,
-            "yield_curve": yield_curve, "fear_greed": fg, "put_call": None,
+            "yield_curve": yield_curve, "fear_greed": fg, "put_call": put_call,
         },
         "risk_score": risk,
         "risk_label": risk_label,

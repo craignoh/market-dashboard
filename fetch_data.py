@@ -1,26 +1,13 @@
-"""
-Daily market indicator fetcher
-Runs via GitHub Actions every day at 00:00 UTC (09:00 KST)
-Saves output to data/indicators.json
-"""
-
 import json
 import os
-import sys
 from datetime import datetime, timedelta
 import requests
-import yfinance as yf
 
-# ── FRED API key (set as GitHub Actions secret: FRED_API_KEY) ──────────────
 FRED_API_KEY = os.environ.get("FRED_API_KEY", "")
 FRED_BASE = "https://api.stlouisfed.org/fred/series/observations"
 
-# ── Helpers ────────────────────────────────────────────────────────────────
-
-def fred_latest(series_id: str) -> float | None:
-    """Fetch the most recent observation from FRED."""
+def fred_latest(series_id):
     if not FRED_API_KEY:
-        print(f"  [WARN] FRED_API_KEY not set, skipping {series_id}")
         return None
     params = {
         "series_id": series_id,
@@ -30,19 +17,16 @@ def fred_latest(series_id: str) -> float | None:
         "limit": 5,
     }
     try:
-        r = requests.get(FRED_BASE, params=params, timeout=10)
+        r = requests.get(FRED_BASE, params=params, timeout=15)
         r.raise_for_status()
-        obs = r.json().get("observations", [])
-        for o in obs:
+        for o in r.json().get("observations", []):
             if o["value"] != ".":
                 return float(o["value"])
     except Exception as e:
         print(f"  [ERROR] FRED {series_id}: {e}")
     return None
 
-
-def fred_history(series_id: str, days: int = 35) -> list[dict]:
-    """Fetch last N days of observations from FRED."""
+def fred_history(series_id, days=40):
     if not FRED_API_KEY:
         return []
     start = (datetime.utcnow() - timedelta(days=days)).strftime("%Y-%m-%d")
@@ -54,62 +38,62 @@ def fred_history(series_id: str, days: int = 35) -> list[dict]:
         "observation_start": start,
     }
     try:
-        r = requests.get(FRED_BASE, params=params, timeout=10)
+        r = requests.get(FRED_BASE, params=params, timeout=15)
         r.raise_for_status()
-        obs = r.json().get("observations", [])
         return [{"date": o["date"], "value": float(o["value"])}
-                for o in obs if o["value"] != "."]
+                for o in r.json().get("observations", [])
+                if o["value"] != "."]
     except Exception as e:
         print(f"  [ERROR] FRED history {series_id}: {e}")
     return []
 
-
-def yf_latest(ticker: str) -> float | None:
+def stooq_history(ticker, days=40):
+    """stooq.com — yfinance 대체, 자동화 환경에서 안정적"""
+    end = datetime.utcnow().strftime("%Y%m%d")
+    start = (datetime.utcnow() - timedelta(days=days)).strftime("%Y%m%d")
+    url = f"https://stooq.com/q/d/l/?s={ticker}&d1={start}&d2={end}&i=d"
+    headers = {"User-Agent": "Mozilla/5.0"}
     try:
-        t = yf.Ticker(ticker)
-        hist = t.history(period="5d")
-        if not hist.empty:
-            return round(float(hist["Close"].iloc[-1]), 2)
+        r = requests.get(url, headers=headers, timeout=15)
+        r.raise_for_status()
+        lines = r.text.strip().splitlines()
+        result = []
+        for line in lines[1:]:
+            parts = line.split(",")
+            if len(parts) >= 5 and parts[4] != "null":
+                try:
+                    result.append({
+                        "date": parts[0],
+                        "value": round(float(parts[4]), 2)
+                    })
+                except ValueError:
+                    continue
+        return result
     except Exception as e:
-        print(f"  [ERROR] yfinance {ticker}: {e}")
-    return None
-
-
-def yf_history(ticker: str, days: int = 35) -> list[dict]:
-    try:
-        t = yf.Ticker(ticker)
-        hist = t.history(period=f"{days}d")
-        return [
-            {"date": str(d.date()), "value": round(float(v), 2)}
-            for d, v in zip(hist.index, hist["Close"])
-        ]
-    except Exception as e:
-        print(f"  [ERROR] yfinance history {ticker}: {e}")
+        print(f"  [ERROR] stooq {ticker}: {e}")
     return []
 
+def stooq_latest(ticker):
+    data = stooq_history(ticker, days=7)
+    if data:
+        return data[-1]["value"]
+    return None
 
-def fear_greed_latest() -> dict | None:
-    """Alternative.me Crypto Fear & Greed — free, stable."""
+def fear_greed_latest():
     try:
         r = requests.get(
-            "https://api.alternative.me/fng/?limit=1&format=json", timeout=10
-        )
+            "https://api.alternative.me/fng/?limit=1&format=json", timeout=15)
         r.raise_for_status()
-        data = r.json()["data"][0]
-        return {
-            "value": int(data["value"]),
-            "classification": data["value_classification"],
-        }
+        d = r.json()["data"][0]
+        return {"value": int(d["value"]), "classification": d["value_classification"]}
     except Exception as e:
         print(f"  [ERROR] Fear&Greed: {e}")
     return None
 
-
-def fear_greed_history(days: int = 35) -> list[dict]:
+def fear_greed_history(days=35):
     try:
         r = requests.get(
-            f"https://api.alternative.me/fng/?limit={days}&format=json", timeout=10
-        )
+            f"https://api.alternative.me/fng/?limit={days}&format=json", timeout=15)
         r.raise_for_status()
         items = r.json()["data"]
         return [
@@ -124,89 +108,45 @@ def fear_greed_history(days: int = 35) -> list[dict]:
         print(f"  [ERROR] Fear&Greed history: {e}")
     return []
 
-
-def put_call_ratio() -> float | None:
-    """
-    CBOE total put/call ratio via Yahoo Finance ticker ^PCI is not available.
-    We use the CBOE equity P/C ratio via yfinance as a proxy.
-    Falls back to None if unavailable.
-    """
-    try:
-        # CBOE does not expose P/C via yfinance; scrape CBOE data page
-        url = "https://www.cboe.com/publish/scheduledtask/mktdata/cboesymboldata/options_put_call_ratios.csv"
-        r = requests.get(url, timeout=10)
-        r.raise_for_status()
-        lines = r.text.strip().splitlines()
-        # last data line
-        for line in reversed(lines):
-            parts = line.split(",")
-            if len(parts) >= 4:
-                try:
-                    return round(float(parts[3]), 2)  # Total P/C ratio column
-                except ValueError:
-                    continue
-    except Exception as e:
-        print(f"  [WARN] Put/Call CBOE: {e} — skipping")
-    return None
-
-
-# ── Main ───────────────────────────────────────────────────────────────────
-
 def main():
     print(f"[{datetime.utcnow().isoformat()}] Fetching market indicators...")
-
     today = datetime.utcnow().strftime("%Y-%m-%d")
 
-    # ── Current snapshot ───────────────────────────────────────────────────
-    print("  Fetching index prices (yfinance)...")
-    nasdaq    = yf_latest("^IXIC")
-    sp500     = yf_latest("^GSPC")
-    djia      = yf_latest("^DJI")
-    vix       = yf_latest("^VIX")
-    tnx       = yf_latest("^TNX")   # 10-yr Treasury yield ×10 in Yahoo
+    # stooq 티커: ^NDX=나스닥, ^SPX=S&P500, ^DJI=다우, ^VIX=VIX
+    print("  Fetching indices via stooq...")
+    nasdaq = stooq_latest("^ndx")
+    sp500  = stooq_latest("^spx")
+    djia   = stooq_latest("^dji")
+    vix    = stooq_latest("^vix")
 
     print("  Fetching FRED series...")
-    fed_rate  = fred_latest("FEDFUNDS")          # Fed Funds Rate
-    hy_spread = fred_latest("BAMLH0A0HYM2")      # HY OAS spread
-    t2y       = fred_latest("DGS2")              # 2-yr Treasury yield
-    t10y      = fred_latest("DGS10")             # 10-yr Treasury yield
+    fed_rate  = fred_latest("FEDFUNDS")
+    hy_spread = fred_latest("BAMLH0A0HYM2")
+    t2y       = fred_latest("DGS2")
+    t10y      = fred_latest("DGS10")
 
-    yield_curve = None
-    if t10y is not None and t2y is not None:
-        yield_curve = round(t10y - t2y, 3)
+    yield_curve = round(t10y - t2y, 3) if t10y and t2y else None
+    ten_yr = t10y
 
-    # Use FRED 10y if yfinance TNX unavailable
-    ten_yr = t10y if t10y else (round(tnx / 10, 3) if tnx else None)
-
-    print("  Fetching Fear & Greed (alternative.me)...")
+    print("  Fetching Fear & Greed...")
     fg = fear_greed_latest()
 
-    print("  Fetching Put/Call ratio (CBOE)...")
-    pc_ratio = put_call_ratio()
-
-    # ── 35-day history for sparklines ─────────────────────────────────────
     print("  Fetching 35-day history...")
-    history = {
-        "nasdaq":      yf_history("^IXIC", 35),
-        "sp500":       yf_history("^GSPC", 35),
-        "djia":        yf_history("^DJI",  35),
-        "vix":         yf_history("^VIX",  35),
-        "tnx":         fred_history("DGS10", 40),
-        "hy_spread":   fred_history("BAMLH0A0HYM2", 40),
-        "yield_curve": [],   # computed below
-        "fear_greed":  fear_greed_history(35),
-    }
+    nasdaq_h = stooq_history("^ndx", 40)
+    sp500_h  = stooq_history("^spx", 40)
+    djia_h   = stooq_history("^dji", 40)
+    vix_h    = stooq_history("^vix", 40)
+    tnx_h    = fred_history("DGS10", 40)
+    hy_h     = fred_history("BAMLH0A0HYM2", 40)
+    fg_h     = fear_greed_history(35)
 
-    # Compute 2s10s history from FRED
-    t2_hist  = fred_history("DGS2",  40)
-    t10_hist = fred_history("DGS10", 40)
-    t2_map   = {d["date"]: d["value"] for d in t2_hist}
-    history["yield_curve"] = [
-        {"date": d["date"], "value": round(d["value"] - t2_map[d["date"]], 3)}
-        for d in t10_hist if d["date"] in t2_map
-    ]
+    t2_h  = fred_history("DGS2", 40)
+    t10_h = fred_history("DGS10", 40)
+    t2_map = {d["date"]: d["value"] for d in t2_h}
+    yc_h   = [{"date": d["date"], "value": round(d["value"] - t2_map[d["date"]], 3)}
+               for d in t10_h if d["date"] in t2_map]
 
-    # ── Risk score (0-100) ─────────────────────────────────────────────────
+    # 리스크 점수
     risk = 0
     if vix:
         if vix > 45: risk += 30
@@ -230,12 +170,11 @@ def main():
 
     risk_label = (
         "위험 — 급락 가능성 높음" if risk >= 70 else
-        "경고 — 복합 신호 감지" if risk >= 50 else
-        "주의 — 일부 지표 이상" if risk >= 30 else
+        "경고 — 복합 신호 감지"   if risk >= 50 else
+        "주의 — 일부 지표 이상"   if risk >= 30 else
         "안전 — 리스크 낮음"
     )
 
-    # ── Assemble output ────────────────────────────────────────────────────
     output = {
         "updated_at": today,
         "updated_kst": (datetime.utcnow() + timedelta(hours=9)).strftime("%Y-%m-%d %H:%M KST"),
@@ -249,20 +188,28 @@ def main():
             "hy_spread":   hy_spread,
             "yield_curve": yield_curve,
             "fear_greed":  fg,
-            "put_call":    pc_ratio,
+            "put_call":    None,
         },
         "risk_score": risk,
         "risk_label": risk_label,
-        "history":    history,
+        "history": {
+            "nasdaq":      nasdaq_h,
+            "sp500":       sp500_h,
+            "djia":        djia_h,
+            "vix":         vix_h,
+            "tnx":         tnx_h,
+            "hy_spread":   hy_h,
+            "yield_curve": yc_h,
+            "fear_greed":  fg_h,
+        },
     }
 
     os.makedirs("data", exist_ok=True)
     with open("data/indicators.json", "w") as f:
         json.dump(output, f, indent=2, ensure_ascii=False)
 
-    print(f"  Done. Risk score: {risk}/100 ({risk_label})")
-    print(f"  Saved to data/indicators.json")
-
+    print(f"  Done. Risk: {risk}/100 ({risk_label})")
+    print(f"  NASDAQ={nasdaq}, SP500={sp500}, VIX={vix}")
 
 if __name__ == "__main__":
     main()

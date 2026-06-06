@@ -36,6 +36,31 @@ def fred_history(series_id, days=45):
         print(f"  [ERROR] FRED history {series_id}: {e}")
     return []
 
+def get_put_call():
+    urls = [
+        "https://cdn.cboe.com/api/global/us_indices/daily_prices/PCR_TOTAL_History.csv",
+        "https://www.cboe.com/publish/scheduledtask/mktdata/cboesymboldata/options_put_call_ratios.csv",
+    ]
+    headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"}
+    for url in urls:
+        try:
+            r = requests.get(url, headers=headers, timeout=15)
+            r.raise_for_status()
+            lines = r.text.strip().splitlines()
+            print(f"  [PC] Got {len(lines)} lines from {url[:50]}")
+            for line in reversed(lines):
+                parts = line.split(",")
+                if len(parts) >= 2:
+                    try:
+                        val = float(parts[-1])
+                        if 0.2 < val < 5.0:
+                            return round(val, 2)
+                    except ValueError:
+                        continue
+        except Exception as e:
+            print(f"  [WARN] Put/Call {url[:50]}: {e}")
+    return None
+
 def fear_greed_latest():
     try:
         r = requests.get("https://api.alternative.me/fng/?limit=1&format=json", timeout=15)
@@ -57,33 +82,11 @@ def fear_greed_history(days=35):
     except Exception as e:
         print(f"  [ERROR] Fear&Greed history: {e}")
     return []
-def get_put_call():
-    """CBOE 일별 Put/Call 비율"""
-    try:
-        url = "https://cdn.cboe.com/api/global/us_indices/daily_prices/PCR_TOTAL_History.csv"
-        headers = {"User-Agent": "Mozilla/5.0"}
-        r = requests.get(url, headers=headers, timeout=15)
-        r.raise_for_status()
-        lines = r.text.strip().splitlines()
-        for line in reversed(lines):
-            parts = line.split(",")
-            if len(parts) >= 2:
-                try:
-                    return round(float(parts[1]), 2)
-                except ValueError:
-                    continue
-    except Exception as e:
-        print(f"  [ERROR] Put/Call: {e}")
-    return None
+
 def main():
     print(f"[{datetime.utcnow().isoformat()}] Fetching market indicators...")
     today = datetime.utcnow().strftime("%Y-%m-%d")
 
-    # FRED 지수 시리즈
-    # NASDAQCOM  = 나스닥 종합지수
-    # SP500      = S&P 500
-    # DJIA       = 다우존스
-    # VIXCLS     = VIX 종가
     print("  Fetching indices via FRED...")
     nasdaq_h = fred_history("NASDAQCOM", 45)
     sp500_h  = fred_history("SP500",     45)
@@ -94,7 +97,6 @@ def main():
     sp500  = sp500_h[-1]["value"]  if sp500_h  else None
     djia   = djia_h[-1]["value"]   if djia_h   else None
     vix    = vix_h[-1]["value"]    if vix_h    else None
-
     print(f"  NASDAQ={nasdaq}, SP500={sp500}, DJIA={djia}, VIX={vix}")
 
     print("  Fetching FRED indicators...")

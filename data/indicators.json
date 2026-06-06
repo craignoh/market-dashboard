@@ -1,0 +1,29 @@
+{
+  "updated_at": "2026-06-07",
+  "updated_kst": "2026-06-07 09:00 KST",
+  "_note": "Seed file — will be replaced by GitHub Actions on first run",
+  "snapshot": {
+    "nasdaq":      19200.00,
+    "sp500":        5320.00,
+    "djia":        42100.00,
+    "vix":            16.20,
+    "ten_yr":          4.45,
+    "fed_rate":        4.25,
+    "hy_spread":       3.10,
+    "yield_curve":     0.18,
+    "fear_greed": { "value": 42, "classification": "Fear" },
+    "put_call":        0.72
+  },
+  "risk_score": 38,
+  "risk_label": "주의 — 일부 지표 이상",
+  "history": {
+    "nasdaq":      [],
+    "sp500":       [],
+    "djia":        [],
+    "vix":         [],
+    "tnx":         [],
+    "hy_spread":   [],
+    "yield_curve": [],
+    "fear_greed":  []
+  }
+}

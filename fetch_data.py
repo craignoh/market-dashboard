@@ -1,12 +1,11 @@
 import json
 import os
+import time
 from datetime import datetime, timedelta
 import requests
 
 FRED_API_KEY = os.environ.get("FRED_API_KEY", "")
-AV_API_KEY   = os.environ.get("ALPHAVANTAGE_API_KEY", "")
 FRED_BASE    = "https://api.stlouisfed.org/fred/series/observations"
-AV_BASE      = "https://www.alphavantage.co/query"
 
 def fred_latest(series_id):
     if not FRED_API_KEY:
@@ -38,33 +37,40 @@ def fred_history(series_id, days=40):
         print(f"  [ERROR] FRED history {series_id}: {e}")
     return []
 
-def av_daily(symbol, days=40):
-    """Alpha Vantage daily adjusted close"""
-    if not AV_API_KEY:
-        print(f"  [WARN] No AV key, skipping {symbol}")
-        return []
-    params = {"function": "TIME_SERIES_DAILY", "symbol": symbol,
-              "outputsize": "compact", "apikey": AV_API_KEY}
+def yf_download(symbol, days=45):
+    """
+    Yahoo Finance 비공식 v8 API — 헤더 추가로 차단 우회
+    """
+    end   = int(datetime.utcnow().timestamp())
+    start = int((datetime.utcnow() - timedelta(days=days)).timestamp())
+    url   = f"https://query1.finance.yahoo.com/v8/finance/chart/{symbol}"
+    params = {"period1": start, "period2": end, "interval": "1d"}
+    headers = {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
+        "Accept": "application/json",
+        "Accept-Language": "en-US,en;q=0.9",
+        "Referer": "https://finance.yahoo.com/",
+        "Origin":  "https://finance.yahoo.com",
+    }
     try:
-        r = requests.get(AV_BASE, params=params, timeout=20)
+        r = requests.get(url, params=params, headers=headers, timeout=20)
         r.raise_for_status()
         data = r.json()
-        if "Time Series (Daily)" not in data:
-            print(f"  [WARN] AV no data for {symbol}: {data.get('Note') or data.get('Information') or ''}")
-            return []
-        ts = data["Time Series (Daily)"]
-        cutoff = (datetime.utcnow() - timedelta(days=days)).strftime("%Y-%m-%d")
+        chart = data["chart"]["result"][0]
+        timestamps = chart["timestamp"]
+        closes     = chart["indicators"]["quote"][0]["close"]
         result = []
-        for date in sorted(ts.keys()):
-            if date >= cutoff:
-                result.append({"date": date, "value": round(float(ts[date]["4. close"]), 2)})
+        for ts, c in zip(timestamps, closes):
+            if c is not None:
+                date = datetime.utcfromtimestamp(ts).strftime("%Y-%m-%d")
+                result.append({"date": date, "value": round(float(c), 2)})
         return result
     except Exception as e:
-        print(f"  [ERROR] AV {symbol}: {e}")
+        print(f"  [ERROR] YF {symbol}: {e}")
     return []
 
-def av_latest(symbol):
-    data = av_daily(symbol, days=7)
+def yf_latest(symbol):
+    data = yf_download(symbol, days=7)
     if data:
         return data[-1]["value"]
     return None
@@ -95,18 +101,22 @@ def main():
     print(f"[{datetime.utcnow().isoformat()}] Fetching market indicators...")
     today = datetime.utcnow().strftime("%Y-%m-%d")
 
-    # Alpha Vantage 티커
-    # ^IXIC=나스닥 / ^GSPC=S&P500 / ^DJI=다우 / ^VIX=VIX
-    print("  Fetching indices via Alpha Vantage...")
-    nasdaq_h = av_daily("QQQ",  40)   # 나스닥 추종 ETF (^IXIC 대체)
-    sp500_h  = av_daily("SPY",  40)   # S&P500 추종 ETF
-    djia_h   = av_daily("DIA",  40)   # 다우 추종 ETF
-    vix_h    = av_daily("VIXY", 40)   # VIX 추종 ETF
+    print("  Fetching indices via Yahoo Finance v8 API...")
+    nasdaq_h = yf_download("^IXIC", 45)
+    time.sleep(1)
+    sp500_h  = yf_download("^GSPC", 45)
+    time.sleep(1)
+    djia_h   = yf_download("^DJI",  45)
+    time.sleep(1)
+    vix_h    = yf_download("^VIX",  45)
+    time.sleep(1)
 
     nasdaq = nasdaq_h[-1]["value"] if nasdaq_h else None
     sp500  = sp500_h[-1]["value"]  if sp500_h  else None
     djia   = djia_h[-1]["value"]   if djia_h   else None
     vix    = vix_h[-1]["value"]    if vix_h    else None
+
+    print(f"  NASDAQ={nasdaq}, SP500={sp500}, DJIA={djia}, VIX={vix}")
 
     print("  Fetching FRED series...")
     fed_rate  = fred_latest("FEDFUNDS")
@@ -178,7 +188,6 @@ def main():
         json.dump(output, f, indent=2, ensure_ascii=False)
 
     print(f"  Done. Risk: {risk}/100 ({risk_label})")
-    print(f"  NASDAQ={nasdaq}, SP500={sp500}, DJIA={djia}, VIX={vix}")
 
 if __name__ == "__main__":
     main()

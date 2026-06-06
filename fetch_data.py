@@ -114,10 +114,10 @@ def main():
 
     # stooq 티커: ^NDX=나스닥, ^SPX=S&P500, ^DJI=다우, ^VIX=VIX
     print("  Fetching indices via stooq...")
-    nasdaq = stooq_latest("^ndx")
-    sp500  = stooq_latest("^spx")
+    nasdaq = stooq_latest("^nasdaq")
+    sp500  = stooq_latest("^spx500")
     djia   = stooq_latest("^dji")
-    vix    = stooq_latest("^vix")
+    vix    = stooq_latest("vix.cboe")
 
     print("  Fetching FRED series...")
     fed_rate  = fred_latest("FEDFUNDS")
@@ -132,10 +132,10 @@ def main():
     fg = fear_greed_latest()
 
     print("  Fetching 35-day history...")
-    nasdaq_h = stooq_history("^ndx", 40)
-    sp500_h  = stooq_history("^spx", 40)
+    nasdaq_h = stooq_history("^nasdaq", 40)
+    sp500_h  = stooq_history("^spx500", 40)
     djia_h   = stooq_history("^dji", 40)
-    vix_h    = stooq_history("^vix", 40)
+    vix_h    = stooq_history("vix.cboe", 40)
     tnx_h    = fred_history("DGS10", 40)
     hy_h     = fred_history("BAMLH0A0HYM2", 40)
     fg_h     = fear_greed_history(35)

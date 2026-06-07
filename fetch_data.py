@@ -2,6 +2,7 @@ import json
 import os
 from datetime import datetime, timedelta
 import requests
+import time
 
 FRED_API_KEY = os.environ.get("FRED_API_KEY", "")
 FRED_BASE    = "https://api.stlouisfed.org/fred/series/observations"
@@ -355,6 +356,7 @@ def main():
             print(f"buy={result['buy_score']} sell={result['sell_score']}")
         else:
             print("failed")
+        time.sleep(13)  # Polygon 무료: 분당 5회 → 12초 간격
     
     # ── 환율 (USD/KRW) ────────────────────────────────────────────────
     print("  Fetching USD/KRW rate...")

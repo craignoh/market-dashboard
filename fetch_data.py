@@ -5,41 +5,36 @@ import requests
 
 FRED_API_KEY = os.environ.get("FRED_API_KEY", "")
 FRED_BASE    = "https://api.stlouisfed.org/fred/series/observations"
-FMP_API_KEY  = os.environ.get("FMP_API_KEY", "")
-FMP_BASE     = "https://financialmodelingprep.com/api/v3"
+FMP_API_KEY     = os.environ.get("FMP_API_KEY", "")
+POLYGON_API_KEY = os.environ.get("POLYGON_API_KEY", "")
+FMP_BASE        = "https://financialmodelingprep.com/api/v3"
 
-def yf_history_stock(symbol, days=220):
-    """Yahoo Finance v8 — 개별 종목 일별 데이터"""
-    import time
-    end   = int(__import__('datetime').datetime.utcnow().timestamp())
-    start = int((__import__('datetime').datetime.utcnow() - __import__('datetime').timedelta(days=days)).timestamp())
-    url   = f"https://query1.finance.yahoo.com/v8/finance/chart/{symbol}"
-    params = {"period1": start, "period2": end, "interval": "1d"}
-    headers = {
-        "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
-        "Accept": "application/json",
-        "Accept-Language": "en-US,en;q=0.9",
-        "Referer": "https://finance.yahoo.com",
-    }
-    # query1 실패 시 query2 시도
-    for base in ["https://query1.finance.yahoo.com", "https://query2.finance.yahoo.com"]:
-        try:
-            r = requests.get(f"{base}/v8/finance/chart/{symbol}", params=params, headers=headers, timeout=20)
-            if r.status_code == 200:
-                data   = r.json()
-                result = data["chart"]["result"][0]
-                ts     = result["timestamp"]
-                closes = result["indicators"]["quote"][0]["close"]
-                vols   = result["indicators"]["quote"][0]["volume"]
-                hist = []
-                for t, c, v in zip(ts, closes, vols):
-                    if c is not None:
-                        hist.append({"close": round(float(c), 4), "volume": int(v or 0)})
-                if hist:
-                    return hist
-        except Exception as e:
-            print(f"  [WARN] YF {base} {symbol}: {e}")
-        time.sleep(1)
+def fetch_polygon_history(ticker, days=220):
+    """Polygon.io 무료 티어 — 일별 OHLCV"""
+    if not POLYGON_API_KEY:
+        return []
+    try:
+        end   = datetime.utcnow().strftime("%Y-%m-%d")
+        start = (datetime.utcnow() - timedelta(days=days)).strftime("%Y-%m-%d")
+        url   = f"https://api.polygon.io/v2/aggs/ticker/{ticker}/range/1/day/{start}/{end}"
+        params = {
+            "adjusted": "true",
+            "sort":     "asc",
+            "limit":    220,
+            "apiKey":   POLYGON_API_KEY,
+        }
+        r = requests.get(url, params=params, timeout=20)
+        r.raise_for_status()
+        data = r.json()
+        results = data.get("results", [])
+        if not results:
+            return []
+        return [
+            {"close": round(d["c"], 4), "volume": int(d["v"])}
+            for d in results if "c" in d
+        ]
+    except Exception as e:
+        print(f"  [ERROR] Polygon {ticker}: {e}")
     return []
 
 WATCHLIST = [
@@ -167,7 +162,7 @@ def calc_rsi_list(closes, period=14):
 def fetch_stock_technicals(ticker):
     """FMP 무료 엔드포인트로 종목 기술적 지표 수집"""
     try:
-        hist = yf_history_stock(ticker, 220)
+        hist = fetch_polygon_history(ticker, 220)
         if not hist:
             print(f"  [WARN] {ticker}: 데이터 없음")
             return None

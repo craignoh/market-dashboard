@@ -8,6 +8,40 @@ FRED_BASE    = "https://api.stlouisfed.org/fred/series/observations"
 FMP_API_KEY  = os.environ.get("FMP_API_KEY", "")
 FMP_BASE     = "https://financialmodelingprep.com/api/v3"
 
+def yf_history_stock(symbol, days=220):
+    """Yahoo Finance v8 — 개별 종목 일별 데이터"""
+    import time
+    end   = int(__import__('datetime').datetime.utcnow().timestamp())
+    start = int((__import__('datetime').datetime.utcnow() - __import__('datetime').timedelta(days=days)).timestamp())
+    url   = f"https://query1.finance.yahoo.com/v8/finance/chart/{symbol}"
+    params = {"period1": start, "period2": end, "interval": "1d"}
+    headers = {
+        "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
+        "Accept": "application/json",
+        "Accept-Language": "en-US,en;q=0.9",
+        "Referer": "https://finance.yahoo.com",
+    }
+    # query1 실패 시 query2 시도
+    for base in ["https://query1.finance.yahoo.com", "https://query2.finance.yahoo.com"]:
+        try:
+            r = requests.get(f"{base}/v8/finance/chart/{symbol}", params=params, headers=headers, timeout=20)
+            if r.status_code == 200:
+                data   = r.json()
+                result = data["chart"]["result"][0]
+                ts     = result["timestamp"]
+                closes = result["indicators"]["quote"][0]["close"]
+                vols   = result["indicators"]["quote"][0]["volume"]
+                hist = []
+                for t, c, v in zip(ts, closes, vols):
+                    if c is not None:
+                        hist.append({"close": round(float(c), 4), "volume": int(v or 0)})
+                if hist:
+                    return hist
+        except Exception as e:
+            print(f"  [WARN] YF {base} {symbol}: {e}")
+        time.sleep(1)
+    return []
+
 WATCHLIST = [
     {"ticker": "SOXL",  "name": "반도체 3x 레버리지"},
     {"ticker": "TQQQ",  "name": "나스닥 3x 레버리지"},
@@ -132,21 +166,11 @@ def calc_rsi_list(closes, period=14):
 
 def fetch_stock_technicals(ticker):
     """FMP 무료 엔드포인트로 종목 기술적 지표 수집"""
-    if not FMP_API_KEY:
-        return None
     try:
-        # 무료 플랜에서 작동하는 엔드포인트
-        url = f"{FMP_BASE}/historical-price-full/{ticker}?apikey={FMP_API_KEY}"
-        r = requests.get(url, timeout=20)
-        r.raise_for_status()
-        data = r.json()
-        hist = data.get("historical", [])
+        hist = yf_history_stock(ticker, 220)
         if not hist:
             print(f"  [WARN] {ticker}: 데이터 없음")
             return None
-
-        # 최대 220개만 사용
-        hist = list(reversed(hist))[-220:]
         closes  = [d["close"]  for d in hist]
         volumes = [d["volume"] for d in hist]
         current = closes[-1]

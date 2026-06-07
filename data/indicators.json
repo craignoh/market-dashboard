@@ -1,6 +1,6 @@
 {
   "updated_at": "2026-06-07",
-  "updated_kst": "2026-06-08 02:20 KST",
+  "updated_kst": "2026-06-08 02:26 KST",
   "snapshot": {
     "nasdaq": 26830.96,
     "sp500": 7584.31,
@@ -16,6 +16,11 @@
       "value": 12,
       "classification": "Extreme Fear"
     },
+    "t10y_change_3m": 0.35,
+    "t10y_change_1m": 0.09,
+    "fedfunds_change_3m": null,
+    "real_rate": 2.17,
+    "erp": 0.08,
     "put_call": null,
     "jobless_claims": 225000.0,
     "fed_assets": 6711495.0

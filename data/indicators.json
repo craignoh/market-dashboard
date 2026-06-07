@@ -1,6 +1,6 @@
 {
   "updated_at": "2026-06-07",
-  "updated_kst": "2026-06-08 02:58 KST",
+  "updated_kst": "2026-06-08 03:03 KST",
   "snapshot": {
     "nasdaq": 26830.96,
     "sp500": 7584.31,
@@ -68,7 +68,123 @@
   "sell_signal": "홀딩",
   "sell_color": "blue",
   "sell_desc": "과열 신호 없음 — 현 포지션 유지",
-  "watchlist": [],
+  "watchlist": [
+    {
+      "ticker": "SOXL",
+      "price": 182.54,
+      "chg1d": -30.51,
+      "rsi": 53.59,
+      "vs_ma50": 33.79,
+      "vs_ma200": null,
+      "ma20_slope": 14.13,
+      "bb_pos": 37.0,
+      "vs_high52": -34.93,
+      "vs_low52": 492.47,
+      "vol_ratio": 189.2,
+      "high52": 280.54,
+      "low52": 30.81,
+      "ma200": null,
+      "buy_score": 10,
+      "sell_score": 10,
+      "buy_signals": [
+        "52주 고점 대비 -34.93%"
+      ],
+      "sell_signals": [
+        "52주 저점 대비 +492.47%"
+      ],
+      "name": "반도체 3x 레버리지"
+    },
+    {
+      "ticker": "TQQQ",
+      "price": 73.05,
+      "chg1d": -14.28,
+      "rsi": 46.36,
+      "vs_ma50": 13.08,
+      "vs_ma200": null,
+      "ma20_slope": 5.14,
+      "bb_pos": 15.6,
+      "vs_high52": -16.25,
+      "vs_low52": 92.79,
+      "vol_ratio": 173.1,
+      "high52": 87.22,
+      "low52": 37.89,
+      "ma200": null,
+      "buy_score": 0,
+      "sell_score": 10,
+      "buy_signals": [],
+      "sell_signals": [
+        "52주 저점 대비 +92.79%"
+      ],
+      "name": "나스닥 3x 레버리지"
+    },
+    {
+      "ticker": "XLK",
+      "price": 180.3,
+      "chg1d": -6.66,
+      "rsi": 54.27,
+      "vs_ma50": 10.61,
+      "vs_ma200": null,
+      "ma20_slope": 3.82,
+      "bb_pos": 42.0,
+      "vs_high52": -9.04,
+      "vs_low52": 41.41,
+      "vol_ratio": 207.5,
+      "high52": 198.21,
+      "low52": 127.5,
+      "ma200": null,
+      "buy_score": 0,
+      "sell_score": 0,
+      "buy_signals": [],
+      "sell_signals": [],
+      "name": "기술 섹터"
+    },
+    {
+      "ticker": "XLV",
+      "price": 153.01,
+      "chg1d": 0.61,
+      "rsi": 69.77,
+      "vs_ma50": 4.25,
+      "vs_ma200": null,
+      "ma20_slope": 0.74,
+      "bb_pos": 103.3,
+      "vs_high52": -4.49,
+      "vs_low52": 7.12,
+      "vol_ratio": 201.9,
+      "high52": 160.2,
+      "low52": 142.84,
+      "ma200": null,
+      "buy_score": 0,
+      "sell_score": 31,
+      "buy_signals": [],
+      "sell_signals": [
+        "RSI 69.77 — 과열 주의",
+        "볼린저 상단 (103.3%) — 조정 후보",
+        "고점 거래량 급증 (201.9%)"
+      ],
+      "name": "헬스케어/바이오"
+    },
+    {
+      "ticker": "XLE",
+      "price": 57.67,
+      "chg1d": -1.84,
+      "rsi": 42.03,
+      "vs_ma50": -0.83,
+      "vs_ma200": null,
+      "ma20_slope": -0.02,
+      "bb_pos": 40.1,
+      "vs_high52": -7.82,
+      "vs_low52": 32.29,
+      "vol_ratio": 73.2,
+      "high52": 62.56,
+      "low52": 43.59,
+      "ma200": null,
+      "buy_score": 0,
+      "sell_score": 0,
+      "buy_signals": [],
+      "sell_signals": [],
+      "name": "정유/에너지"
+    }
+  ],
   "history": {
     "nasdaq": [
       {

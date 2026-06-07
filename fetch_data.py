@@ -242,7 +242,88 @@ def main():
         buy_signals.append({"label": f"IG스프레드 {ig_spread}% — 우량채 먼저 안정화 (반등 선행 신호)", "strength": "medium"})
 
     buy_score = min(buy_score, 100)
+    # ── 매도 타이밍 점수 (과열 조건) ──────────────────────────────────
+    sell_score = 0
+    sell_signals = []
 
+    # RSI 과매수
+    if rsi_sp500 is not None:
+        if rsi_sp500 > 80:
+            sell_score += 25
+            sell_signals.append({"label": f"S&P500 RSI {rsi_sp500} — 극단 과매수 (강한 매도 신호)", "strength": "strong"})
+        elif rsi_sp500 > 70:
+            sell_score += 18
+            sell_signals.append({"label": f"S&P500 RSI {rsi_sp500} — 과매수 구간", "strength": "medium"})
+        elif rsi_sp500 > 65:
+            sell_score += 8
+            sell_signals.append({"label": f"S&P500 RSI {rsi_sp500} — 과열 주의", "strength": "weak"})
+
+    if rsi_nasdaq is not None and rsi_nasdaq > 70:
+        sell_score += 10
+        sell_signals.append({"label": f"NASDAQ RSI {rsi_nasdaq} — 기술주 과매수", "strength": "medium"})
+
+    # 200일 이평선 괴리율 (고평가)
+    if ma200_sp500 is not None:
+        if ma200_sp500 > 25:
+            sell_score += 25
+            sell_signals.append({"label": f"S&P500, 200일선 대비 +{ma200_sp500}% — 역사적 고평가", "strength": "strong"})
+        elif ma200_sp500 > 20:
+            sell_score += 18
+            sell_signals.append({"label": f"S&P500, 200일선 대비 +{ma200_sp500}% — 강한 매도 구간", "strength": "strong"})
+        elif ma200_sp500 > 15:
+            sell_score += 10
+            sell_signals.append({"label": f"S&P500, 200일선 대비 +{ma200_sp500}% — 과열 주의 구간", "strength": "medium"})
+
+    # Fear & Greed 극단 탐욕
+    if fg and fg["value"] > 85:
+        sell_score += 20
+        sell_signals.append({"label": f"Fear&Greed {fg['value']} — 극단 탐욕 (역발상 매도)", "strength": "strong"})
+    elif fg and fg["value"] > 75:
+        sell_score += 12
+        sell_signals.append({"label": f"Fear&Greed {fg['value']} — Extreme Greed 구간", "strength": "medium"})
+
+    # VIX 극단 저점 (방심 극점 = 위험)
+    if vix and vix < 12:
+        sell_score += 20
+        sell_signals.append({"label": f"VIX {vix} — 역대 최저 수준 방심 (급등 리스크)", "strength": "strong"})
+    elif vix and vix < 15:
+        sell_score += 10
+        sell_signals.append({"label": f"VIX {vix} — 낮은 변동성 구간 (조정 전 경계)", "strength": "medium"})
+
+    # HY 스프레드 극단 축소 (리스크 완전 무시)
+    if hy_spread and hy_spread < 3.0:
+        sell_score += 15
+        sell_signals.append({"label": f"HY스프레드 {hy_spread}% — 리스크 프리미엄 소멸 (과열)", "strength": "strong"})
+    elif hy_spread and hy_spread < 3.5:
+        sell_score += 8
+        sell_signals.append({"label": f"HY스프레드 {hy_spread}% — 과도한 낙관 구간", "strength": "medium"})
+
+    # 수익률 곡선 급격한 정상화 (침체 시작 신호)
+    if yield_curve is not None and yield_curve > 0.8:
+        sell_score += 10
+        sell_signals.append({"label": f"수익률곡선 {yield_curve}% — 역전 후 급속 정상화 (침체 진입 가능)", "strength": "medium"})
+
+    sell_score = min(sell_score, 100)
+
+    # 매도 종합 판단
+    if sell_score >= 65:
+        sell_signal = "매도 타이밍"
+        sell_color  = "red"
+        sell_desc   = "과열 지표 다수 충족 — 비중 축소 또는 익절 적극 검토"
+    elif sell_score >= 40:
+        sell_signal = "부분 익절 검토"
+        sell_color  = "amber"
+        sell_desc   = "과열 신호 일부 감지 — 고점 리스크 인식, 분할 익절 고려"
+    elif sell_score >= 20:
+        sell_signal = "주의 관찰"
+        sell_color  = "amber"
+        sell_desc   = "일부 과열 조짐 — 추가 매수보다 보유 관리 집중"
+    else:
+        sell_signal = "홀딩"
+        sell_color  = "blue"
+        sell_desc   = "과열 신호 없음 — 현 포지션 유지"
+
+    print(f"  SellScore={sell_score}, SellSignal={sell_signal}")
     # 종합 판단
     if risk >= 50 and buy_score >= 60:
         trade_signal = "매수 타이밍"
@@ -293,6 +374,11 @@ def main():
         "trade_signal": trade_signal,
         "trade_color":  trade_color,
         "trade_desc":   trade_desc,
+        "sell_score":   sell_score,
+        "sell_signals": sell_signals,
+        "sell_signal":  sell_signal,
+        "sell_color":   sell_color,
+        "sell_desc":    sell_desc,
         "history": {
             "nasdaq":      nasdaq_chart,
             "sp500":       sp500_chart,

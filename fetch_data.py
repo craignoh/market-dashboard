@@ -178,6 +178,11 @@ def main():
     fg   = fear_greed_latest()
     fg_h = fear_greed_history(45)
 
+    # ── 환율 (USD/KRW) ────────────────────────────────────────────────
+    print("  Fetching USD/KRW rate...")
+    usdkrw = fred_latest("DEXKOUS")   # FRED: 원/달러 환율
+    print(f"  USD/KRW={usdkrw}")
+    
     # ── 금리 방향 분석 (3개월 전 대비) ───────────────────────────────
     print("  Calculating rate direction...")
     t10y_hist_long = fred_history("DGS10",    120)
@@ -484,6 +489,7 @@ def main():
             "ten_yr": t10y, "fed_rate": fed_rate, "hy_spread": hy_spread,
             "ig_spread": ig_spread, "ted_spread": ted_spread,
             "yield_curve": yield_curve, "fear_greed": fg,
+            "usdkrw":             usdkrw,
             "t10y_change_3m":     t10y_change_3m,
             "t10y_change_1m":     t10y_change_1m,
             "fedfunds_change_3m": fedfunds_change_3m,

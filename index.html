@@ -3,203 +3,332 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>시장 변동성 모니터</title>
+<title>하락장 매수 타이밍 모니터</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg:#f8f7f4; --surface:#ffffff; --border:rgba(0,0,0,0.09); --border2:rgba(0,0,0,0.16);
+  --text:#1a1a18; --muted:#6b6b67; --faint:#9a9a95;
+  --red:#E24B4A; --red-bg:rgba(226,75,74,0.08); --red-tx:#791F1F;
+  --amber:#BA7517; --amber-bg:rgba(186,117,23,0.08); --amber-tx:#633806;
+  --green:#3B6D11; --green-bg:rgba(59,109,17,0.08); --green-tx:#173404;
+  --blue:#185FA5; --blue-bg:rgba(24,95,165,0.08); --blue-tx:#042C53;
+  --purple:#534AB7; --r:10px; --rsm:6px;
+}
+@media (prefers-color-scheme:dark) {
   :root {
-    --bg:#f8f7f4; --surface:#ffffff; --border:rgba(0,0,0,0.10); --border2:rgba(0,0,0,0.18);
-    --text:#1a1a18; --muted:#6b6b67; --faint:#9a9a95;
-    --red:#E24B4A; --red-bg:#FCEBEB; --red-tx:#791F1F;
-    --amber:#BA7517; --amber-bg:#FAEEDA; --amber-tx:#633806;
-    --green:#3B6D11; --green-bg:#EAF3DE; --green-tx:#173404;
-    --blue:#185FA5; --blue-bg:#E6F1FB; --blue-tx:#042C53;
-    --radius:10px; --radius-sm:6px;
+    --bg:#181816; --surface:#222220; --border:rgba(255,255,255,0.09); --border2:rgba(255,255,255,0.16);
+    --text:#ededea; --muted:#9a9a95; --faint:#6b6b67;
+    --red-bg:rgba(226,75,74,0.13); --red-tx:#F09595;
+    --amber-bg:rgba(186,117,23,0.13); --amber-tx:#FAC775;
+    --green-bg:rgba(59,109,17,0.13); --green-tx:#C0DD97;
+    --blue-bg:rgba(24,95,165,0.13); --blue-tx:#85B7EB;
   }
-  @media (prefers-color-scheme: dark) {
-    :root {
-      --bg:#181816; --surface:#222220; --border:rgba(255,255,255,0.10); --border2:rgba(255,255,255,0.18);
-      --text:#ededea; --muted:#9a9a95; --faint:#6b6b67;
-      --red-bg:rgba(226,75,74,0.15); --red-tx:#F09595;
-      --amber-bg:rgba(186,117,23,0.15); --amber-tx:#FAC775;
-      --green-bg:rgba(59,109,17,0.15); --green-tx:#C0DD97;
-      --blue-bg:rgba(24,95,165,0.15); --blue-tx:#85B7EB;
-    }
-  }
-  body { background:var(--bg); color:var(--text); font-family:-apple-system,'Helvetica Neue',sans-serif; font-size:14px; line-height:1.5; }
-  .page { max-width:1100px; margin:0 auto; padding:2rem 1.25rem 4rem; }
-  .hdr { display:flex; align-items:baseline; justify-content:space-between; flex-wrap:wrap; gap:8px; margin-bottom:2rem; padding-bottom:1rem; border-bottom:0.5px solid var(--border2); }
-  .hdr-title { font-size:20px; font-weight:600; letter-spacing:-0.02em; }
-  .hdr-sub { font-size:12px; color:var(--muted); }
-  .updated { font-size:11px; color:var(--faint); }
-  .tabs { display:flex; gap:4px; margin-bottom:1.75rem; flex-wrap:wrap; }
-  .tab { padding:6px 14px; border:0.5px solid var(--border2); border-radius:var(--radius-sm); font-size:13px; cursor:pointer; background:transparent; color:var(--muted); transition:all 0.15s; }
-  .tab.active { background:var(--text); color:var(--bg); border-color:var(--text); }
-  .tab:hover:not(.active) { background:var(--border); }
-  .sec-title { font-size:11px; font-weight:600; color:var(--faint); text-transform:uppercase; letter-spacing:0.07em; margin-bottom:1rem; }
-  .metric-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(148px,1fr)); gap:10px; margin-bottom:2rem; }
-  .metric-card { background:var(--surface); border:0.5px solid var(--border); border-radius:var(--radius); padding:1rem 1.1rem; }
-  .metric-lbl { font-size:11px; color:var(--muted); margin-bottom:6px; }
-  .metric-val { font-size:24px; font-weight:600; letter-spacing:-0.02em; line-height:1; margin-bottom:4px; }
-  .metric-sub { font-size:11px; }
-  .c-red { color:var(--red); } .c-amber { color:var(--amber); } .c-green { color:var(--green); } .c-blue { color:var(--blue); } .c-muted { color:var(--muted); }
-  .risk-banner { background:var(--surface); border:0.5px solid var(--border); border-radius:var(--radius); padding:1.5rem; margin-bottom:2rem; display:flex; align-items:center; gap:2rem; flex-wrap:wrap; }
-  .risk-num { font-size:56px; font-weight:700; letter-spacing:-0.04em; line-height:1; min-width:80px; }
-  .risk-info { flex:1; min-width:180px; }
-  .risk-label { font-size:15px; font-weight:500; margin-bottom:10px; }
-  .risk-track { height:8px; border-radius:4px; background:linear-gradient(to right,#3B6D11 0%,#639922 25%,#BA7517 50%,#D85A30 75%,#E24B4A 100%); position:relative; max-width:340px; }
-  .risk-ptr { position:absolute; top:-5px; width:18px; height:18px; border-radius:50%; background:var(--text); border:3px solid var(--surface); transform:translateX(-50%); transition:left 0.6s; }
-  .risk-ticks { display:flex; justify-content:space-between; max-width:340px; margin-top:4px; font-size:10px; color:var(--faint); }
-  .signal-list { margin-bottom:2rem; }
-  .signal-row { display:flex; align-items:center; gap:10px; margin-bottom:9px; }
-  .signal-name { font-size:12px; color:var(--muted); width:150px; flex-shrink:0; }
-  .signal-track { flex:1; height:5px; background:var(--border); border-radius:3px; overflow:hidden; }
-  .signal-fill { height:100%; border-radius:3px; }
-  .signal-val { font-size:12px; font-weight:500; min-width:100px; text-align:right; }
-  .chart-card { background:var(--surface); border:0.5px solid var(--border); border-radius:var(--radius); padding:1.25rem; margin-bottom:1.25rem; }
-  .chart-title { font-size:13px; font-weight:500; margin-bottom:10px; }
-  .legend-row { display:flex; flex-wrap:wrap; gap:12px; font-size:11px; color:var(--muted); margin-bottom:8px; }
-  .ld { display:inline-flex; align-items:center; gap:4px; }
-  .ld-dot { width:10px; height:10px; border-radius:2px; }
-  .crash-grid-wrap { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:10px; margin-bottom:1.5rem; }
-  .crash-card { background:var(--surface); border:0.5px solid var(--border); border-radius:var(--radius); padding:1rem; cursor:pointer; transition:border-color 0.15s; }
-  .crash-card:hover { border-color:var(--border2); }
-  .crash-card.sel { border:1.5px solid var(--red); }
-  .crash-card-name { font-size:13px; font-weight:500; margin-bottom:3px; }
-  .crash-card-date { font-size:11px; color:var(--muted); margin-bottom:8px; }
-  .badge-row { display:flex; flex-wrap:wrap; gap:5px; }
-  .badge { font-size:10px; padding:2px 7px; border-radius:20px; font-weight:500; }
-  .badge-r { background:var(--red-bg); color:var(--red-tx); }
-  .badge-a { background:var(--amber-bg); color:var(--amber-tx); }
-  .badge-b { background:var(--blue-bg); color:var(--blue-tx); }
-  .tbl-wrap { overflow-x:auto; margin-bottom:1.25rem; }
-  table { width:100%; border-collapse:collapse; font-size:12px; min-width:760px; }
-  th { text-align:left; padding:7px 8px; color:var(--muted); font-weight:500; border-bottom:0.5px solid var(--border2); white-space:nowrap; font-size:11px; background:var(--bg); }
-  td { padding:7px 8px; border-bottom:0.5px solid var(--border); }
-  tr:last-child td { border-bottom:none; }
-  tr:hover td { background:var(--bg); }
-  .tr-crash td { color:var(--red); font-weight:500; background:var(--red-bg); }
-  .td-idx { background:var(--blue-bg); }
-  .insight-ul { list-style:none; }
-  .insight-ul li { padding:7px 0; border-bottom:0.5px solid var(--border); font-size:13px; display:flex; gap:8px; }
-  .insight-ul li:last-child { border-bottom:none; }
-  .guide-card { border-left:3px solid; padding:1rem; border-top:0.5px solid var(--border); border-right:0.5px solid var(--border); border-bottom:0.5px solid var(--border); margin-bottom:10px; background:var(--surface); }
-  .guide-desc { font-size:12px; color:var(--muted); line-height:1.6; margin-bottom:6px; }
-  .guide-pill { font-size:11px; padding:4px 10px; background:var(--bg); border-radius:var(--radius-sm); color:var(--muted); display:inline-block; margin-bottom:3px; }
-  .note { font-size:11px; color:var(--faint); padding:8px 12px; background:var(--bg); border-radius:var(--radius-sm); margin-bottom:1rem; }
-  #loader { display:flex; align-items:center; justify-content:center; min-height:60vh; flex-direction:column; gap:12px; }
-  .spinner { width:28px; height:28px; border:2px solid var(--border2); border-top-color:var(--text); border-radius:50%; animation:spin 0.7s linear infinite; }
-  @keyframes spin { to { transform:rotate(360deg); } }
+}
+body { background:var(--bg); color:var(--text); font-family:-apple-system,'Helvetica Neue',sans-serif; font-size:14px; line-height:1.5; }
+.page { max-width:1120px; margin:0 auto; padding:2rem 1.25rem 5rem; }
+
+/* Header */
+.hdr { display:flex; align-items:flex-start; justify-content:space-between; flex-wrap:wrap; gap:8px; margin-bottom:2rem; padding-bottom:1.25rem; border-bottom:0.5px solid var(--border2); }
+.hdr-title { font-size:20px; font-weight:600; letter-spacing:-0.02em; }
+.hdr-sub { font-size:12px; color:var(--muted); margin-top:2px; }
+.updated { font-size:11px; color:var(--faint); }
+
+/* Tabs */
+.tabs { display:flex; gap:4px; margin-bottom:1.75rem; flex-wrap:wrap; }
+.tab { padding:6px 14px; border:0.5px solid var(--border2); border-radius:var(--rsm); font-size:13px; cursor:pointer; background:transparent; color:var(--muted); transition:all 0.15s; }
+.tab.active { background:var(--text); color:var(--bg); border-color:var(--text); }
+.tab:hover:not(.active) { background:var(--border); }
+
+/* Section title */
+.st { font-size:11px; font-weight:600; color:var(--faint); text-transform:uppercase; letter-spacing:0.07em; margin-bottom:1rem; }
+
+/* ── SIGNAL BANNER ── */
+.signal-banner { border-radius:var(--r); padding:1.5rem 1.75rem; margin-bottom:1.5rem; display:flex; align-items:center; gap:2rem; flex-wrap:wrap; border:0.5px solid var(--border); }
+.signal-banner.green  { background:var(--green-bg);  border-color:rgba(59,109,17,0.25); }
+.signal-banner.amber  { background:var(--amber-bg);  border-color:rgba(186,117,23,0.25); }
+.signal-banner.red    { background:var(--red-bg);    border-color:rgba(226,75,74,0.25); }
+.signal-banner.blue   { background:var(--blue-bg);   border-color:rgba(24,95,165,0.25); }
+.signal-icon { font-size:40px; line-height:1; }
+.signal-info { flex:1; min-width:200px; }
+.signal-label { font-size:22px; font-weight:700; letter-spacing:-0.02em; margin-bottom:4px; }
+.signal-desc  { font-size:13px; opacity:0.85; }
+.signal-scores { display:flex; gap:1.5rem; flex-wrap:wrap; margin-top:12px; }
+.score-item { text-align:center; }
+.score-num  { font-size:28px; font-weight:700; letter-spacing:-0.03em; line-height:1; }
+.score-lbl  { font-size:10px; color:var(--muted); text-transform:uppercase; letter-spacing:0.05em; margin-top:2px; }
+
+/* Two-stage gauge */
+.stage-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:1.5rem; }
+@media(max-width:600px){.stage-grid{grid-template-columns:1fr;}}
+.stage-card { background:var(--surface); border:0.5px solid var(--border); border-radius:var(--r); padding:1.25rem; }
+.stage-head { display:flex; align-items:center; justify-content:space-between; margin-bottom:12px; }
+.stage-title { font-size:13px; font-weight:500; }
+.stage-badge { font-size:11px; padding:3px 9px; border-radius:20px; font-weight:500; }
+.badge-red    { background:var(--red-bg);   color:var(--red-tx); }
+.badge-amber  { background:var(--amber-bg); color:var(--amber-tx); }
+.badge-green  { background:var(--green-bg); color:var(--green-tx); }
+.badge-blue   { background:var(--blue-bg);  color:var(--blue-tx); }
+.gauge-bar { height:8px; border-radius:4px; background:var(--border); overflow:hidden; margin-bottom:6px; }
+.gauge-fill { height:100%; border-radius:4px; transition:width 0.6s; }
+.gauge-labels { display:flex; justify-content:space-between; font-size:10px; color:var(--faint); }
+
+/* Buy signals list */
+.buy-signals { list-style:none; margin-bottom:1.5rem; }
+.buy-signals li { display:flex; align-items:center; gap:10px; padding:8px 0; border-bottom:0.5px solid var(--border); font-size:13px; }
+.buy-signals li:last-child { border-bottom:none; }
+.sig-dot { width:8px; height:8px; border-radius:50%; flex-shrink:0; }
+.sig-strong { background:var(--green); }
+.sig-medium { background:var(--amber); }
+.sig-weak   { background:var(--faint); }
+
+/* Metric grid */
+.metric-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(140px,1fr)); gap:10px; margin-bottom:1.75rem; }
+.metric-card { background:var(--surface); border:0.5px solid var(--border); border-radius:var(--r); padding:1rem 1.1rem; }
+.metric-lbl { font-size:11px; color:var(--muted); margin-bottom:6px; }
+.metric-val { font-size:22px; font-weight:600; letter-spacing:-0.02em; line-height:1; margin-bottom:3px; }
+.metric-sub { font-size:11px; }
+.c-red { color:var(--red); } .c-amber { color:var(--amber); } .c-green { color:var(--green); }
+.c-blue { color:var(--blue); } .c-purple { color:var(--purple); } .c-muted { color:var(--muted); }
+
+/* Technical grid */
+.tech-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:10px; margin-bottom:1.75rem; }
+.tech-card { background:var(--surface); border:0.5px solid var(--border); border-radius:var(--r); padding:1rem 1.1rem; position:relative; overflow:hidden; }
+.tech-card::before { content:''; position:absolute; top:0; left:0; right:0; height:3px; }
+.tech-card.bullish::before { background:var(--green); }
+.tech-card.bearish::before { background:var(--red); }
+.tech-card.neutral::before { background:var(--faint); }
+
+/* Signal bar */
+.signal-row  { display:flex; align-items:center; gap:10px; margin-bottom:9px; }
+.signal-name { font-size:12px; color:var(--muted); width:160px; flex-shrink:0; }
+.signal-track{ flex:1; height:5px; background:var(--border); border-radius:3px; overflow:hidden; }
+.signal-fill { height:100%; border-radius:3px; }
+.signal-val  { font-size:12px; font-weight:500; min-width:80px; text-align:right; }
+
+/* Chart */
+.chart-card { background:var(--surface); border:0.5px solid var(--border); border-radius:var(--r); padding:1.25rem; margin-bottom:1.25rem; }
+.chart-head  { display:flex; align-items:center; justify-content:space-between; margin-bottom:1rem; flex-wrap:wrap; gap:6px; }
+.chart-title { font-size:13px; font-weight:500; }
+.legend-row  { display:flex; flex-wrap:wrap; gap:12px; font-size:11px; color:var(--muted); }
+.ld { display:inline-flex; align-items:center; gap:4px; }
+.ld-dot { width:10px; height:10px; border-radius:2px; }
+
+/* Crash cards */
+.crash-grid-wrap { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:10px; margin-bottom:1.5rem; }
+.crash-card { background:var(--surface); border:0.5px solid var(--border); border-radius:var(--r); padding:1rem; cursor:pointer; transition:border-color 0.15s; }
+.crash-card:hover { border-color:var(--border2); }
+.crash-card.sel { border:1.5px solid var(--red); }
+.crash-card-name { font-size:13px; font-weight:500; margin-bottom:3px; }
+.crash-card-date { font-size:11px; color:var(--muted); margin-bottom:8px; }
+.badge-row { display:flex; flex-wrap:wrap; gap:5px; }
+.badge { font-size:10px; padding:2px 7px; border-radius:20px; font-weight:500; }
+.tbl-wrap { overflow-x:auto; margin-bottom:1.25rem; }
+table { width:100%; border-collapse:collapse; font-size:12px; min-width:700px; }
+th { text-align:left; padding:7px 8px; color:var(--muted); font-weight:500; border-bottom:0.5px solid var(--border2); white-space:nowrap; font-size:11px; background:var(--bg); }
+td { padding:7px 8px; border-bottom:0.5px solid var(--border); }
+tr:last-child td { border-bottom:none; }
+tr:hover td { background:var(--bg); }
+.tr-crash td { color:var(--red); font-weight:500; background:var(--red-bg); }
+.td-idx { background:var(--blue-bg); }
+
+.insight-ul { list-style:none; }
+.insight-ul li { padding:7px 0; border-bottom:0.5px solid var(--border); font-size:13px; display:flex; gap:8px; }
+.insight-ul li:last-child { border-bottom:none; }
+
+/* Guide */
+.guide-card { border-left:3px solid; padding:1rem; border-top:0.5px solid var(--border); border-right:0.5px solid var(--border); border-bottom:0.5px solid var(--border); margin-bottom:10px; background:var(--surface); }
+.guide-desc { font-size:12px; color:var(--muted); line-height:1.6; margin-bottom:6px; }
+.guide-pill { font-size:11px; padding:4px 10px; background:var(--bg); border-radius:var(--rsm); color:var(--muted); display:inline-block; margin-bottom:3px; }
+
+.note { font-size:11px; color:var(--faint); padding:8px 12px; background:var(--bg); border-radius:var(--rsm); margin-bottom:1rem; }
+
+#loader { display:flex; align-items:center; justify-content:center; min-height:60vh; flex-direction:column; gap:12px; }
+.spinner { width:28px; height:28px; border:2px solid var(--border2); border-top-color:var(--text); border-radius:50%; animation:spin 0.7s linear infinite; }
+@keyframes spin { to { transform:rotate(360deg); } }
 </style>
 </head>
 <body>
 <div id="loader"><div class="spinner"></div><span style="font-size:13px;color:var(--muted)">데이터 로딩 중...</span></div>
+
 <div class="page" id="app" style="display:none">
   <div class="hdr">
-    <div><div class="hdr-title">시장 변동성 모니터</div><div class="hdr-sub">나스닥 · S&amp;P 500 · 다우존스 | 급락 선행지표 실시간 추적</div></div>
+    <div>
+      <div class="hdr-title">하락장 매수 타이밍 모니터</div>
+      <div class="hdr-sub">나스닥 · S&amp;P 500 · 다우존스 | 2단계 신호 시스템 — 위험 경보 + 반등 조건</div>
+    </div>
     <div class="updated" id="updated-label"></div>
   </div>
+
   <div class="tabs">
-    <button class="tab active" onclick="showTab('monitor')">실시간 모니터</button>
-    <button class="tab" onclick="showTab('history')">35일 추이 차트</button>
-    <button class="tab" onclick="showTab('crashes')">역사적 급락장 분석</button>
+    <button class="tab active" onclick="showTab('signal')">매수 신호</button>
+    <button class="tab" onclick="showTab('monitor')">실시간 지표</button>
+    <button class="tab" onclick="showTab('history')">35일 추이</button>
+    <button class="tab" onclick="showTab('crashes')">역사적 급락장</button>
     <button class="tab" onclick="showTab('guide')">지표 해설</button>
   </div>
 
-  <div id="tab-monitor">
-    <div class="sec-title">현재 지수</div>
-    <div class="metric-grid" id="index-cards"></div>
-    <div class="sec-title">주요 선행지표</div>
-    <div class="metric-grid" id="indicator-cards"></div>
-    <div class="risk-banner">
-      <div class="risk-num" id="risk-num"></div>
-      <div class="risk-info">
-        <div class="risk-label" id="risk-label"></div>
-        <div class="risk-track"><div class="risk-ptr" id="risk-ptr"></div></div>
-        <div class="risk-ticks"><span>안전</span><span>주의</span><span>경고</span><span>위험</span></div>
+  <!-- ── TAB: SIGNAL ─────────────────────────────────────────────────── -->
+  <div id="tab-signal">
+    <div class="signal-banner" id="trade-banner">
+      <div class="signal-icon" id="trade-icon"></div>
+      <div class="signal-info">
+        <div class="signal-label" id="trade-label"></div>
+        <div class="signal-desc"  id="trade-desc"></div>
+        <div class="signal-scores">
+          <div class="score-item">
+            <div class="score-num" id="score-risk"></div>
+            <div class="score-lbl">위험 경보</div>
+          </div>
+          <div class="score-item" style="color:var(--muted); font-size:20px; line-height:2">+</div>
+          <div class="score-item">
+            <div class="score-num" id="score-buy"></div>
+            <div class="score-lbl">반등 조건</div>
+          </div>
+        </div>
       </div>
     </div>
-    <div class="sec-title">리스크 신호 강도</div>
-    <div class="signal-list" id="signal-list"></div>
-    <div class="note">* 데이터는 매일 09:00 KST 자동 업데이트. 지수·VIX는 FRED, Fear&amp;Greed는 Alternative.me, 금리·HY스프레드는 FRED API 기준.</div>
+
+    <div class="stage-grid">
+      <div class="stage-card">
+        <div class="stage-head">
+          <div class="stage-title">1단계 — 위험 경보</div>
+          <div class="stage-badge" id="risk-badge"></div>
+        </div>
+        <div class="gauge-bar"><div class="gauge-fill" id="risk-fill" style="background:var(--red)"></div></div>
+        <div class="gauge-labels"><span>안전</span><span>주의</span><span>경고</span><span>위험</span></div>
+        <div style="margin-top:12px; font-size:12px; color:var(--muted); line-height:1.7" id="risk-detail"></div>
+      </div>
+      <div class="stage-card">
+        <div class="stage-head">
+          <div class="stage-title">2단계 — 반등 조건</div>
+          <div class="stage-badge" id="buy-badge"></div>
+        </div>
+        <div class="gauge-bar"><div class="gauge-fill" id="buy-fill" style="background:var(--green)"></div></div>
+        <div class="gauge-labels"><span>0</span><span>25</span><span>50</span><span>75+</span></div>
+        <div style="margin-top:12px; font-size:12px; color:var(--muted); line-height:1.7" id="buy-detail"></div>
+      </div>
+    </div>
+
+    <div class="st">반등 조건 충족 신호</div>
+    <ul class="buy-signals" id="buy-signals-list"></ul>
+
+    <div class="st">기술적 지표 (RSI · 이동평균 괴리율)</div>
+    <div class="tech-grid" id="tech-grid"></div>
+
+    <div class="st">리스크 신호 강도</div>
+    <div id="signal-bars" style="margin-bottom:1.5rem"></div>
+
+    <div class="note">* 매수 타이밍 판단: 1단계(위험경보) 50+ AND 2단계(반등조건) 60+ 동시 충족 시 "매수 타이밍" 표시. 매일 09:00 KST 자동 업데이트.</div>
   </div>
 
+  <!-- ── TAB: MONITOR ────────────────────────────────────────────────── -->
+  <div id="tab-monitor" style="display:none">
+    <div class="st">현재 지수</div>
+    <div class="metric-grid" id="index-cards"></div>
+    <div class="st">선행지표 — 위험 경보 그룹</div>
+    <div class="metric-grid" id="risk-cards"></div>
+    <div class="st">선행지표 — 신용·유동성 그룹</div>
+    <div class="metric-grid" id="credit-cards"></div>
+    <div class="st">선행지표 — 실물경기 그룹</div>
+    <div class="metric-grid" id="macro-cards"></div>
+    <div class="note">* FRED 기준. 일부 지표(기준금리, 실업수당)는 1~2 영업일 지연. Fed 자산은 주간 업데이트.</div>
+  </div>
+
+  <!-- ── TAB: HISTORY ────────────────────────────────────────────────── -->
   <div id="tab-history" style="display:none">
     <div class="chart-card">
-      <div class="chart-title">3대 지수 — 최근 35일 (기준점=100 정규화)</div>
-      <div class="legend-row">
-        <span class="ld"><span class="ld-dot" style="background:#E24B4A"></span>NASDAQ</span>
-        <span class="ld"><span class="ld-dot" style="background:#378ADD"></span>S&amp;P 500</span>
-        <span class="ld"><span class="ld-dot" style="background:#3B6D11"></span>DJIA</span>
+      <div class="chart-head">
+        <div class="chart-title">3대 지수 (기준점=100 정규화)</div>
+        <div class="legend-row">
+          <span class="ld"><span class="ld-dot" style="background:#E24B4A"></span>NASDAQ</span>
+          <span class="ld"><span class="ld-dot" style="background:#378ADD"></span>S&amp;P 500</span>
+          <span class="ld"><span class="ld-dot" style="background:#3B6D11"></span>DJIA</span>
+        </div>
       </div>
-      <div style="position:relative;height:220px"><canvas id="chart-indices" role="img" aria-label="3대 지수 35일 추이">3대 지수 35일 종가 추이 차트</canvas></div>
+      <div style="position:relative;height:220px"><canvas id="chart-indices"></canvas></div>
     </div>
     <div class="chart-card">
-      <div class="chart-title">VIX (변동성지수)</div>
-      <div class="legend-row"><span class="ld"><span class="ld-dot" style="background:#E24B4A"></span>VIX</span></div>
-      <div style="position:relative;height:180px"><canvas id="chart-vix" role="img" aria-label="VIX 35일 추이">VIX 차트</canvas></div>
-    </div>
-    <div class="chart-card">
-      <div class="chart-title">Fear &amp; Greed Index</div>
-      <div class="legend-row"><span class="ld"><span class="ld-dot" style="background:#D85A30"></span>Fear &amp; Greed</span></div>
-      <div style="position:relative;height:180px"><canvas id="chart-fg" role="img" aria-label="Fear Greed 35일 추이">Fear Greed 차트</canvas></div>
-    </div>
-    <div class="chart-card">
-      <div class="chart-title">10년물 국채 금리 &amp; HY 스프레드</div>
-      <div class="legend-row">
-        <span class="ld"><span class="ld-dot" style="background:#185FA5"></span>10년물(%)</span>
-        <span class="ld"><span class="ld-dot" style="background:#BA7517"></span>HY 스프레드(%)</span>
+      <div class="chart-head">
+        <div class="chart-title">VIX (변동성지수)</div>
+        <div class="legend-row"><span class="ld"><span class="ld-dot" style="background:#E24B4A"></span>VIX</span><span style="font-size:11px;color:var(--muted)">점선=위험기준 25</span></div>
       </div>
-      <div style="position:relative;height:180px"><canvas id="chart-rates" role="img" aria-label="국채금리 HY스프레드 추이">금리 차트</canvas></div>
+      <div style="position:relative;height:180px"><canvas id="chart-vix"></canvas></div>
     </div>
     <div class="chart-card">
-      <div class="chart-title">수익률 곡선 (10년물 - 2년물)</div>
-      <div class="legend-row"><span class="ld"><span class="ld-dot" style="background:#534AB7"></span>2s10s 스프레드</span></div>
-      <div style="position:relative;height:180px"><canvas id="chart-yc" role="img" aria-label="수익률곡선 추이">수익률곡선 차트</canvas></div>
+      <div class="chart-head">
+        <div class="chart-title">Fear &amp; Greed Index</div>
+        <div class="legend-row"><span class="ld"><span class="ld-dot" style="background:#D85A30"></span>F&amp;G</span><span style="font-size:11px;color:var(--muted)">25이하=Extreme Fear / 75이상=Extreme Greed</span></div>
+      </div>
+      <div style="position:relative;height:180px"><canvas id="chart-fg"></canvas></div>
+    </div>
+    <div class="chart-card">
+      <div class="chart-head">
+        <div class="chart-title">HY 스프레드 &amp; IG 스프레드</div>
+        <div class="legend-row">
+          <span class="ld"><span class="ld-dot" style="background:#BA7517"></span>HY(%)</span>
+          <span class="ld"><span class="ld-dot" style="background:#185FA5"></span>IG(%)</span>
+        </div>
+      </div>
+      <div style="position:relative;height:180px"><canvas id="chart-spread"></canvas></div>
+    </div>
+    <div class="chart-card">
+      <div class="chart-head">
+        <div class="chart-title">10년물 국채 &amp; 수익률 곡선 (2s10s)</div>
+        <div class="legend-row">
+          <span class="ld"><span class="ld-dot" style="background:#185FA5"></span>10년물(%)</span>
+          <span class="ld"><span class="ld-dot" style="background:#534AB7"></span>2s10s(%)</span>
+        </div>
+      </div>
+      <div style="position:relative;height:180px"><canvas id="chart-rates"></canvas></div>
     </div>
   </div>
 
+  <!-- ── TAB: CRASHES ────────────────────────────────────────────────── -->
   <div id="tab-crashes" style="display:none">
-    <div class="sec-title">역사적 주요 급락장 선택</div>
+    <div class="st">역사적 주요 급락장 — 바닥 당시 지표값</div>
     <div class="crash-grid-wrap" id="crash-grid"></div>
     <div id="crash-detail" style="display:none">
-      <div class="sec-title">선행지표 주간 변화 (급락 -4주 → 급락 주)</div>
-      <div class="note">누적 변화율 기준. 빨간 행 = 급락 당시.</div>
+      <div class="st">선행지표 주간 변화 (급락 -4주 → 급락 주)</div>
+      <div class="note">누적 변화율 기준. 빨간 행 = 급락 당시 (바닥 후보 구간).</div>
       <div class="tbl-wrap" id="crash-tbl"></div>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.25rem">
         <div class="chart-card" style="margin-bottom:0">
-          <div class="chart-title" style="margin-bottom:8px">3대 지수 낙폭 (%)</div>
-          <div class="legend-row">
+          <div class="chart-title" style="margin-bottom:8px">3대 지수 낙폭</div>
+          <div class="legend-row" style="margin-bottom:8px">
             <span class="ld"><span class="ld-dot" style="background:#E24B4A"></span>NASDAQ</span>
-            <span class="ld"><span class="ld-dot" style="background:#378ADD"></span>S&amp;P 500</span>
+            <span class="ld"><span class="ld-dot" style="background:#378ADD"></span>S&amp;P</span>
             <span class="ld"><span class="ld-dot" style="background:#3B6D11"></span>DJIA</span>
           </div>
-          <div style="position:relative;height:180px"><canvas id="chart-crash-idx" role="img" aria-label="급락장 지수 낙폭">지수 낙폭 차트</canvas></div>
+          <div style="position:relative;height:180px"><canvas id="chart-crash-idx"></canvas></div>
         </div>
         <div class="chart-card" style="margin-bottom:0">
           <div class="chart-title" style="margin-bottom:8px">VIX · F&amp;G · HY×10</div>
-          <div class="legend-row">
+          <div class="legend-row" style="margin-bottom:8px">
             <span class="ld"><span class="ld-dot" style="background:#E24B4A"></span>VIX</span>
             <span class="ld"><span class="ld-dot" style="background:#185FA5"></span>F&amp;G</span>
             <span class="ld"><span class="ld-dot" style="background:#BA7517"></span>HY×10</span>
           </div>
-          <div style="position:relative;height:180px"><canvas id="chart-crash-ind" role="img" aria-label="급락장 선행지표">선행지표 차트</canvas></div>
+          <div style="position:relative;height:180px"><canvas id="chart-crash-ind"></canvas></div>
         </div>
       </div>
-      <div class="sec-title">핵심 인사이트</div>
+      <div class="st">핵심 인사이트</div>
       <ul class="insight-ul" id="crash-insights"></ul>
     </div>
   </div>
 
+  <!-- ── TAB: GUIDE ──────────────────────────────────────────────────── -->
   <div id="tab-guide" style="display:none">
     <div id="guide-list"></div>
   </div>
 </div>
 
 <script>
+// ── Static crash data ─────────────────────────────────────────────────
 const CRASHES = [
   { id:'dotcom', name:'닷컴 버블 붕괴', date:'2000.03–2002.10',
-    badge:[['나스닥 -78%','r'],['S&P -49%','r'],['다우 -38%','a']],
+    badge:[['나스닥 -78%','badge-red'],['S&P -49%','badge-red'],['다우 -38%','badge-amber']],
     weeks:[
       {l:'-4주',vix:24.2,fg:48,t10:6.51,hy:4.1,yc:-0.52,pc:0.71,ndx:-3.2,spx:-2.1,djia:-1.8},
       {l:'-3주',vix:28.5,fg:42,t10:6.48,hy:4.3,yc:-0.50,pc:0.78,ndx:-8.5,spx:-5.4,djia:-3.9},
@@ -207,9 +336,9 @@ const CRASHES = [
       {l:'-1주',vix:38.1,fg:28,t10:6.35,hy:5.1,yc:-0.45,pc:0.96,ndx:-22.4,spx:-14.1,djia:-10.3},
       {l:'급락주',vix:47.3,fg:18,t10:6.22,hy:6.2,yc:-0.41,pc:1.12,ndx:-34.8,spx:-21.5,djia:-14.2,crash:true},
     ],
-    insights:['수익률 곡선 4주 전부터 완전 역전(-0.52%): 침체 전조','VIX 24→47 — S&P는 나스닥 낙폭의 절반. 기술주 집중 붕괴','HY스프레드 4.1→6.2% — 신용시장이 주식보다 먼저 경고','마진 부채 꾸준한 감소 — 레버리지 강제청산 선행 신호','Put/Call 0.71→1.12 — 헤지 수요 폭발'] },
+    insights:['수익률 곡선 역전(-0.52%) 4주 전부터 유지 — 전형적 침체 전조','VIX 24→47, RSI 극단 과매도 구간 진입이 바닥 신호','HY스프레드 6.2% 돌파 후 안정화가 반등 선행','마진 부채 감소 전환 — 강제청산 마무리 신호','Fear&Greed 18 극단 공포 = 역발상 매수 적기'] },
   { id:'gfc', name:'금융위기 (서브프라임)', date:'2008.09–2009.03',
-    badge:[['나스닥 -54%','r'],['S&P -57%','r'],['다우 -54%','r']],
+    badge:[['나스닥 -54%','badge-red'],['S&P -57%','badge-red'],['다우 -54%','badge-red']],
     weeks:[
       {l:'-4주',vix:22.5,fg:38,t10:3.82,hy:6.8,yc:0.90,pc:0.84,ndx:-4.1,spx:-3.8,djia:-3.5},
       {l:'-3주',vix:26.8,fg:32,t10:3.71,hy:7.5,yc:0.88,pc:0.91,ndx:-9.8,spx:-9.1,djia:-8.7},
@@ -217,9 +346,9 @@ const CRASHES = [
       {l:'-1주',vix:55.2,fg:15,t10:3.44,hy:11.2,yc:0.80,pc:1.21,ndx:-28.5,spx:-27.8,djia:-26.9},
       {l:'급락주',vix:80.9,fg:6,t10:3.31,hy:16.4,yc:0.74,pc:1.48,ndx:-40.1,spx:-39.5,djia:-38.2,crash:true},
     ],
-    insights:['3대 지수 동반 폭락 — 금융위기는 섹터 무관 전방위 붕괴','HY스프레드 6.8→16.4% — 신용시장이 4주 전 이미 붕괴','S&P -57%는 닷컴(-49%)보다 큰 낙폭 — 금융섹터 집중 타격','VIX 80.9 역사적 최고치 (리먼 파산 직후)','Put/Call 1.48 — 역대 최고 헤지 수요'] },
+    insights:['VIX 80.9 역대 최고 = 극단 공포 = 역사적 매수 기회','HY스프레드 16% → 이후 급격히 축소 = 반등의 핵심 선행','바닥은 2009년 3월, VIX 하락 전환 + IG스프레드 안정화 신호','Fed TARP + QE 개시가 바닥 확인 트리거','S&P 200일 이평선 대비 -40% 이하 = 역사적 저평가'] },
   { id:'covid', name:'COVID-19 패닉', date:'2020.02–2020.03',
-    badge:[['나스닥 -33%','r'],['S&P -34%','r'],['다우 -37%','r']],
+    badge:[['나스닥 -33%','badge-red'],['S&P -34%','badge-red'],['다우 -37%','badge-red']],
     weeks:[
       {l:'-4주',vix:14.2,fg:72,t10:1.61,hy:3.4,yc:0.22,pc:0.62,ndx:2.1,spx:1.8,djia:1.5},
       {l:'-3주',vix:15.8,fg:68,t10:1.52,hy:3.5,yc:0.20,pc:0.65,ndx:1.4,spx:1.1,djia:0.8},
@@ -227,9 +356,9 @@ const CRASHES = [
       {l:'-1주',vix:38.8,fg:33,t10:1.18,hy:4.9,yc:0.14,pc:0.92,ndx:-12.8,spx:-13.0,djia:-14.1},
       {l:'급락주',vix:66.0,fg:12,t10:0.95,hy:8.7,yc:0.08,pc:1.35,ndx:-28.1,spx:-28.9,djia:-30.2,crash:true},
     ],
-    insights:['외부충격형 — 4주 전까지 3대 지수 모두 상승 중','S&P·나스닥 낙폭 유사(-33~34%) — 섹터 무관 패닉셀','다우 최대 낙폭(-37%) — 산업주·항공주 집중 타격','-1주 전 갑자기 VIX 19→38 폭등 — 경고 기회 단 1주','마진부채 역대 최고 상태에서 급락 — 강제청산 가속'] },
+    insights:['VIX 66 + F&G 12 = 역대급 공포 → 33일 만에 반등 시작','Fed 무제한 QE 선언이 바닥 확인 트리거','외부충격형은 경제 펀더멘털 훼손 없어 V자 반등 가능','RSI 20 이하 극단 과매도가 2~3주 유지 후 반등','10년물 급락(안전자산 쏠림) 후 안정화 = 반등 선행'] },
   { id:'taper22', name:'테이퍼 탠트럼 (2022)', date:'2022.01–2022.10',
-    badge:[['나스닥 -35%','r'],['S&P -25%','r'],['다우 -21%','a']],
+    badge:[['나스닥 -35%','badge-red'],['S&P -25%','badge-red'],['다우 -21%','badge-amber']],
     weeks:[
       {l:'-4주',vix:17.2,fg:54,t10:1.51,hy:3.1,yc:0.85,pc:0.68,ndx:-2.1,spx:-1.8,djia:-1.2},
       {l:'-3주',vix:19.8,fg:46,t10:1.65,hy:3.2,yc:0.82,pc:0.72,ndx:-6.4,spx:-4.9,djia:-3.8},
@@ -237,9 +366,9 @@ const CRASHES = [
       {l:'-1주',vix:28.5,fg:31,t10:1.87,hy:3.7,yc:0.74,pc:0.88,ndx:-19.2,spx:-13.4,djia:-9.5},
       {l:'급락주',vix:34.2,fg:22,t10:1.98,hy:4.1,yc:0.68,pc:1.01,ndx:-28.1,spx:-19.8,djia:-14.8,crash:true},
     ],
-    insights:['나스닥 낙폭이 S&P의 1.4배 — 성장주 집중 타격','금리 상승기엔 고PER 성장주가 가장 취약','마진부채 역대 최고 후 급감 — 레버리지 해소 연쇄반응','10년물 1.51→1.98% 4주 상승 — 밸류에이션 압박','Fear&Greed 54→22 한 달 만에 Greed→Fear 전환'] },
+    insights:['금리 인상 사이클 종료 신호가 바닥 확인 핵심','9개월 지속 하락 — RSI 25 이하가 세 번 나타남 (분할 매수 적기)','S&P -25%, 200일선 대비 -20% 이하 구간이 역사적 매수 구간','인플레 피크아웃 데이터 나오자 급반등 시작','HY스프레드 안정화 → 주식 반등 2~4주 선행'] },
   { id:'q42018', name:'Q4 2018 급락', date:'2018.10–2018.12',
-    badge:[['나스닥 -24%','r'],['S&P -20%','r'],['다우 -19%','a']],
+    badge:[['나스닥 -24%','badge-red'],['S&P -20%','badge-red'],['다우 -19%','badge-amber']],
     weeks:[
       {l:'-4주',vix:12.5,fg:71,t10:3.20,hy:3.5,yc:0.31,pc:0.58,ndx:-1.4,spx:-1.1,djia:-0.9},
       {l:'-3주',vix:15.2,fg:61,t10:3.22,hy:3.6,yc:0.28,pc:0.63,ndx:-5.8,spx:-4.4,djia:-3.9},
@@ -247,42 +376,41 @@ const CRASHES = [
       {l:'-1주',vix:28.8,fg:35,t10:3.14,hy:4.2,yc:0.16,pc:0.88,ndx:-18.4,spx:-15.1,djia:-13.5},
       {l:'급락주',vix:36.1,fg:19,t10:3.05,hy:5.1,yc:0.08,pc:1.09,ndx:-22.8,spx:-18.9,djia:-17.1,crash:true},
     ],
-    insights:['수익률 곡선 0.31→0.08% — 역전 직전 전형적 사전 경고','S&P -20% 달성으로 공식 약세장 진입 확인','VIX 12.5에서 시작 — 낮은 변동성이 오히려 방심 유도','무역전쟁 + 연준 긴축 이중 압박','4주 전부터 체크리스트 6개 항목 동시 충족'] },
-  { id:'china15', name:'중국발 쇼크', date:'2015.08–2015.09',
-    badge:[['나스닥 -18%','r'],['S&P -12%','a'],['다우 -16%','a']],
-    weeks:[
-      {l:'-4주',vix:12.1,fg:65,t10:2.35,hy:4.8,yc:1.42,pc:0.59,ndx:1.2,spx:0.9,djia:0.7},
-      {l:'-3주',vix:13.5,fg:58,t10:2.28,hy:5.0,yc:1.38,pc:0.62,ndx:-1.8,spx:-1.4,djia:-1.9},
-      {l:'-2주',vix:14.8,fg:50,t10:2.21,hy:5.3,yc:1.35,pc:0.66,ndx:-5.2,spx:-4.1,djia:-5.8},
-      {l:'-1주',vix:18.2,fg:41,t10:2.14,hy:5.7,yc:1.31,pc:0.74,ndx:-9.4,spx:-7.2,djia:-9.8},
-      {l:'급락주',vix:40.7,fg:18,t10:2.05,hy:6.9,yc:1.24,pc:1.02,ndx:-15.8,spx:-11.4,djia:-14.5,crash:true},
-    ],
-    insights:['S&P -12%로 나스닥(-18%)·다우(-16%)보다 낙폭 작음','4주 전 VIX 12 — 역대 최저 수준의 방심 구간','HY스프레드 4.8→6.9% — 신흥국 위기 간접 경고','위안화 평가절하는 예측 불가 — 사전 신호는 HY 확대뿐'] },
+    insights:['Fed "피벗" 시사 발언이 바닥 확인 트리거','RSI 28 + F&G 19 동시 충족 = 교과서적 매수 신호','크리스마스 직전 바닥, 이후 V자 급반등','수익률곡선 역전 직전 바닥 — 역전 이후가 더 위험','4주 만에 20% 하락 = 단기 충격형, 빠른 반등'] },
 ];
 
 const GUIDE = [
-  {name:'VIX',color:'#E24B4A',acc:82,threshold:'>25 주의 / >35 위험 / >45 위기',desc:'S&P500 옵션 내재변동성. 정상 15~20. 낮을수록(12~15) 방심 리스크 증가.',signal:'4주 대비 +50% 이상 상승 시 강력 경고'},
-  {name:'Fear & Greed',color:'#D85A30',acc:71,threshold:'Extreme Fear 0~25 / Fear 25~45 / Greed 55~75 / Extreme Greed 75~100',desc:'CNN 7개 지표 복합 산출. 역발상 지표로 Extreme Greed(75+)는 조정 전 과열 신호.',signal:'75→25 이하로 4주 이내 급락 시 경고'},
-  {name:'10년물 국채 금리',color:'#185FA5',acc:68,threshold:'빠른 상승(+100bp/3개월): 성장주 압박 / 빠른 하락: 경기침체 쏠림',desc:'금리 상승 → 할인율 상승 → 고PER 성장주 타격. 나스닥이 S&P·다우보다 훨씬 민감.',signal:'3개월간 ±100bp 이상 이동 시 경보'},
-  {name:'HY 스프레드',color:'#854F0B',acc:79,threshold:'>4% 경보 / >6% 위험 / >10% 위기',desc:'신용시장의 카나리아. 주식보다 2~4주 선행. 스프레드 급등은 기업 부도 위험 증가.',signal:'4주간 +150bp 이상 확대 시 강력 경보'},
-  {name:'수익률 곡선 (2s10s)',color:'#534AB7',acc:74,threshold:'역전(-0.5% 이하): 침체 전조 / 역전 후 정상화: 실제 침체 시작',desc:'10년물-2년물 금리차. 역전 후 정상화 시점이 실제 위기와 일치하는 경우 많음.',signal:'역전 후 급속 정상화 시 실제 침체 경보'},
-  {name:'기준금리 (Fed)',color:'#3B6D11',acc:61,threshold:'인상 4회 이상 연속: 침체 전조 / 긴급 인하: 위기 이미 발생',desc:'급락은 보통 마지막 금리 인상 후 6~18개월 내 발생.',signal:'연속 4회 이상 인상 + 경기선행지수 하락'},
+  {name:'RSI (상대강도지수)', color:'#3B6D11', acc:'핵심', threshold:'70이상: 과매수 / 30이하: 과매도 / 25이하: 극단 과매도',
+   desc:'14일 RSI. 과매도(30이하)가 매수 신호의 기본 조건. 25이하 극단 과매도는 강한 반등 후보. 급락장에서는 20까지 하락 후 반등이 일반적.',
+   signal:'RSI 30이하 + 추가 조건 2개 이상 충족 시 적극 검토'},
+  {name:'200일 이동평균 괴리율', color:'#185FA5', acc:'핵심', threshold:'-10%이하: 매수 후보 / -15%이하: 강한 매수 / -20%이하: 역사적 저평가',
+   desc:'현재가가 200일 이평선보다 얼마나 떨어졌는지. 역사적으로 -15% 이하는 중기 매수 기회. -20% 이하는 강력 매수 구간. 반대로 +20% 이상은 과매수.',
+   signal:'SP500 200일선 대비 -15% 이하'},
+  {name:'VIX (변동성지수)', color:'#E24B4A', acc:'위험', threshold:'>25 주의 / >35 위험 / >45 극단 공포 (역발상 매수)',
+   desc:'VIX 45이상은 역설적으로 매수 기회. 역사적으로 VIX 60이상에서 매수한 경우 1년 수익률 평균 +40%. 단, VIX 하락 전환 확인 후 진입 권장.',
+   signal:'VIX 35이상 + 하락 전환 조짐'},
+  {name:'Fear & Greed', color:'#D85A30', acc:'타이밍', threshold:'Extreme Fear 0~25 = 역발상 매수 구간',
+   desc:'역발상 지표. Extreme Fear(25이하) 구간에서 매수 시 1년 평균 수익률 +28%(역사적). 단, 공포 극점 이후에도 추가 하락 가능 — 분할 매수 필수.',
+   signal:'Fear&Greed 25이하 지속'},
+  {name:'HY 스프레드', color:'#854F0B', acc:'선행', threshold:'>6% 매수 후보 / >8% 강한 바닥 신호 / 축소 전환 = 반등 선행',
+   desc:'HY스프레드가 고점 찍고 축소 전환하면 주식 반등을 2~4주 선행. 스프레드 확대 중에는 아직 바닥 아님. 축소 전환 확인이 핵심.',
+   signal:'HY 8%이상 후 축소 전환'},
+  {name:'IG 스프레드', color:'#185FA5', acc:'선행', threshold:'HY보다 먼저 안정화 시 반등 선행 신호',
+   desc:'우량채 스프레드. HY보다 먼저 움직임. IG가 안정화되는데 HY는 아직 확대 중이면 바닥 형성 초기. IG 정상화 → HY 정상화 → 주식 반등 순서.',
+   signal:'IG 축소 전환 + HY 고점 확인'},
+  {name:'TED 스프레드', color:'#534AB7', acc:'시스템', threshold:'>0.5%: 유동성 스트레스 / >1.0%: 금융 시스템 위기',
+   desc:'3개월 달러 LIBOR - 미국채 금리. 금융 시스템 스트레스 지표. 2008년 4.6%까지 급등. 하락 전환이 시장 안정화 신호.',
+   signal:'TED 0.5이상 후 하락 전환'},
+  {name:'수익률 곡선 (2s10s)', color:'#534AB7', acc:'거시', threshold:'역전: 침체 전조 / 역전 후 정상화: 실제 침체 시작',
+   desc:'10년물-2년물. 역전 후 정상화 시점에 실제 침체/급락 시작. 역설적으로 역전 해소 후 매수가 더 위험. 완전 정상화(0.5%이상) 후 안전.',
+   signal:'역전 완전 해소 + 다른 지표 동시 안정화'},
+  {name:'실업수당 청구', color:'#0F6E56', acc:'경기', threshold:'주간 30만건 이상: 고용 악화 / 4주 이평 하향 안정: 회복 신호',
+   desc:'고용시장 선행지표. 4주 이동평균 기준. 급등 후 안정화 전환이 경기 회복 초기 신호. 코로나 때 690만 돌파 후 급락이 반등 선행.',
+   signal:'4주 이평 하향 전환 확인'},
 ];
 
 let DATA = null;
 let charts = {};
-let historyRendered = false;
-
-function mkChart(id, cfg) {
-  if (charts[id]) { charts[id].destroy(); delete charts[id]; }
-  const canvas = document.getElementById(id);
-  if (!canvas) return;
-  charts[id] = new Chart(canvas, cfg);
-}
-
-function fmtNum(v, dec=2) { return (v != null && !isNaN(v)) ? Number(v).toFixed(dec) : '—'; }
-function fmtComma(v) { return (v != null && !isNaN(v)) ? Number(v).toLocaleString() : '—'; }
-function riskColor(s) { return s>=70?'var(--red)':s>=50?'var(--amber)':s>=30?'var(--amber)':'var(--green)'; }
 
 const BASE_URL = (() => {
   const p = window.location.pathname.replace(/\/[^/]*$/, '');
@@ -291,153 +419,256 @@ const BASE_URL = (() => {
 
 async function boot() {
   try {
-    const url = BASE_URL + '/data/indicators.json?v=' + Date.now();
-    console.log('Fetching:', url);
-    const r = await fetch(url);
+    const r = await fetch(BASE_URL + '/data/indicators.json?v=' + Date.now());
     if (!r.ok) throw new Error('HTTP ' + r.status);
     DATA = await r.json();
   } catch(e) {
-    console.error('Load error:', e);
     document.getElementById('loader').innerHTML =
-      '<div style="color:var(--muted);text-align:center;padding:2rem">데이터 로드 실패: ' + e.message + '<br><small>' + (BASE_URL||'/') + '/data/indicators.json</small></div>';
+      `<div style="color:var(--muted);text-align:center;padding:2rem">데이터 로드 실패: ${e.message}</div>`;
     return;
   }
   document.getElementById('loader').style.display = 'none';
   document.getElementById('app').style.display = '';
   document.getElementById('updated-label').textContent = '업데이트: ' + (DATA.updated_kst || DATA.updated_at);
+  renderSignal();
   renderMonitor();
   renderCrashGrid();
   renderGuide();
 }
 
-function renderMonitor() {
-  const s = DATA.snapshot || {};
-  const fg = s.fear_greed;
+function fmt(v, dec=2) { return (v != null && !isNaN(v)) ? Number(v).toFixed(dec) : '—'; }
+function fmtC(v) { return (v != null && !isNaN(v)) ? Number(v).toLocaleString() : '—'; }
+function mkChart(id, cfg) {
+  if (charts[id]) { charts[id].destroy(); delete charts[id]; }
+  const c = document.getElementById(id);
+  if (!c) return;
+  charts[id] = new Chart(c, cfg);
+}
+const CO = {
+  responsive:true, maintainAspectRatio:false,
+  plugins:{legend:{display:false}},
+  scales:{
+    x:{grid:{color:'rgba(128,128,128,0.07)'},ticks:{color:'#888',font:{size:10},maxTicksLimit:8}},
+    y:{grid:{color:'rgba(128,128,128,0.07)'},ticks:{color:'#888',font:{size:10}}}
+  }
+};
 
-  document.getElementById('index-cards').innerHTML = [
-    {lbl:'NASDAQ',  val:fmtComma(s.nasdaq)},
-    {lbl:'S&P 500', val:fmtComma(s.sp500)},
-    {lbl:'DJIA',    val:fmtComma(s.djia)},
-    {lbl:'VIX',     val:fmtNum(s.vix,2), color: s.vix>35?'c-red':s.vix>25?'c-amber':s.vix>18?'c-amber':'c-green', sub: s.vix>35?'위험':s.vix>25?'주의':s.vix?'정상':''},
-  ].map(c=>`
-    <div class="metric-card">
-      <div class="metric-lbl">${c.lbl}</div>
-      <div class="metric-val ${c.color||'c-muted'}">${c.val}</div>
-      <div class="metric-sub ${c.color||'c-muted'}">${c.sub||''}</div>
-    </div>`).join('');
-
-  const fgColor = fg?(fg.value<25?'c-red':fg.value<45?'c-amber':fg.value>75?'c-red':'c-green'):'c-muted';
-  const hyColor = s.hy_spread?(s.hy_spread>6?'c-red':s.hy_spread>4?'c-amber':'c-green'):'c-muted';
-  const ycColor = s.yield_curve!=null?(s.yield_curve<0?'c-red':s.yield_curve<0.2?'c-amber':'c-green'):'c-muted';
-
-  document.getElementById('indicator-cards').innerHTML = [
-    {lbl:'Fear & Greed', val:fg?.value??'—', color:fgColor, sub:fg?.classification??'—'},
-    {lbl:'10년물 국채',  val:fmtNum(s.ten_yr)+'%', color:'c-muted', sub:''},
-    {lbl:'기준금리 (Fed)',val:fmtNum(s.fed_rate)+'%', color:'c-muted', sub:''},
-    {lbl:'HY 스프레드',  val:fmtNum(s.hy_spread)+'%', color:hyColor, sub:s.hy_spread>6?'위험':s.hy_spread>4?'주의':s.hy_spread?'안정':''},
-    {lbl:'수익률 곡선',  val:fmtNum(s.yield_curve)+'%', color:ycColor, sub:s.yield_curve<0?'역전 중':s.yield_curve<0.2?'주의':'정상'},
-    ...(s.put_call != null ? [{lbl:'Put/Call Ratio',val:fmtNum(s.put_call), color:'c-muted', sub:''}] : []),
-  ].map(c=>`
-    <div class="metric-card">
-      <div class="metric-lbl">${c.lbl}</div>
-      <div class="metric-val ${c.color}">${c.val}</div>
-      <div class="metric-sub ${c.color}">${c.sub}</div>
-    </div>`).join('');
-
+// ── SIGNAL TAB ────────────────────────────────────────────────────────
+function renderSignal() {
+  const s  = DATA.snapshot || {};
+  const t  = DATA.technicals || {};
   const rs = DATA.risk_score ?? 0;
-  document.getElementById('risk-num').textContent = rs;
-  document.getElementById('risk-num').style.color = riskColor(rs);
-  document.getElementById('risk-label').textContent = DATA.risk_label ?? '';
-  document.getElementById('risk-ptr').style.left = rs + '%';
+  const bs = DATA.buy_score  ?? 0;
+  const tc = DATA.trade_color || 'blue';
+  const colorMap = { green:'var(--green)', amber:'var(--amber)', red:'var(--red)', blue:'var(--blue)' };
+  const iconMap  = { green:'🟢', amber:'🟡', red:'🔴', blue:'⚪' };
 
-  document.getElementById('signal-list').innerHTML = [
-    {name:'VIX 위험도',      pct:s.vix?Math.min((s.vix/60)*100,100):0,      color:'#E24B4A', display:fmtNum(s.vix,1)},
-    {name:'Fear&Greed 반전', pct:fg?Math.max(100-fg.value,0):0,              color:'#D85A30', display:fg?.value??'—'},
-    {name:'HY 스트레스',     pct:s.hy_spread?Math.min((s.hy_spread/12)*100,100):0, color:'#BA7517', display:fmtNum(s.hy_spread)+'%'},
-    {name:'수익률곡선 경보', pct:s.yield_curve!=null?Math.max((0.5-s.yield_curve)/1*100,0):0, color:'#534AB7', display:fmtNum(s.yield_curve)+'%'},
-  ].map(sg=>`
+  const banner = document.getElementById('trade-banner');
+  banner.className = `signal-banner ${tc}`;
+  document.getElementById('trade-icon').textContent = iconMap[tc] || '⚪';
+  document.getElementById('trade-label').textContent = DATA.trade_signal || '—';
+  document.getElementById('trade-desc').textContent  = DATA.trade_desc  || '—';
+  document.getElementById('score-risk').textContent  = rs;
+  document.getElementById('score-risk').style.color  = colorMap[rs>=70?'red':rs>=50?'amber':rs>=30?'amber':'green'];
+  document.getElementById('score-buy').textContent   = bs;
+  document.getElementById('score-buy').style.color   = colorMap[bs>=60?'green':bs>=35?'amber':'red'];
+
+  // Stage 1
+  document.getElementById('risk-fill').style.width = rs + '%';
+  const rBadge = document.getElementById('risk-badge');
+  rBadge.textContent = rs >= 70 ? '위험' : rs >= 50 ? '경고' : rs >= 30 ? '주의' : '안전';
+  rBadge.className = `stage-badge ${rs>=70?'badge-red':rs>=50?'badge-amber':rs>=30?'badge-amber':'badge-green'}`;
+  document.getElementById('risk-detail').innerHTML = [
+    `VIX: ${fmt(s.vix,1)}`,
+    `Fear&Greed: ${s.fear_greed?.value ?? '—'}`,
+    `HY스프레드: ${fmt(s.hy_spread)}%`,
+    `수익률곡선: ${fmt(s.yield_curve)}%`,
+  ].join(' &nbsp;·&nbsp; ');
+
+  // Stage 2
+  document.getElementById('buy-fill').style.width = bs + '%';
+  const bBadge = document.getElementById('buy-badge');
+  bBadge.textContent = bs >= 60 ? '충족' : bs >= 35 ? '부분충족' : '미충족';
+  bBadge.className = `stage-badge ${bs>=60?'badge-green':bs>=35?'badge-amber':'badge-red'}`;
+  document.getElementById('buy-detail').innerHTML = [
+    `RSI(SP500): ${fmt(t.rsi_sp500,1)}`,
+    `200일선 괴리: ${fmt(t.ma200_sp500,1)}%`,
+    `RSI(NASDAQ): ${fmt(t.rsi_nasdaq,1)}`,
+    `50일선 괴리: ${fmt(t.ma50_sp500,1)}%`,
+  ].join(' &nbsp;·&nbsp; ');
+
+  // Buy signals
+  const sigs = DATA.buy_signals || [];
+  const ul = document.getElementById('buy-signals-list');
+  if (sigs.length === 0) {
+    ul.innerHTML = '<li style="color:var(--muted)"><span class="sig-dot sig-weak"></span>현재 반등 조건 충족 신호 없음 — 시장 안정 상태</li>';
+  } else {
+    ul.innerHTML = sigs.map(sg => `
+      <li>
+        <span class="sig-dot sig-${sg.strength||'weak'}"></span>
+        ${sg.label}
+      </li>`).join('');
+  }
+
+  // Tech grid
+  const techItems = [
+    { lbl:'RSI — S&P 500', val:fmt(t.rsi_sp500,1), sub: rsiLabel(t.rsi_sp500), cls: rsiClass(t.rsi_sp500) },
+    { lbl:'RSI — NASDAQ',  val:fmt(t.rsi_nasdaq,1), sub: rsiLabel(t.rsi_nasdaq), cls: rsiClass(t.rsi_nasdaq) },
+    { lbl:'S&P vs 200일선', val:(t.ma200_sp500!=null?(t.ma200_sp500>0?'+':'')+fmt(t.ma200_sp500,1)+'%':'—'), sub: maLabel(t.ma200_sp500), cls: maClass(t.ma200_sp500) },
+    { lbl:'S&P vs 50일선',  val:(t.ma50_sp500!=null?(t.ma50_sp500>0?'+':'')+fmt(t.ma50_sp500,1)+'%':'—'),  sub: maLabel(t.ma50_sp500),  cls: maClass(t.ma50_sp500) },
+    { lbl:'NASDAQ vs 200일선', val:(t.ma200_nasdaq!=null?(t.ma200_nasdaq>0?'+':'')+fmt(t.ma200_nasdaq,1)+'%':'—'), sub: maLabel(t.ma200_nasdaq), cls: maClass(t.ma200_nasdaq) },
+  ];
+  document.getElementById('tech-grid').innerHTML = techItems.map(ti => `
+    <div class="tech-card ${ti.cls}">
+      <div class="metric-lbl">${ti.lbl}</div>
+      <div class="metric-val ${ti.cls==='bullish'?'c-green':ti.cls==='bearish'?'c-red':'c-muted'}">${ti.val}</div>
+      <div class="metric-sub ${ti.cls==='bullish'?'c-green':ti.cls==='bearish'?'c-red':'c-muted'}">${ti.sub}</div>
+    </div>`).join('');
+
+  // Signal bars
+  const bars = [
+    {name:'VIX 위험도',       pct:s.vix?Math.min((s.vix/60)*100,100):0,      color:'#E24B4A', display:fmt(s.vix,1)},
+    {name:'Fear&Greed 역발산', pct:s.fear_greed?Math.max(100-s.fear_greed.value,0):0, color:'#D85A30', display:s.fear_greed?.value??'—'},
+    {name:'HY 스트레스',       pct:s.hy_spread?Math.min((s.hy_spread/12)*100,100):0, color:'#BA7517', display:fmt(s.hy_spread)+'%'},
+    {name:'IG 스트레스',       pct:s.ig_spread?Math.min((s.ig_spread/3)*100,100):0,  color:'#185FA5', display:fmt(s.ig_spread)+'%'},
+    {name:'수익률곡선 경보',   pct:s.yield_curve!=null?Math.max((0.5-s.yield_curve)/1*100,0):0, color:'#534AB7', display:fmt(s.yield_curve)+'%'},
+  ];
+  document.getElementById('signal-bars').innerHTML = bars.map(b => `
     <div class="signal-row">
-      <div class="signal-name">${sg.name}</div>
-      <div class="signal-track"><div class="signal-fill" style="width:${Math.min(Math.max(sg.pct,0),100).toFixed(0)}%;background:${sg.color}"></div></div>
-      <div class="signal-val" style="color:${sg.color}">${sg.display}</div>
+      <div class="signal-name">${b.name}</div>
+      <div class="signal-track"><div class="signal-fill" style="width:${Math.min(Math.max(b.pct,0),100).toFixed(0)}%;background:${b.color}"></div></div>
+      <div class="signal-val" style="color:${b.color}">${b.display}</div>
     </div>`).join('');
 }
 
+function rsiLabel(v) {
+  if (v == null) return '';
+  if (v < 25) return '극단 과매도 🟢';
+  if (v < 30) return '과매도 ↑';
+  if (v < 40) return '약한 과매도';
+  if (v > 70) return '과매수 ↓';
+  return '중립';
+}
+function rsiClass(v) {
+  if (v == null) return 'neutral';
+  if (v < 35) return 'bullish';
+  if (v > 65) return 'bearish';
+  return 'neutral';
+}
+function maLabel(v) {
+  if (v == null) return '';
+  if (v < -20) return '역사적 저평가 🟢';
+  if (v < -15) return '강한 매수 구간 🟢';
+  if (v < -10) return '매수 후보 구간';
+  if (v < 0)   return '200일선 하방';
+  if (v > 20)  return '과매수 주의';
+  return '200일선 상방';
+}
+function maClass(v) {
+  if (v == null) return 'neutral';
+  if (v < -10) return 'bullish';
+  if (v > 15)  return 'bearish';
+  return 'neutral';
+}
+
+// ── MONITOR TAB ───────────────────────────────────────────────────────
+function renderMonitor() {
+  const s = DATA.snapshot || {};
+  const fg = s.fear_greed;
+  const vixC = s.vix > 35?'c-red':s.vix > 25?'c-amber':s.vix > 18?'c-amber':'c-green';
+
+  document.getElementById('index-cards').innerHTML = [
+    {lbl:'NASDAQ', val:fmtC(s.nasdaq), color:'c-muted', sub:''},
+    {lbl:'S&P 500', val:fmtC(s.sp500), color:'c-muted', sub:''},
+    {lbl:'DJIA',    val:fmtC(s.djia),  color:'c-muted', sub:''},
+    {lbl:'VIX',     val:fmt(s.vix,1),  color:vixC, sub:s.vix>35?'위험':s.vix>25?'주의':s.vix?'정상':''},
+  ].map(c=>`<div class="metric-card"><div class="metric-lbl">${c.lbl}</div><div class="metric-val ${c.color}">${c.val}</div><div class="metric-sub ${c.color}">${c.sub}</div></div>`).join('');
+
+  const fgC = fg?(fg.value<25?'c-red':fg.value<45?'c-amber':fg.value>75?'c-red':'c-green'):'c-muted';
+  document.getElementById('risk-cards').innerHTML = [
+    {lbl:'Fear & Greed', val:fg?.value??'—', color:fgC, sub:fg?.classification??'—'},
+    {lbl:'10년물 국채',  val:fmt(s.ten_yr)+'%', color:'c-muted', sub:''},
+    {lbl:'기준금리',     val:fmt(s.fed_rate)+'%', color:'c-muted', sub:''},
+    {lbl:'수익률곡선 2s10s', val:fmt(s.yield_curve)+'%', color:s.yield_curve<0?'c-red':s.yield_curve<0.2?'c-amber':'c-green', sub:s.yield_curve<0?'역전 중':'정상'},
+  ].map(c=>`<div class="metric-card"><div class="metric-lbl">${c.lbl}</div><div class="metric-val ${c.color}">${c.val}</div><div class="metric-sub ${c.color}">${c.sub}</div></div>`).join('');
+
+  const hyC = s.hy_spread>6?'c-red':s.hy_spread>4?'c-amber':'c-green';
+  document.getElementById('credit-cards').innerHTML = [
+    {lbl:'HY 스프레드',  val:fmt(s.hy_spread)+'%', color:hyC, sub:s.hy_spread>8?'위기':s.hy_spread>6?'위험':s.hy_spread>4?'주의':'안정'},
+    {lbl:'IG 스프레드',  val:fmt(s.ig_spread)+'%', color:s.ig_spread>2?'c-amber':'c-green', sub:s.ig_spread>2?'주의':'안정'},
+    {lbl:'TED 스프레드', val:fmt(s.ted_spread)+'%', color:s.ted_spread>0.5?'c-amber':'c-green', sub:s.ted_spread>0.5?'유동성 스트레스':'정상'},
+  ].map(c=>`<div class="metric-card"><div class="metric-lbl">${c.lbl}</div><div class="metric-val ${c.color}">${c.val}</div><div class="metric-sub ${c.color}">${c.sub}</div></div>`).join('');
+
+  const jc = s.jobless_claims;
+  document.getElementById('macro-cards').innerHTML = [
+    {lbl:'실업수당 청구', val:jc?Math.round(jc/1000)+'K':'—', color:jc>300000?'c-amber':'c-green', sub:jc>300000?'고용 악화':'정상'},
+    {lbl:'Fed 자산규모',  val:s.fed_assets?'$'+(s.fed_assets/1e6).toFixed(1)+'T':'—', color:'c-muted', sub:'주간 업데이트'},
+  ].map(c=>`<div class="metric-card"><div class="metric-lbl">${c.lbl}</div><div class="metric-val ${c.color}">${c.val}</div><div class="metric-sub ${c.color}">${c.sub}</div></div>`).join('');
+}
+
+// ── HISTORY CHARTS ────────────────────────────────────────────────────
 function renderHistory() {
   const h = DATA.history || {};
-  const co = {
-    responsive:true, maintainAspectRatio:false,
-    plugins:{legend:{display:false}},
-    scales:{
-      x:{grid:{color:'rgba(128,128,128,0.08)'},ticks:{color:'#888',font:{size:10},maxTicksLimit:8}},
-      y:{grid:{color:'rgba(128,128,128,0.08)'},ticks:{color:'#888',font:{size:10}}}
-    }
-  };
-
   if (h.nasdaq?.length && h.sp500?.length && h.djia?.length) {
-    const norm = arr => { const base=arr[0].value; return arr.map(d=>+((d.value/base*100).toFixed(2))); };
-    const labels = h.nasdaq.map(d=>d.date.slice(5));
-    mkChart('chart-indices',{type:'line',data:{labels,datasets:[
-      {label:'NASDAQ',data:norm(h.nasdaq),borderColor:'#E24B4A',borderWidth:1.5,pointRadius:0,tension:0.3,fill:false},
-      {label:'S&P 500',data:norm(h.sp500),borderColor:'#378ADD',borderWidth:1.5,pointRadius:0,tension:0.3,fill:false,borderDash:[4,2]},
-      {label:'DJIA',data:norm(h.djia),borderColor:'#3B6D11',borderWidth:1.5,pointRadius:0,tension:0.3,fill:false,borderDash:[8,3]},
-    ]},options:co});
+    const norm = arr => { const b=arr[0].value; return arr.map(d=>+((d.value/b*100).toFixed(2))); };
+    mkChart('chart-indices',{type:'line',data:{
+      labels:h.nasdaq.map(d=>d.date.slice(5)),
+      datasets:[
+        {label:'NASDAQ',data:norm(h.nasdaq),borderColor:'#E24B4A',borderWidth:1.5,pointRadius:0,tension:0.3,fill:false},
+        {label:'S&P',   data:norm(h.sp500), borderColor:'#378ADD',borderWidth:1.5,pointRadius:0,tension:0.3,fill:false,borderDash:[4,2]},
+        {label:'DJIA',  data:norm(h.djia),  borderColor:'#3B6D11',borderWidth:1.5,pointRadius:0,tension:0.3,fill:false,borderDash:[8,3]},
+      ]},options:CO});
   }
-
   if (h.vix?.length) {
     mkChart('chart-vix',{type:'line',data:{
       labels:h.vix.map(d=>d.date.slice(5)),
       datasets:[{label:'VIX',data:h.vix.map(d=>d.value),borderColor:'#E24B4A',borderWidth:1.5,pointRadius:0,tension:0.3,fill:true,backgroundColor:'rgba(226,75,74,0.07)'}]
-    },options:co});
+    },options:CO});
   }
-
   if (h.fear_greed?.length) {
     mkChart('chart-fg',{type:'bar',data:{
       labels:h.fear_greed.map(d=>d.date.slice(5)),
       datasets:[{label:'F&G',data:h.fear_greed.map(d=>d.value),backgroundColor:h.fear_greed.map(d=>d.value<25?'rgba(226,75,74,0.7)':d.value<45?'rgba(186,117,23,0.7)':'rgba(59,109,17,0.7)'),borderWidth:0}]
-    },options:{...co,scales:{...co.scales,y:{...co.scales.y,min:0,max:100}}}});
+    },options:{...CO,scales:{...CO.scales,y:{...CO.scales.y,min:0,max:100}}}});
   }
-
-  const dset=[];
-  if (h.tnx?.length)      dset.push({label:'10년물',data:h.tnx.map(d=>d.value),borderColor:'#185FA5',borderWidth:1.5,pointRadius:0,tension:0.3});
-  if (h.hy_spread?.length) dset.push({label:'HY스프레드',data:h.hy_spread.map(d=>d.value),borderColor:'#BA7517',borderWidth:1.5,pointRadius:0,tension:0.3,borderDash:[5,3]});
-  if (dset.length) {
-    const lbls = h.tnx?.length ? h.tnx.map(d=>d.date.slice(5)) : h.hy_spread.map(d=>d.date.slice(5));
-    mkChart('chart-rates',{type:'line',data:{labels:lbls,datasets:dset},options:co});
+  if (h.hy_spread?.length || h.ig_spread?.length) {
+    const dset=[];
+    if (h.hy_spread?.length) dset.push({label:'HY',data:h.hy_spread.map(d=>d.value),borderColor:'#BA7517',borderWidth:1.5,pointRadius:0,tension:0.3});
+    if (h.ig_spread?.length) dset.push({label:'IG',data:h.ig_spread.map(d=>d.value),borderColor:'#185FA5',borderWidth:1.5,pointRadius:0,tension:0.3,borderDash:[4,2]});
+    const lbl = (h.hy_spread||h.ig_spread).map(d=>d.date.slice(5));
+    mkChart('chart-spread',{type:'line',data:{labels:lbl,datasets:dset},options:CO});
   }
-
-  if (h.yield_curve?.length) {
-    mkChart('chart-yc',{type:'line',data:{
-      labels:h.yield_curve.map(d=>d.date.slice(5)),
-      datasets:[{label:'2s10s',data:h.yield_curve.map(d=>d.value),borderColor:'#534AB7',borderWidth:1.5,pointRadius:0,tension:0.3,fill:true,
-        backgroundColor:h.yield_curve.map(d=>d.value<0?'rgba(226,75,74,0.1)':'rgba(83,74,183,0.06)')}]
-    },options:co});
+  if (h.tnx?.length || h.yield_curve?.length) {
+    const dset=[];
+    if (h.tnx?.length)       dset.push({label:'10년물',data:h.tnx.map(d=>d.value),borderColor:'#185FA5',borderWidth:1.5,pointRadius:0,tension:0.3});
+    if (h.yield_curve?.length) dset.push({label:'2s10s',data:h.yield_curve.map(d=>d.value),borderColor:'#534AB7',borderWidth:1.5,pointRadius:0,tension:0.3,borderDash:[5,3]});
+    const lbl = (h.tnx||h.yield_curve).map(d=>d.date.slice(5));
+    mkChart('chart-rates',{type:'line',data:{labels:lbl,datasets:dset},options:CO});
   }
 }
 
+// ── CRASH GRID ────────────────────────────────────────────────────────
 function renderCrashGrid() {
   document.getElementById('crash-grid').innerHTML = CRASHES.map(c=>`
     <div class="crash-card" id="cc-${c.id}" onclick="selectCrash('${c.id}')">
       <div class="crash-card-name">${c.name}</div>
       <div class="crash-card-date">${c.date}</div>
-      <div class="badge-row">${c.badge.map(([t,k])=>`<span class="badge badge-${k}">${t}</span>`).join('')}</div>
+      <div class="badge-row">${c.badge.map(([t,k])=>`<span class="badge ${k}">${t}</span>`).join('')}</div>
     </div>`).join('');
 }
-
 function selectCrash(id) {
   const crash = CRASHES.find(c=>c.id===id);
   document.querySelectorAll('.crash-card').forEach(c=>c.classList.remove('sel'));
   document.getElementById('cc-'+id).classList.add('sel');
   document.getElementById('crash-detail').style.display='';
-
-  const cols=['주차','NASDAQ(%)','S&P(%)','DJIA(%)','VIX','F&G','10년물','HY%','곡선%','P/C'];
+  const cols=['주차','NASDAQ%','S&P%','DJIA%','VIX','F&G','10년물','HY%','곡선%'];
   let tbl=`<table><thead><tr>${cols.map(c=>`<th>${c}</th>`).join('')}</tr></thead><tbody>`;
   crash.weeks.forEach((w,i)=>{
     const prev=i>0?crash.weeks[i-1]:null;
-    const fi=(v,dec=2)=>typeof v==='number'?v.toFixed(dec):'—';
+    const fi=(v,d=2)=>typeof v==='number'?v.toFixed(d):'—';
     const fxc=(v,k,bad=true)=>{
       if(!prev) return fi(v);
-      const d=v-prev[k],c=bad?(d>0.05?'c-red':d<-0.05?'c-green':'c-muted'):(d>0.05?'c-green':d<-0.05?'c-red':'c-muted');
+      const d=v-prev[k], c=bad?(d>0.05?'c-red':d<-0.05?'c-green':'c-muted'):(d>0.05?'c-green':d<-0.05?'c-red':'c-muted');
       return `<span class="${c}">${fi(v)}</span>`;
     };
     const fIdx=v=>`<span class="${v>0?'c-green':v<0?'c-red':'c-muted'}">${v>0?'+':''}${v.toFixed(1)}%</span>`;
@@ -447,52 +678,50 @@ function selectCrash(id) {
       <td>${fxc(w.vix,'vix',true)}</td><td>${fxc(w.fg,'fg',false)}</td><td>${fxc(w.t10,'t10',false)}</td>
       <td>${fxc(w.hy,'hy',true)}</td>
       <td><span class="${w.yc<0?'c-red':w.yc<0.2?'c-amber':'c-green'}">${w.yc.toFixed(2)}</span></td>
-      <td>${fxc(w.pc,'pc',true)}</td>
     </tr>`;
   });
   tbl+='</tbody></table>';
   document.getElementById('crash-tbl').innerHTML=tbl;
-
   const labels=crash.weeks.map(w=>w.l);
   const co2={responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},
-    scales:{x:{grid:{color:'rgba(128,128,128,0.08)'},ticks:{color:'#888',font:{size:11}}},
-            y:{grid:{color:'rgba(128,128,128,0.08)'},ticks:{color:'#888',font:{size:11}}}}};
+    scales:{x:{grid:{color:'rgba(128,128,128,0.07)'},ticks:{color:'#888',font:{size:11}}},
+            y:{grid:{color:'rgba(128,128,128,0.07)'},ticks:{color:'#888',font:{size:11}}}}};
   mkChart('chart-crash-idx',{type:'line',data:{labels,datasets:[
     {label:'NASDAQ',data:crash.weeks.map(w=>w.ndx),borderColor:'#E24B4A',borderWidth:2,tension:0.3,pointRadius:3,fill:false},
-    {label:'S&P',data:crash.weeks.map(w=>w.spx),borderColor:'#378ADD',borderWidth:2,tension:0.3,pointRadius:3,fill:false,borderDash:[4,2]},
-    {label:'DJIA',data:crash.weeks.map(w=>w.djia),borderColor:'#3B6D11',borderWidth:2,tension:0.3,pointRadius:3,fill:false,borderDash:[8,3]},
+    {label:'S&P',   data:crash.weeks.map(w=>w.spx),borderColor:'#378ADD',borderWidth:2,tension:0.3,pointRadius:3,fill:false,borderDash:[4,2]},
+    {label:'DJIA',  data:crash.weeks.map(w=>w.djia),borderColor:'#3B6D11',borderWidth:2,tension:0.3,pointRadius:3,fill:false,borderDash:[8,3]},
   ]},options:{...co2,scales:{...co2.scales,y:{...co2.scales.y,ticks:{...co2.scales.y.ticks,callback:v=>v+'%'}}}}});
   mkChart('chart-crash-ind',{type:'line',data:{labels,datasets:[
     {label:'VIX',data:crash.weeks.map(w=>w.vix),borderColor:'#E24B4A',borderWidth:2,tension:0.3,pointRadius:3,fill:false},
-    {label:'F&G',data:crash.weeks.map(w=>w.fg),borderColor:'#185FA5',borderWidth:2,tension:0.3,pointRadius:3,fill:false},
+    {label:'F&G',data:crash.weeks.map(w=>w.fg), borderColor:'#185FA5',borderWidth:2,tension:0.3,pointRadius:3,fill:false},
     {label:'HY×10',data:crash.weeks.map(w=>+(w.hy*10).toFixed(1)),borderColor:'#BA7517',borderWidth:2,tension:0.3,pointRadius:3,fill:false,borderDash:[5,3]},
   ]},options:co2});
   document.getElementById('crash-insights').innerHTML=crash.insights.map(t=>`<li><span style="color:var(--muted);flex-shrink:0">›</span>${t}</li>`).join('');
 }
 
+// ── GUIDE ─────────────────────────────────────────────────────────────
 function renderGuide() {
   document.getElementById('guide-list').innerHTML = GUIDE.map(g=>`
     <div class="guide-card" style="border-left-color:${g.color}">
       <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
         <span style="font-size:14px;font-weight:500">${g.name}</span>
-        <span class="badge badge-a" style="margin-left:auto">예측 정확도 ${g.acc}%</span>
+        <span class="badge badge-green" style="margin-left:auto">${g.acc}</span>
       </div>
       <div class="guide-desc">${g.desc}</div>
-      <div class="guide-pill"><b>임계값:</b> ${g.threshold}</div><br>
-      <div class="guide-pill" style="color:${g.color}"><b>경보 기준:</b> ${g.signal}</div>
+      <div class="guide-pill"><b>기준값:</b> ${g.threshold}</div><br>
+      <div class="guide-pill" style="color:${g.color}"><b>매수 신호:</b> ${g.signal}</div>
     </div>`).join('');
 }
 
+// ── TABS ──────────────────────────────────────────────────────────────
 function showTab(name) {
-  ['monitor','history','crashes','guide'].forEach(t=>{
+  ['signal','monitor','history','crashes','guide'].forEach(t=>{
     document.getElementById('tab-'+t).style.display = t===name?'':'none';
   });
   document.querySelectorAll('.tab').forEach((tab,i)=>{
-    tab.classList.toggle('active',['monitor','history','crashes','guide'][i]===name);
+    tab.classList.toggle('active',['signal','monitor','history','crashes','guide'][i]===name);
   });
-  if (name==='history' && DATA) {
-    setTimeout(()=>renderHistory(), 100);
-  }
+  if (name==='history' && DATA) setTimeout(()=>renderHistory(), 100);
 }
 
 boot();

@@ -71,6 +71,24 @@ def calc_vs_ma(current, ma_val):
     if current is None or ma_val is None or ma_val == 0:
         return None
     return round((current - ma_val) / ma_val * 100, 2)
+
+def rate_direction(history, lookback_days=90):
+    """N일 전 대비 방향과 변화폭 반환"""
+    if not history or len(history) < 5:
+        return None, None
+    current = history[-1]["value"]
+    # lookback_days 전 근처 값 찾기
+    target_date = (datetime.utcnow() - timedelta(days=lookback_days)).strftime("%Y-%m-%d")
+    past_val = None
+    for d in history:
+        if d["date"] >= target_date:
+            past_val = d["value"]
+            break
+    if past_val is None:
+        past_val = history[0]["value"]
+    change = round(current - past_val, 3)
+    return current, change
+
 def calc_ma_deviation(values, period=200):
     """현재가 대비 N일 이동평균 괴리율 (%)"""
     if len(values) < period:
@@ -160,6 +178,27 @@ def main():
     fg   = fear_greed_latest()
     fg_h = fear_greed_history(45)
 
+    # ── 금리 방향 분석 (3개월 전 대비) ───────────────────────────────
+    print("  Calculating rate direction...")
+    t10y_hist_long = fred_history("DGS10",    120)
+    fedfunds_hist  = fred_history("FEDFUNDS", 120)
+
+    _, t10y_change_3m    = rate_direction(t10y_hist_long,   90)
+    _, fedfunds_change_3m= rate_direction(fedfunds_hist,    90)
+    _, t10y_change_1m    = rate_direction(t10y_hist_long,   30)
+
+    # 실질금리 근사 (10년물 - 기대인플레 2.3% 고정 근사)
+    real_rate = round(t10y - 2.3, 2) if t10y else None
+
+    # 주식 이익수익률 vs 10년물 (ERP 근사)
+    # S&P500 PER 약 22배 가정 → E/P = 4.5%
+    sp500_earnings_yield = round(100 / 22, 2)  # 간단 근사
+    erp = round(sp500_earnings_yield - t10y, 2) if t10y else None
+
+    print(f"  T10Y 3M change={t10y_change_3m}, 1M={t10y_change_1m}")
+    print(f"  Fed 3M change={fedfunds_change_3m}")
+    print(f"  RealRate={real_rate}%, ERP={erp}%")
+    
     # ── 이평선 분석 ────────────────────────────────────────────────────
     print("  Calculating moving average analysis...")
 
@@ -445,6 +484,11 @@ def main():
             "ten_yr": t10y, "fed_rate": fed_rate, "hy_spread": hy_spread,
             "ig_spread": ig_spread, "ted_spread": ted_spread,
             "yield_curve": yield_curve, "fear_greed": fg,
+            "t10y_change_3m":     t10y_change_3m,
+            "t10y_change_1m":     t10y_change_1m,
+            "fedfunds_change_3m": fedfunds_change_3m,
+            "real_rate":          real_rate,
+            "erp":                erp,
             "put_call": None,
             "jobless_claims": jobless_claims,
             "fed_assets": fed_assets,

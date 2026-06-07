@@ -52,6 +52,25 @@ def calc_rsi(values, period=14):
     rs = avg_gain / avg_loss
     return round(100 - (100 / (1 + rs)), 2)
 
+def calc_ma(values, period):
+    """단순 이동평균"""
+    if len(values) < period:
+        return None
+    return round(sum(values[-period:]) / period, 4)
+
+def calc_ma_slope(values, period, lookback=5):
+    """이평선 기울기 — 최근 N일간 방향 (+상승/-하락)"""
+    if len(values) < period + lookback:
+        return None
+    ma_now  = sum(values[-(period):])   / period
+    ma_prev = sum(values[-(period+lookback):-lookback]) / period
+    return round((ma_now - ma_prev) / ma_prev * 100, 3)
+
+def calc_vs_ma(current, ma_val):
+    """현재값이 이평선 대비 몇 % 위/아래인지"""
+    if current is None or ma_val is None or ma_val == 0:
+        return None
+    return round((current - ma_val) / ma_val * 100, 2)
 def calc_ma_deviation(values, period=200):
     """현재가 대비 N일 이동평균 괴리율 (%)"""
     if len(values) < period:
@@ -240,8 +259,56 @@ def main():
     if ig_spread and hy_spread and ig_spread < hy_spread * 0.25:
         buy_score += 8
         buy_signals.append({"label": f"IG스프레드 {ig_spread}% — 우량채 먼저 안정화 (반등 선행 신호)", "strength": "medium"})
+    
+    # VIX 이평선 매수 신호
+    if vix_vs_ma20 is not None:
+        if vix_vs_ma20 > 80:
+            buy_score += 20
+            buy_signals.append({"label": f"VIX, 20일선 대비 +{vix_vs_ma20}% — 공포 극점 (강한 역발상 매수)", "strength": "strong"})
+        elif vix_vs_ma20 > 50:
+            buy_score += 12
+            buy_signals.append({"label": f"VIX, 20일선 대비 +{vix_vs_ma20}% — 공포 급증 구간", "strength": "medium"})
 
+    # VIX 이평선 하락 전환 (안정화 신호)
+    if vix_slope is not None and vix_slope < -5 and vix_vs_ma20 and vix_vs_ma20 > 20:
+        buy_score += 15
+        buy_signals.append({"label": f"VIX 20일선 기울기 {vix_slope}% — 하락 전환 (공포 완화, 반등 선행)", "strength": "strong"})
+
+    # HY 이평선 매수 신호 (고점 이탈 후 하락)
+    if hy_slope is not None and hy_slope < -3:
+        buy_score += 12
+        buy_signals.append({"label": f"HY스프레드 20일선 기울기 {hy_slope}% — 하락 전환 (신용 안정화)", "strength": "medium"})
+
+    # F&G 이평선 매수 신호
+    if fg_slope is not None and fg_slope < -8 and fg_ma10 and fg_ma10 < 35:
+        buy_score += 10
+        buy_signals.append({"label": f"Fear&Greed 10일 이평 {round(fg_ma10,1)} — 공포 추세 (역발상 구간)", "strength": "medium"})
     buy_score = min(buy_score, 100)
+    # ── 이평선 분석 ────────────────────────────────────────────────────
+    print("  Calculating moving average analysis...")
+
+    # VIX 이평선
+    vix_vals   = [d["value"] for d in vix_h]
+    vix_ma20   = calc_ma(vix_vals, 20)
+    vix_vs_ma20= calc_vs_ma(vix, vix_ma20)          # VIX가 20일선 대비 몇%
+    vix_slope  = calc_ma_slope(vix_vals, 20)         # 20일선 기울기
+
+    # HY 스프레드 이평선
+    hy_hist    = fred_history("BAMLH0A0HYM2", 60)
+    hy_vals    = [d["value"] for d in hy_hist]
+    hy_ma20    = calc_ma(hy_vals, 20)
+    hy_vs_ma20 = calc_vs_ma(hy_spread, hy_ma20)
+    hy_slope   = calc_ma_slope(hy_vals, 20)
+
+    # Fear & Greed 10일 이평선
+    fg_vals    = [d["value"] for d in fg_h]
+    fg_ma10    = calc_ma(fg_vals, 10)
+    fg_vs_ma10 = calc_vs_ma(fg["value"] if fg else None, fg_ma10)
+    fg_slope   = calc_ma_slope(fg_vals, 10)
+
+    print(f"  VIX vs MA20={vix_vs_ma20}%, slope={vix_slope}%")
+    print(f"  HY  vs MA20={hy_vs_ma20}%, slope={hy_slope}%")
+    print(f"  F&G vs MA10={fg_vs_ma10}%, slope={fg_slope}%")
     # ── 매도 타이밍 점수 (과열 조건) ──────────────────────────────────
     sell_score = 0
     sell_signals = []
@@ -302,7 +369,27 @@ def main():
     if yield_curve is not None and yield_curve > 0.8:
         sell_score += 10
         sell_signals.append({"label": f"수익률곡선 {yield_curve}% — 역전 후 급속 정상화 (침체 진입 가능)", "strength": "medium"})
+    
+    # VIX 이평선 매도 신호 (20일선 대비 극단 저점 = 방심)
+    if vix_vs_ma20 is not None and vix_vs_ma20 < -25:
+        sell_score += 15
+        sell_signals.append({"label": f"VIX, 20일선 대비 {vix_vs_ma20}% — 변동성 극단 억제 (방심 극점)", "strength": "medium"})
 
+    # VIX 이평선 상승 전환 (불안 증가 = 포지션 축소 신호)
+    if vix_slope is not None and vix_slope > 10 and vix_ma20 and vix_ma20 < 20:
+        sell_score += 12
+        sell_signals.append({"label": f"VIX 20일선 기울기 +{vix_slope}% — 저VIX에서 상승 전환 (경계)", "strength": "medium"})
+
+    # HY 이평선 매도 신호 (극단 축소 + 상승 전환)
+    if hy_slope is not None and hy_slope > 5 and hy_ma20 and hy_ma20 < 3.5:
+        sell_score += 12
+        sell_signals.append({"label": f"HY스프레드 20일선 기울기 +{hy_slope}% — 극저점에서 반등 (위험)", "strength": "medium"})
+
+    # F&G 이평선 매도 신호
+    if fg_slope is not None and fg_slope > 8 and fg_ma10 and fg_ma10 > 65:
+        sell_score += 10
+        sell_signals.append({"label": f"Fear&Greed 10일 이평 {round(fg_ma10,1)} — 탐욕 추세 가속", "strength": "medium"})
+    
     sell_score = min(sell_score, 100)
 
     # 매도 종합 판단
@@ -366,6 +453,15 @@ def main():
             "ma200_sp500":  ma200_sp500,
             "ma50_sp500":   ma50_sp500,
             "ma200_nasdaq": ma200_nasdaq,
+            "vix_ma20":     vix_ma20,
+            "vix_vs_ma20":  vix_vs_ma20,
+            "vix_slope":    vix_slope,
+            "hy_ma20":      hy_ma20,
+            "hy_vs_ma20":   hy_vs_ma20,
+            "hy_slope":     hy_slope,
+            "fg_ma10":      round(fg_ma10, 1) if fg_ma10 else None,
+            "fg_vs_ma10":   fg_vs_ma10,
+            "fg_slope":     fg_slope,
         },
         "risk_score":   risk,
         "risk_label":   risk_label,

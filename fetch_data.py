@@ -131,18 +131,22 @@ def calc_rsi_list(closes, period=14):
     return round(100 - 100 / (1 + rs), 2)
 
 def fetch_stock_technicals(ticker):
-    """FMP에서 종목 기술적 지표 수집 및 계산"""
+    """FMP 무료 엔드포인트로 종목 기술적 지표 수집"""
     if not FMP_API_KEY:
         return None
     try:
-        url = f"{FMP_BASE}/historical-price-full/{ticker}?timeseries=220&apikey={FMP_API_KEY}"
+        # 무료 플랜에서 작동하는 엔드포인트
+        url = f"{FMP_BASE}/historical-price-full/{ticker}?apikey={FMP_API_KEY}"
         r = requests.get(url, timeout=20)
         r.raise_for_status()
         data = r.json()
         hist = data.get("historical", [])
         if not hist:
+            print(f"  [WARN] {ticker}: 데이터 없음")
             return None
-        hist = list(reversed(hist))  # 오래된 순
+
+        # 최대 220개만 사용
+        hist = list(reversed(hist))[-220:]
         closes  = [d["close"]  for d in hist]
         volumes = [d["volume"] for d in hist]
         current = closes[-1]
@@ -152,14 +156,14 @@ def fetch_stock_technicals(ticker):
         rsi = calc_rsi_list(closes, 14)
 
         # 이동평균
-        ma50  = round(sum(closes[-50:])/50,   2) if len(closes) >= 50  else None
-        ma200 = round(sum(closes[-200:])/200, 2) if len(closes) >= 200 else None
-        ma20  = round(sum(closes[-20:])/20,   2) if len(closes) >= 20  else None
-        ma20_5ago = round(sum(closes[-25:-5])/20, 2) if len(closes) >= 25 else None
+        ma50      = round(sum(closes[-50:])/50,   2) if len(closes) >= 50  else None
+        ma200     = round(sum(closes[-200:])/200, 2) if len(closes) >= 200 else None
+        ma20      = round(sum(closes[-20:])/20,   2) if len(closes) >= 20  else None
+        ma20_5ago = round(sum(closes[-25:-5])/20, 2) if len(closes) >= 25  else None
 
-        vs_ma50   = round((current - ma50)  / ma50  * 100, 2) if ma50  else None
-        vs_ma200  = round((current - ma200) / ma200 * 100, 2) if ma200 else None
-        ma20_slope= round((ma20 - ma20_5ago) / ma20_5ago * 100, 2) if (ma20 and ma20_5ago) else None
+        vs_ma50    = round((current - ma50)  / ma50  * 100, 2) if ma50  else None
+        vs_ma200   = round((current - ma200) / ma200 * 100, 2) if ma200 else None
+        ma20_slope = round((ma20 - ma20_5ago) / ma20_5ago * 100, 2) if (ma20 and ma20_5ago) else None
 
         # 볼린저밴드
         bb_pos = None
@@ -176,12 +180,12 @@ def fetch_stock_technicals(ticker):
         w52      = closes[-252:] if len(closes) >= 252 else closes
         high52   = max(w52)
         low52    = min(w52)
-        vs_high52= round((current - high52) / high52 * 100, 2)
-        vs_low52 = round((current - low52)  / low52  * 100, 2)
+        vs_high52 = round((current - high52) / high52 * 100, 2)
+        vs_low52  = round((current - low52)  / low52  * 100, 2)
 
         # 거래량
-        vol20avg = sum(volumes[-21:-1]) / 20 if len(volumes) >= 21 else None
-        vol_ratio= round(volumes[-1] / vol20avg * 100, 1) if vol20avg else None
+        vol20avg  = sum(volumes[-21:-1]) / 20 if len(volumes) >= 21 else None
+        vol_ratio = round(volumes[-1] / vol20avg * 100, 1) if vol20avg else None
 
         # 매수 점수
         buy_score, buy_signals = 0, []
@@ -218,27 +222,25 @@ def fetch_stock_technicals(ticker):
         buy_score  = min(buy_score,  100)
         sell_score = min(sell_score, 100)
 
-        chg1d = round((current - prev) / prev * 100, 2)
-
         return {
-            "ticker":       ticker,
-            "price":        round(current, 2),
-            "chg1d":        chg1d,
-            "rsi":          rsi,
-            "vs_ma50":      vs_ma50,
-            "vs_ma200":     vs_ma200,
-            "ma20_slope":   ma20_slope,
-            "bb_pos":       bb_pos,
-            "vs_high52":    vs_high52,
-            "vs_low52":     vs_low52,
-            "vol_ratio":    vol_ratio,
-            "high52":       round(high52, 2),
-            "low52":        round(low52,  2),
-            "ma200":        ma200,
-            "buy_score":    buy_score,
-            "sell_score":   sell_score,
-            "buy_signals":  buy_signals,
-            "sell_signals": sell_signals,
+            "ticker":      ticker,
+            "price":       round(current, 2),
+            "chg1d":       round((current - prev) / prev * 100, 2),
+            "rsi":         rsi,
+            "vs_ma50":     vs_ma50,
+            "vs_ma200":    vs_ma200,
+            "ma20_slope":  ma20_slope,
+            "bb_pos":      bb_pos,
+            "vs_high52":   vs_high52,
+            "vs_low52":    vs_low52,
+            "vol_ratio":   vol_ratio,
+            "high52":      round(high52, 2),
+            "low52":       round(low52,  2),
+            "ma200":       ma200,
+            "buy_score":   buy_score,
+            "sell_score":  sell_score,
+            "buy_signals": buy_signals,
+            "sell_signals":sell_signals,
         }
     except Exception as e:
         print(f"  [ERROR] {ticker}: {e}")

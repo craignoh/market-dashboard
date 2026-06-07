@@ -89,18 +89,18 @@ body { background:var(--bg); color:var(--text); font-family:-apple-system,'Helve
 /* 지표 카드 */
 .metric-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(138px,1fr)); gap:10px; margin-bottom:1.5rem; }
 .metric-card { background:var(--surface); border:0.5px solid var(--border); border-radius:var(--r); padding:1rem 1.1rem; }
-.metric-lbl { font-size:11px; color:var(--muted); margin-bottom:5px; }
-.metric-val { font-size:22px; font-weight:600; letter-spacing:-0.02em; line-height:1; margin-bottom:3px; }
-.metric-sub { font-size:11px; }
+.metric-lbl  { font-size:11px; color:var(--muted); margin-bottom:5px; }
+.metric-val  { font-size:22px; font-weight:600; letter-spacing:-0.02em; line-height:1; margin-bottom:3px; }
+.metric-sub  { font-size:11px; }
 .metric-sub2 { font-size:10px; color:var(--faint); margin-top:3px; }
 
-/* 기술적 지표 카드 */
+/* 기술적 카드 */
 .tech-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(158px,1fr)); gap:10px; margin-bottom:1.5rem; }
 .tech-card { background:var(--surface); border:0.5px solid var(--border); border-radius:var(--r); padding:1rem 1.1rem; position:relative; overflow:hidden; }
 .tech-card::before { content:''; position:absolute; top:0; left:0; right:0; height:3px; }
-.tech-card.bullish::before   { background:var(--green); }
-.tech-card.overbought::before{ background:var(--red); }
-.tech-card.neutral::before   { background:var(--faint); }
+.tech-card.bullish::before    { background:var(--green); }
+.tech-card.overbought::before { background:var(--red); }
+.tech-card.neutral::before    { background:var(--faint); }
 
 .c-red{color:var(--red);} .c-amber{color:var(--amber);} .c-green{color:var(--green);}
 .c-blue{color:var(--blue);} .c-muted{color:var(--muted);}
@@ -119,6 +119,14 @@ body { background:var(--bg); color:var(--text); font-family:-apple-system,'Helve
 .legend-row  { display:flex; flex-wrap:wrap; gap:12px; font-size:11px; color:var(--muted); }
 .ld { display:inline-flex; align-items:center; gap:4px; }
 .ld-dot { width:10px; height:10px; border-radius:2px; }
+
+/* 워치리스트 테이블 */
+.watch-table { width:100%; border-collapse:collapse; font-size:12px; margin-bottom:1.5rem; }
+.watch-table th { text-align:left; padding:8px 10px; color:var(--muted); font-weight:500; border-bottom:0.5px solid var(--border2); font-size:11px; background:var(--bg); white-space:nowrap; }
+.watch-table td { padding:8px 10px; border-bottom:0.5px solid var(--border); vertical-align:middle; }
+.watch-table tr:last-child td { border-bottom:none; }
+.watch-table tr:hover td { background:var(--bg); }
+.score-bar { height:5px; border-radius:3px; display:inline-block; vertical-align:middle; }
 
 /* 급락장 */
 .crash-grid-wrap { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:10px; margin-bottom:1.5rem; }
@@ -158,14 +166,14 @@ tr:hover td { background:var(--bg); }
   <div class="hdr">
     <div>
       <div class="hdr-title">매수·매도 타이밍 모니터</div>
-      <div class="hdr-sub">나스닥 · S&amp;P 500 · 다우존스 | 2단계 양방향 신호 시스템</div>
+      <div class="hdr-sub">나스닥 · S&amp;P 500 · 다우존스 | 2단계 양방향 신호 + 워치리스트</div>
     </div>
     <div class="updated" id="updated-label"></div>
   </div>
   <div class="tabs">
     <button class="tab active" onclick="showTab('signal')">📊 매수·매도 신호</button>
+    <button class="tab" onclick="showTab('watchlist')">📋 워치리스트</button>
     <button class="tab" onclick="showTab('portfolio')">💼 포트폴리오</button>
-    <button class="tab" onclick="showTab('stock')">🔍 종목 분석</button>
     <button class="tab" onclick="showTab('monitor')">실시간 지표</button>
     <button class="tab" onclick="showTab('history')">35일 추이</button>
     <button class="tab" onclick="showTab('crashes')">역사적 급락장</button>
@@ -174,6 +182,39 @@ tr:hover td { background:var(--bg); }
 
   <!-- ── SIGNAL ─────────────────────────────────────────────────────── -->
   <div id="tab-signal">
+
+    <!-- 포트폴리오 비중 가이드 -->
+    <div id="pf-guide-banner" style="border-radius:var(--r);padding:1.25rem 1.5rem;margin-bottom:1.5rem;border:0.5px solid var(--border);background:var(--surface)">
+      <div style="font-size:11px;font-weight:600;color:var(--faint);text-transform:uppercase;letter-spacing:0.07em;margin-bottom:12px">💼 포트폴리오 비중 가이드</div>
+      <div style="display:grid;grid-template-columns:1fr auto;gap:1rem;align-items:center;flex-wrap:wrap">
+        <div>
+          <div style="font-size:17px;font-weight:700;margin-bottom:4px" id="pf-guide-label"></div>
+          <div style="font-size:12px;color:var(--muted);line-height:1.6" id="pf-guide-desc"></div>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(3,80px);gap:8px;text-align:center;flex-shrink:0">
+          <div style="background:var(--bg);border-radius:var(--rsm);padding:8px 4px">
+            <div style="font-size:10px;color:var(--faint);margin-bottom:4px">지금</div>
+            <div style="font-size:14px;font-weight:700" id="pf-guide-now"></div>
+          </div>
+          <div style="background:var(--green-bg);border-radius:var(--rsm);padding:8px 4px">
+            <div style="font-size:10px;color:var(--faint);margin-bottom:4px">매수시</div>
+            <div style="font-size:14px;font-weight:700;color:var(--green)">주식70%</div>
+          </div>
+          <div style="background:var(--red-bg);border-radius:var(--rsm);padding:8px 4px">
+            <div style="font-size:10px;color:var(--faint);margin-bottom:4px">매도시</div>
+            <div style="font-size:14px;font-weight:700;color:var(--red)">현금100%</div>
+          </div>
+        </div>
+      </div>
+      <div style="margin-top:12px;height:6px;border-radius:3px;background:var(--border);overflow:hidden">
+        <div id="pf-guide-bar" style="height:100%;border-radius:3px;transition:width 0.6s,background 0.4s"></div>
+      </div>
+      <div style="display:flex;justify-content:space-between;font-size:10px;color:var(--faint);margin-top:4px">
+        <span>현금 100%</span><span>분할매수</span><span>주식 70%</span>
+      </div>
+    </div>
+
+    <!-- 매수·매도 배너 -->
     <div class="dual-banner">
       <div class="side-banner" id="buy-banner">
         <div class="side-icon">📈</div>
@@ -246,26 +287,94 @@ tr:hover td { background:var(--bg); }
     <div class="note">* 매수: 위험경보 50+ AND 반등점수 60+. 매도: 과열점수 65+. 매일 09:00 KST 자동 업데이트.</div>
   </div>
 
+  <!-- ── WATCHLIST ────────────────────────────────────────────────── -->
+  <div id="tab-watchlist" style="display:none">
+    <div class="st">ETF / 레버리지 워치리스트 — 기술적 신호 (매일 자동 업데이트)</div>
+    <div style="overflow-x:auto;margin-bottom:1.5rem">
+      <table class="watch-table" id="watch-table">
+        <thead>
+          <tr>
+            <th>티커</th>
+            <th>종목명</th>
+            <th>현재가</th>
+            <th>전일대비</th>
+            <th>RSI</th>
+            <th>vs 200일선</th>
+            <th>볼린저 위치</th>
+            <th>매수 점수</th>
+            <th>매도 점수</th>
+            <th>신호</th>
+          </tr>
+        </thead>
+        <tbody id="watch-tbody"></tbody>
+      </table>
+    </div>
+
+    <div class="st">종목별 상세</div>
+    <div id="watch-detail-grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:12px;margin-bottom:1.5rem"></div>
+
+    <div class="note">* 기술적 분석 전용. 레버리지 ETF(SOXL, TQQQ)는 단기 변동성 매우 큼. 펀더멘털·어닝·거시 흐름은 별도 확인 필요. 투자 판단은 본인 책임.</div>
+  </div>
+
+  <!-- ── PORTFOLIO ────────────────────────────────────────────────── -->
+  <div id="tab-portfolio" style="display:none">
+    <div class="st">포트폴리오 입력</div>
+    <div style="background:var(--surface);border:0.5px solid var(--border);border-radius:var(--r);padding:1.25rem;margin-bottom:1.5rem">
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr auto;gap:10px;align-items:end">
+        <div>
+          <div class="metric-lbl" style="margin-bottom:6px">보유 현금</div>
+          <div style="display:flex;gap:4px">
+            <input id="pf-cash" type="number" placeholder="0" style="width:100%;padding:8px 10px;border:0.5px solid var(--border2);border-radius:var(--rsm);background:var(--bg);color:var(--text);font-size:14px">
+            <select id="pf-cash-cur" style="padding:8px;border:0.5px solid var(--border2);border-radius:var(--rsm);background:var(--bg);color:var(--text);font-size:13px">
+              <option value="KRW">₩</option><option value="USD">$</option>
+            </select>
+          </div>
+        </div>
+        <div>
+          <div class="metric-lbl" style="margin-bottom:6px">보유 주식 평가액</div>
+          <div style="display:flex;gap:4px">
+            <input id="pf-stock" type="number" placeholder="0" style="width:100%;padding:8px 10px;border:0.5px solid var(--border2);border-radius:var(--rsm);background:var(--bg);color:var(--text);font-size:14px">
+            <select id="pf-stock-cur" style="padding:8px;border:0.5px solid var(--border2);border-radius:var(--rsm);background:var(--bg);color:var(--text);font-size:13px">
+              <option value="KRW">₩</option><option value="USD">$</option>
+            </select>
+          </div>
+        </div>
+        <div>
+          <div class="metric-lbl" style="margin-bottom:6px">표시 통화</div>
+          <select id="pf-display-cur" style="width:100%;padding:8px 10px;border:0.5px solid var(--border2);border-radius:var(--rsm);background:var(--bg);color:var(--text);font-size:13px">
+            <option value="KRW">원화 (₩)</option><option value="USD">달러 ($)</option>
+          </select>
+        </div>
+        <button onclick="calcPortfolio()" style="padding:9px 20px;background:var(--text);color:var(--bg);border:none;border-radius:var(--rsm);font-size:13px;cursor:pointer;font-weight:500">계산</button>
+      </div>
+      <div id="pf-usdkrw" style="font-size:11px;color:var(--faint);margin-top:8px"></div>
+    </div>
+    <div id="pf-result" style="display:none">
+      <div class="st">현재 포트폴리오</div>
+      <div class="metric-grid" id="pf-current-cards"></div>
+      <div class="st">시그널 기반 권장 포지션</div>
+      <div id="pf-recommendation" style="margin-bottom:1.5rem"></div>
+      <div class="st">시장 시나리오별 액션 플랜</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:1.5rem" id="pf-scenarios"></div>
+      <div class="note">* 지수 기반 기술적 분석입니다. 개별 종목 리스크·세금·수수료는 별도 고려하세요. 투자 판단은 본인 책임입니다.</div>
+    </div>
+  </div>
+
   <!-- ── MONITOR ────────────────────────────────────────────────────── -->
   <div id="tab-monitor" style="display:none">
     <div class="st">현재 지수</div>
     <div class="metric-grid" id="index-cards"></div>
-
     <div class="st">변동성 · 심리 지표</div>
     <div class="metric-grid" id="risk-cards"></div>
-
     <div class="st">금리 지표 — 방향성 평가</div>
     <div class="metric-grid" id="rate-cards"></div>
-
     <div class="st">신용 · 유동성 지표</div>
     <div class="metric-grid" id="credit-cards"></div>
-
     <div class="st">이평선 분석 — VIX · HY · Fear&amp;Greed</div>
     <div class="metric-grid" id="ma-cards"></div>
-
     <div class="st">실물경기 지표</div>
     <div class="metric-grid" id="macro-cards"></div>
-    <div class="note">* FRED 기준. 기준금리·실업수당은 1~2 영업일 지연. Fed 자산은 주간. 실질금리 = 10년물 - 기대인플레 2.3% 근사.</div>
+    <div class="note">* FRED 기준. 실질금리 = 10년물 - 기대인플레 2.3% 근사.</div>
   </div>
 
   <!-- ── HISTORY ────────────────────────────────────────────────────── -->
@@ -286,7 +395,7 @@ tr:hover td { background:var(--bg); }
         <div class="chart-title">VIX &amp; 20일 이동평균</div>
         <div class="legend-row">
           <span class="ld"><span class="ld-dot" style="background:#E24B4A"></span>VIX</span>
-          <span class="ld"><span class="ld-dot" style="background:rgba(226,75,74,0.4)"></span>VIX 20일선</span>
+          <span class="ld"><span class="ld-dot" style="background:rgba(226,75,74,0.4)"></span>20일선</span>
         </div>
       </div>
       <div style="position:relative;height:200px"><canvas id="chart-vix"></canvas></div>
@@ -358,118 +467,6 @@ tr:hover td { background:var(--bg); }
     </div>
   </div>
 
-  <!-- ── PORTFOLIO ────────────────────────────────────────────────── -->
-  <div id="tab-portfolio" style="display:none">
-    <div class="st">포트폴리오 입력</div>
-    <div style="background:var(--surface);border:0.5px solid var(--border);border-radius:var(--r);padding:1.25rem;margin-bottom:1.5rem">
-      <div style="display:grid;grid-template-columns:1fr 1fr 1fr auto;gap:10px;align-items:end;flex-wrap:wrap" id="pf-input-grid">
-        <div>
-          <div class="metric-lbl" style="margin-bottom:6px">보유 현금</div>
-          <div style="display:flex;gap:4px">
-            <input id="pf-cash" type="number" placeholder="0" style="width:100%;padding:8px 10px;border:0.5px solid var(--border2);border-radius:var(--rsm);background:var(--bg);color:var(--text);font-size:14px">
-            <select id="pf-cash-cur" style="padding:8px;border:0.5px solid var(--border2);border-radius:var(--rsm);background:var(--bg);color:var(--text);font-size:13px">
-              <option value="KRW">₩</option>
-              <option value="USD">$</option>
-            </select>
-          </div>
-        </div>
-        <div>
-          <div class="metric-lbl" style="margin-bottom:6px">보유 주식 평가액</div>
-          <div style="display:flex;gap:4px">
-            <input id="pf-stock" type="number" placeholder="0" style="width:100%;padding:8px 10px;border:0.5px solid var(--border2);border-radius:var(--rsm);background:var(--bg);color:var(--text);font-size:14px">
-            <select id="pf-stock-cur" style="padding:8px;border:0.5px solid var(--border2);border-radius:var(--rsm);background:var(--bg);color:var(--text);font-size:13px">
-              <option value="KRW">₩</option>
-              <option value="USD">$</option>
-            </select>
-          </div>
-        </div>
-        <div>
-          <div class="metric-lbl" style="margin-bottom:6px">표시 통화</div>
-          <select id="pf-display-cur" style="width:100%;padding:8px 10px;border:0.5px solid var(--border2);border-radius:var(--rsm);background:var(--bg);color:var(--text);font-size:13px">
-            <option value="KRW">원화 (₩)</option>
-            <option value="USD">달러 ($)</option>
-          </select>
-        </div>
-        <button onclick="calcPortfolio()" style="padding:9px 20px;background:var(--text);color:var(--bg);border:none;border-radius:var(--rsm);font-size:13px;cursor:pointer;font-weight:500;white-space:nowrap">계산</button>
-      </div>
-      <div id="pf-usdkrw" style="font-size:11px;color:var(--faint);margin-top:8px"></div>
-    </div>
-
-    <div id="pf-result" style="display:none">
-      <!-- 현재 상태 -->
-      <div class="st">현재 포트폴리오</div>
-      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-bottom:1.5rem" id="pf-current-cards"></div>
-
-      <!-- 시그널 기반 추천 -->
-      <div class="st">시그널 기반 권장 포지션</div>
-      <div id="pf-recommendation" style="margin-bottom:1.5rem"></div>
-
-      <!-- 3단계 시나리오 -->
-      <div class="st">시장 시나리오별 액션 플랜</div>
-      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:1.5rem" id="pf-scenarios"></div>
-
-      <div class="note">* 이 추천은 지수 기반 기술적 분석입니다. 개별 종목 리스크·세금·수수료는 별도 고려하세요. 투자 판단은 본인 책임입니다.</div>
-    </div>
-  </div>
-
-  <!-- ── STOCK ─────────────────────────────────────────────────────── -->
-  <div id="tab-stock" style="display:none">
-    <div class="st">종목 분석</div>
-    <div style="background:var(--surface);border:0.5px solid var(--border);border-radius:var(--r);padding:1.25rem;margin-bottom:1.5rem">
-      <div style="display:flex;gap:8px;align-items:flex-end;flex-wrap:wrap">
-        <div style="flex:1;min-width:160px">
-          <div class="metric-lbl" style="margin-bottom:6px">티커 입력 (미국 주식)</div>
-          <input id="stock-ticker" type="text" placeholder="예: AAPL, NVDA, QQQ" style="width:100%;padding:9px 12px;border:0.5px solid var(--border2);border-radius:var(--rsm);background:var(--bg);color:var(--text);font-size:14px;text-transform:uppercase" onkeydown="if(event.key==='Enter')analyzeStock()">
-        </div>
-        <div style="min-width:120px">
-          <div class="metric-lbl" style="margin-bottom:6px">FMP API 키</div>
-          <input id="fmp-key" type="password" placeholder="API 키 입력" style="width:100%;padding:9px 12px;border:0.5px solid var(--border2);border-radius:var(--rsm);background:var(--bg);color:var(--text);font-size:13px">
-        </div>
-        <button onclick="analyzeStock()" style="padding:9px 20px;background:var(--text);color:var(--bg);border:none;border-radius:var(--rsm);font-size:13px;cursor:pointer;font-weight:500">분석</button>
-      </div>
-      <div style="font-size:11px;color:var(--faint);margin-top:8px">* API 키는 브라우저에만 저장되며 서버로 전송되지 않습니다. financialmodelingprep.com 무료 가입 후 발급.</div>
-    </div>
-
-    <div id="stock-loading" style="display:none;text-align:center;padding:2rem;color:var(--muted);font-size:13px">분석 중...</div>
-    <div id="stock-error"   style="display:none;padding:1rem;background:var(--red-bg);border-radius:var(--rsm);color:var(--red-tx);font-size:13px;margin-bottom:1rem"></div>
-    <div id="stock-result"  style="display:none">
-      <!-- 종합 시그널 -->
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:1.5rem">
-        <div class="side-banner" id="stock-buy-banner">
-          <div class="side-icon">📈</div>
-          <div class="side-label" id="stock-buy-label"></div>
-          <div class="side-desc"  id="stock-buy-desc"></div>
-          <div class="side-divider"></div>
-          <div class="side-score" id="stock-buy-score"></div>
-          <div class="side-score-lbl">종목 매수 점수 / 100</div>
-        </div>
-        <div class="side-banner" id="stock-sell-banner">
-          <div class="side-icon">📉</div>
-          <div class="side-label" id="stock-sell-label"></div>
-          <div class="side-desc"  id="stock-sell-desc"></div>
-          <div class="side-divider"></div>
-          <div class="side-score" id="stock-sell-score"></div>
-          <div class="side-score-lbl">종목 매도 점수 / 100</div>
-        </div>
-      </div>
-
-      <!-- 지수 신호와 결합 판단 -->
-      <div class="st">시장 신호 × 종목 신호 결합 판단</div>
-      <div id="stock-combined" style="background:var(--surface);border:0.5px solid var(--border);border-radius:var(--r);padding:1.25rem;margin-bottom:1.5rem;font-size:13px;line-height:1.8"></div>
-
-      <!-- 기술적 지표 -->
-      <div class="st">기술적 지표</div>
-      <div class="tech-grid" id="stock-tech-grid"></div>
-
-      <!-- 가격 정보 -->
-      <div class="st">가격 정보</div>
-      <div class="metric-grid" id="stock-price-grid"></div>
-
-      <div class="note">* 기술적 분석만 포함. 펀더멘털(PER, 실적, 어닝 일정)은 별도 확인 필요. 투자 판단은 본인 책임입니다.</div>
-    </div>
-  </div>
-
-
   <!-- ── GUIDE ──────────────────────────────────────────────────────── -->
   <div id="tab-guide" style="display:none">
     <div id="guide-list"></div>
@@ -477,7 +474,6 @@ tr:hover td { background:var(--bg); }
 </div>
 
 <script>
-// ── 정적 데이터 ───────────────────────────────────────────────────────
 const CRASHES = [
   { id:'dotcom', name:'닷컴 버블 붕괴', date:'2000.03–2002.10',
     badge:[['나스닥 -78%','badge-red'],['S&P -49%','badge-red'],['다우 -38%','badge-amber']],
@@ -532,416 +528,19 @@ const CRASHES = [
 ];
 
 const GUIDE = [
-  {name:'RSI — 매수/매도 공통', color:'#534AB7',
-   desc:'14일 RSI. 과매도(30이하)=매수 후보, 과매수(70이상)=매도 후보. RSI 25이하 매수 후 1년 평균 +35%. RSI 80이상 후 3개월 평균 -8%.',
-   threshold:'매수: 30이하 / 매도: 70이상 / 극단: 25이하(매수) 80이상(매도)',
-   signal_buy:'RSI 30이하', signal_sell:'RSI 70이상'},
-  {name:'200일 이동평균 괴리율', color:'#185FA5',
-   desc:'현재가의 200일 이평선 대비 위치. 역사적 고평가/저평가 판단. -20% 이하는 강력 매수, +25% 이상은 강력 매도.',
-   threshold:'매수: -15%이하 / 매도: +20%이상',
-   signal_buy:'SP500 200일선 -15% 이하', signal_sell:'SP500 200일선 +20% 이상'},
-  {name:'VIX 이평선 분석', color:'#E24B4A',
-   desc:'VIX 절대값보다 20일선 대비 위치·기울기가 더 중요. 20일선 대비 +80% 이상=공포 극점(매수). 20일선 하락 전환=안정화 신호(반등 선행). -25% 이하=방심 극점(매도).',
-   threshold:'매수: 20일선 대비 +50%이상 / 매도: +15% 이하 + 기울기 상승',
-   signal_buy:'VIX 20일선 대비 +80% 이상', signal_sell:'VIX 20일선 대비 -25% 이하'},
-  {name:'Fear & Greed + 10일 이평선', color:'#D85A30',
-   desc:'10일 이평선으로 노이즈 제거. 이평 30이하+하락 기울기=공포 추세 가속(매수). 이평 70이상+상승 기울기=탐욕 추세 가속(매도). 단독보다 복합 신호로 사용.',
-   threshold:'매수: 10일 이평 25이하 / 매도: 10일 이평 75이상',
-   signal_buy:'F&G 10일 이평 25이하 + 하락 기울기', signal_sell:'F&G 10일 이평 75이상 + 상승 기울기'},
-  {name:'HY 스프레드 + 이평선', color:'#854F0B',
-   desc:'HY 20일선 하락 전환(-3% 이하)이 주식 반등 2~4주 선행. 매도: HY 3% 이하는 투자자들이 리스크를 완전히 무시하는 과열 신호. 저점에서 이평선 상향 돌파 시 경계.',
-   threshold:'매수: 8%이상 후 20일선 하락 전환 / 매도: 3%이하',
-   signal_buy:'HY 8%+ 후 20일선 하락 전환', signal_sell:'HY 3% 이하 장기 유지'},
-  {name:'IG 스프레드', color:'#185FA5',
-   desc:'HY보다 먼저 움직임. IG 안정화 → HY 안정화 → 주식 반등 순서. IG가 먼저 축소되면 반등 초기 신호.',
-   threshold:'매수: HY보다 먼저 축소 전환',
-   signal_buy:'IG 축소 전환 + HY 고점 확인', signal_sell:'지표 없음'},
-  {name:'10년물 국채 — 방향성', color:'#185FA5',
-   desc:'절대값보다 방향이 중요. 3개월간 +0.5%p 이상 상승=성장주 압박, 하락 전환=경기침체 우려 or 금리인하 기대(성장주 우호). 실질금리(명목-기대인플레) 2% 이상=성장주 부담.',
-   threshold:'상승 중: 성장주 압박 / 하락 중: 경기침체 우려 or 금리인하 기대',
-   signal_buy:'3개월 하락 전환 + 실질금리 하락', signal_sell:'3개월 급등 +1%p 이상'},
-  {name:'기준금리 (Fed) — 방향성', color:'#3B6D11',
-   desc:'인상 사이클 종료 후 6~18개월 내 급락 발생 패턴. 동결 장기화=피벗 기대 누적. 인하 전환=주식 호재(단기). 긴급 인하=위기 이미 진행(단기 반등 후 재하락 가능).',
-   threshold:'인상 종료+동결: 피벗 기대 / 인하 전환: 주식 단기 호재',
-   signal_buy:'인하 사이클 진입 확인', signal_sell:'연속 인상 4회 이상'},
-  {name:'수익률 곡선 (2s10s)', color:'#534AB7',
-   desc:'역전 후 정상화 시점에 실제 급락. 역전 해소(정상화) 후 매수가 더 위험. 완전 정상화(0.5%이상) + 타 지표 안정화 후 진입.',
-   threshold:'역전: 침체 전조 / 역전 후 정상화: 실제 침체 시작',
-   signal_buy:'완전 정상화 + 타 지표 동시 안정', signal_sell:'역전 후 급속 정상화'},
-  {name:'TED 스프레드', color:'#534AB7',
-   desc:'금융 시스템 유동성 스트레스. 0.5% 이상=금융기관 불신 증가. 2008년 4.6% 돌파. 하락 전환이 시장 안정 신호.',
-   threshold:'정상: 0.3% / 주의: 0.5% / 위기: 1.0% 이상',
-   signal_buy:'TED 하락 전환 확인', signal_sell:'경보 지표 (매도 신호 없음)'},
-  {name:'실업수당 청구', color:'#0F6E56',
-   desc:'4주 이동평균 기준. 급등 후 안정화 전환이 경기 회복 초기 신호. 30만건 이상 유지=경기 둔화. 코로나 때 690만 돌파 후 급락이 반등 선행.',
-   threshold:'정상: 25만건 이하 / 주의: 30만건 이상',
-   signal_buy:'4주 이평 하향 전환', signal_sell:'지표 없음 (경기 모니터 용도)'},
-  {name:'실질금리 &amp; ERP', color:'#993556',
-   desc:'실질금리(10년물-기대인플레): 2% 이상=성장주 밸류에이션 압박. ERP(주식이익률-10년물): 양수=주식 유리, 음수=채권 유리. ERP 1% 이상=주식 매수 우호.',
-   threshold:'실질금리 2%이상: 성장주 부담 / ERP 음수: 채권 유리',
-   signal_buy:'실질금리 하락 + ERP 1%이상', signal_sell:'실질금리 2%이상 + ERP 음수'},
+  {name:'RSI', color:'#534AB7', desc:'14일 RSI. 과매도(30이하)=매수 후보, 과매수(70이상)=매도 후보.', threshold:'매수: 30이하 / 매도: 70이상', signal_buy:'RSI 30이하', signal_sell:'RSI 70이상'},
+  {name:'200일 이동평균 괴리율', color:'#185FA5', desc:'현재가의 200일 이평선 대비 위치. -20% 이하 강력 매수, +25% 이상 강력 매도.', threshold:'매수: -15%이하 / 매도: +20%이상', signal_buy:'SP500 200일선 -15% 이하', signal_sell:'SP500 200일선 +20% 이상'},
+  {name:'VIX 이평선', color:'#E24B4A', desc:'VIX 20일선 대비 +80% 이상=공포 극점(매수). 하락 전환=안정화 신호. -25% 이하=방심 극점(매도).', threshold:'매수: 20일선 +50%이상 / 매도: -25%이하', signal_buy:'VIX 20일선 +80%이상', signal_sell:'VIX 20일선 -25%이하'},
+  {name:'Fear & Greed 10일 이평', color:'#D85A30', desc:'이평 30이하+하락 기울기=공포 추세(매수). 이평 70이상+상승 기울기=탐욕 추세(매도).', threshold:'매수: 이평 25이하 / 매도: 이평 75이상', signal_buy:'F&G 10일 이평 25이하', signal_sell:'F&G 10일 이평 75이상'},
+  {name:'HY 스프레드 + 이평선', color:'#854F0B', desc:'HY 20일선 하락 전환이 주식 반등 2~4주 선행. HY 3% 이하=과열 매도 신호.', threshold:'매수: 8%이상 후 20일선 하락 전환 / 매도: 3%이하', signal_buy:'HY 8%+ 후 하락 전환', signal_sell:'HY 3% 이하'},
+  {name:'10년물 국채 방향성', color:'#185FA5', desc:'3개월간 방향이 중요. 상승=성장주 압박. 실질금리 2%이상=성장주 부담.', threshold:'상승 중: 성장주 압박 / 하락 중: 금리인하 기대', signal_buy:'3개월 하락 전환', signal_sell:'3개월 급등 +1%p'},
+  {name:'기준금리 방향성', color:'#3B6D11', desc:'인상 사이클 종료 후 6~18개월 내 급락 발생. 인하 전환=주식 단기 호재.', threshold:'인상 종료+동결: 피벗 기대 / 인하 전환: 호재', signal_buy:'인하 사이클 진입', signal_sell:'연속 인상 4회+'},
+  {name:'수익률 곡선 (2s10s)', color:'#534AB7', desc:'역전 후 정상화 시점에 실제 급락. 완전 정상화 후 안전.', threshold:'역전: 침체 전조 / 역전 후 정상화: 실제 침체', signal_buy:'완전 정상화 + 타 지표 안정', signal_sell:'역전 후 급속 정상화'},
+  {name:'실질금리 & ERP', color:'#993556', desc:'실질금리 2%이상=성장주 압박. ERP(주식이익률-10년물) 음수=채권 유리.', threshold:'실질금리 2%이상: 성장주 부담 / ERP 음수: 채권 유리', signal_buy:'실질금리 하락 + ERP 1%이상', signal_sell:'실질금리 2%이상 + ERP 음수'},
 ];
 
 let DATA = null, charts = {};
 const BASE_URL = (() => { const p=window.location.pathname.replace(/\/[^/]*$/,''); return p===''?'':p; })();
-
-
-// ── PORTFOLIO ─────────────────────────────────────────────────────────
-function renderPortfolioDefaults() {
-  const s = DATA?.snapshot || {};
-  const rate = s.usdkrw || 1380;
-  document.getElementById('pf-usdkrw').textContent =
-    `현재 환율: 1 USD = ${rate.toLocaleString()} KRW (FRED 기준)`;
-}
-
-function toKRW(val, cur, rate) {
-  return cur === 'USD' ? val * rate : val;
-}
-
-function calcPortfolio() {
-  if (!DATA) return;
-  const s = DATA.snapshot || {};
-  const rate     = s.usdkrw || 1380;
-  const dispCur  = document.getElementById('pf-display-cur').value;
-  const cashRaw  = parseFloat(document.getElementById('pf-cash').value)  || 0;
-  const stockRaw = parseFloat(document.getElementById('pf-stock').value) || 0;
-  const cashCur  = document.getElementById('pf-cash-cur').value;
-  const stockCur = document.getElementById('pf-stock-cur').value;
-
-  // 모두 KRW로 통일 후 dispCur로 변환
-  let cashKRW  = toKRW(cashRaw,  cashCur,  rate);
-  let stockKRW = toKRW(stockRaw, stockCur, rate);
-  const totalKRW = cashKRW + stockKRW;
-
-  const conv  = dispCur === 'USD' ? 1/rate : 1;
-  const sym   = dispCur === 'USD' ? '$' : '₩';
-  const fmtA  = v => sym + Math.round(v * conv).toLocaleString();
-  const curRatio = totalKRW > 0 ? Math.round(stockKRW / totalKRW * 100) : 0;
-
-  document.getElementById('pf-result').style.display = '';
-
-  // 현재 포트폴리오 카드
-  document.getElementById('pf-current-cards').innerHTML = [
-    {lbl:'총 자산',       val:fmtA(totalKRW), color:'c-muted'},
-    {lbl:'보유 현금',     val:fmtA(cashKRW),  color:'c-blue'},
-    {lbl:'보유 주식',     val:fmtA(stockKRW), color:'c-green'},
-    {lbl:'현재 주식 비중',val:curRatio+'%',   color:curRatio>80?'c-amber':'c-muted'},
-  ].map(c=>`<div class="metric-card"><div class="metric-lbl">${c.lbl}</div><div class="metric-val ${c.color}">${c.val}</div></div>`).join('');
-
-  // 시그널 기반 권장 비중 계산
-  const bs = DATA.buy_score  || 0;
-  const ss = DATA.sell_score || 0;
-  const rs = DATA.risk_score || 0;
-
-  let recRatio = 0;   // 권장 주식 비중 (%)
-  let recLabel = '';
-  let recColor = 'blue';
-  let recDesc  = '';
-  let recAction= '';
-
-  if (rs >= 50 && bs >= 60) {
-    recRatio = 70; recLabel = '적극 매수'; recColor = 'green';
-    recDesc  = '위험경보 + 반등조건 모두 충족 — 주식 비중 70%까지 확대 권장';
-    recAction= '매수';
-  } else if (rs >= 50 && bs >= 35) {
-    recRatio = 30; recLabel = '분할 매수'; recColor = 'green';
-    recDesc  = '반등 조건 일부 충족 — 소량 선취매, 나머지 대기';
-    recAction= '부분매수';
-  } else if (rs >= 50 && bs < 35) {
-    recRatio = 0; recLabel = '관망'; recColor = 'amber';
-    recDesc  = '하락 중이나 반등 조건 미충족 — 추가 하락 가능, 현금 보유';
-    recAction= '대기';
-  } else if (ss >= 65) {
-    recRatio = 0; recLabel = '매도'; recColor = 'red';
-    recDesc  = '과열 신호 다수 — 주식 비중 축소, 현금화 권장';
-    recAction= '매도';
-  } else if (ss >= 40) {
-    recRatio = 30; recLabel = '부분 익절'; recColor = 'amber';
-    recDesc  = '과열 조짐 감지 — 일부 익절하여 현금 비중 확대';
-    recAction= '부분매도';
-  } else {
-    recRatio = curRatio; recLabel = '현 비중 유지'; recColor = 'blue';
-    recDesc  = '뚜렷한 매수·매도 신호 없음 — 현재 포지션 유지';
-    recAction= '홀딩';
-  }
-
-  const recStockKRW = totalKRW * recRatio / 100;
-  const recCashKRW  = totalKRW - recStockKRW;
-  const diffKRW     = recStockKRW - stockKRW;
-  const diffLabel   = diffKRW > 0
-    ? `→ ${fmtA(Math.abs(diffKRW))} 추가 매수`
-    : diffKRW < 0
-    ? `→ ${fmtA(Math.abs(diffKRW))} 매도 (익절)`
-    : '→ 변동 없음';
-  const diffColor = diffKRW > 0 ? 'c-green' : diffKRW < 0 ? 'c-red' : 'c-muted';
-
-  document.getElementById('pf-recommendation').innerHTML = `
-    <div class="side-banner ${recColor}" style="display:block">
-      <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px">
-        <div>
-          <div class="side-label">${recLabel}</div>
-          <div class="side-desc" style="margin-bottom:0">${recDesc}</div>
-        </div>
-        <div style="text-align:right">
-          <div style="font-size:28px;font-weight:700">주식 ${recRatio}%</div>
-          <div style="font-size:12px;opacity:0.8">현금 ${100-recRatio}%</div>
-        </div>
-      </div>
-      <div class="side-divider"></div>
-      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;text-align:center">
-        <div><div style="font-size:18px;font-weight:600">${fmtA(recStockKRW)}</div><div style="font-size:11px;opacity:0.7">권장 주식 보유액</div></div>
-        <div><div style="font-size:18px;font-weight:600">${fmtA(recCashKRW)}</div><div style="font-size:11px;opacity:0.7">권장 현금 보유액</div></div>
-        <div><div style="font-size:18px;font-weight:600 ;color:${diffKRW>0?'var(--green)':diffKRW<0?'var(--red)':'inherit'}">${diffLabel}</div><div style="font-size:11px;opacity:0.7">현재 대비 액션</div></div>
-      </div>
-    </div>`;
-
-  // 3단계 시나리오
-  const scenarios = [
-    { label:'🟢 매수 타이밍',   ratio:70, color:'green',
-      cond:'위험경보 50+ AND 반등점수 60+',
-      desc:'주식 70%까지 확대. 분할 매수 권장 (한 번에 전량 X)' },
-    { label:'⚪ 중립 / 홀딩',   ratio:curRatio, color:'blue',
-      cond:'뚜렷한 신호 없음',
-      desc:'현 비중 유지. 추가 매수·매도 불필요' },
-    { label:'🔴 매도 타이밍',   ratio:0, color:'red',
-      cond:'과열점수 65+',
-      desc:'주식 전량 또는 대부분 현금화. 다음 매수 기회 대기' },
-  ];
-  document.getElementById('pf-scenarios').innerHTML = scenarios.map(sc=>`
-    <div class="side-banner ${sc.color}" style="display:block">
-      <div class="side-label" style="font-size:15px;margin-bottom:4px">${sc.label}</div>
-      <div style="font-size:11px;opacity:0.75;margin-bottom:10px">${sc.cond}</div>
-      <div class="side-divider"></div>
-      <div style="font-size:13px;font-weight:600;margin-bottom:4px">주식 ${sc.ratio}% / 현금 ${100-sc.ratio}%</div>
-      <div style="font-size:13px;font-weight:700;margin-bottom:6px">${fmtA(totalKRW*sc.ratio/100)} 주식 보유</div>
-      <div style="font-size:11px;opacity:0.8">${sc.desc}</div>
-    </div>`).join('');
-}
-
-// ── STOCK ANALYSIS ────────────────────────────────────────────────────
-const FMP_BASE = 'https://financialmodelingprep.com/api/v3';
-
-async function analyzeStock() {
-  const ticker = document.getElementById('stock-ticker').value.trim().toUpperCase();
-  const apiKey = document.getElementById('fmp-key').value.trim();
-  if (!ticker) { showStockError('티커를 입력해주세요.'); return; }
-  if (!apiKey)  { showStockError('FMP API 키를 입력해주세요.'); return; }
-
-  document.getElementById('stock-loading').style.display = '';
-  document.getElementById('stock-result').style.display  = 'none';
-  document.getElementById('stock-error').style.display   = 'none';
-
-  // API 키 로컬 저장
-  localStorage.setItem('fmp_key', apiKey);
-
-  try {
-    // 1) 일별 가격 (200일치)
-    const priceRes = await fetch(`${FMP_BASE}/historical-price-full/${ticker}?timeseries=220&apikey=${apiKey}`);
-    const priceData = await priceRes.json();
-    if (!priceData.historical || priceData.historical.length === 0) {
-      throw new Error(`"${ticker}" 데이터를 찾을 수 없습니다. 티커를 확인해주세요.`);
-    }
-    const hist = priceData.historical.reverse(); // 오래된 순으로
-    const closes = hist.map(d => d.close);
-    const volumes = hist.map(d => d.volume);
-    const current = closes[closes.length - 1];
-    const prev    = closes[closes.length - 2];
-
-    // 2) 기술적 지표 계산
-    const rsi14     = calcRSI(closes, 14);
-    const ma50      = closes.length >= 50  ? closes.slice(-50).reduce((a,b)=>a+b,0)/50   : null;
-    const ma200     = closes.length >= 200 ? closes.slice(-200).reduce((a,b)=>a+b,0)/200 : null;
-    const ma20      = closes.length >= 20  ? closes.slice(-20).reduce((a,b)=>a+b,0)/20   : null;
-    const ma20_5ago = closes.length >= 25  ? closes.slice(-25,-5).reduce((a,b)=>a+b,0)/20 : null;
-
-    const vs_ma50  = ma50  ? ((current - ma50)  / ma50  * 100) : null;
-    const vs_ma200 = ma200 ? ((current - ma200) / ma200 * 100) : null;
-    const ma20_slope = (ma20 && ma20_5ago) ? ((ma20 - ma20_5ago) / ma20_5ago * 100) : null;
-
-    // 볼린저 밴드 (20일)
-    let bbUpper = null, bbLower = null, bbPos = null;
-    if (closes.length >= 20) {
-      const slice = closes.slice(-20);
-      const mean  = slice.reduce((a,b)=>a+b,0)/20;
-      const std   = Math.sqrt(slice.map(v=>(v-mean)**2).reduce((a,b)=>a+b,0)/20);
-      bbUpper = mean + 2*std;
-      bbLower = mean - 2*std;
-      bbPos   = bbUpper !== bbLower ? ((current - bbLower) / (bbUpper - bbLower) * 100) : 50;
-    }
-
-    // 거래량 20일 평균 대비
-    const vol20avg = volumes.length >= 20 ? volumes.slice(-20,-1).reduce((a,b)=>a+b,0)/19 : null;
-    const volRatio = (vol20avg && volumes.length > 0) ? (volumes[volumes.length-1] / vol20avg * 100) : null;
-
-    // 52주 고/저
-    const w52 = closes.slice(-252);
-    const high52 = Math.max(...w52);
-    const low52  = Math.min(...w52);
-    const vs_high52 = ((current - high52) / high52 * 100);
-    const vs_low52  = ((current - low52)  / low52  * 100);
-
-    // 3) 매수 점수
-    let buyScore = 0, buySignals = [];
-    if (rsi14 !== null) {
-      if (rsi14 < 25)      { buyScore += 25; buySignals.push({label:`RSI ${rsi14.toFixed(1)} — 극단 과매도 🟢`, strength:'strong'}); }
-      else if (rsi14 < 30) { buyScore += 18; buySignals.push({label:`RSI ${rsi14.toFixed(1)} — 과매도 구간`, strength:'medium'}); }
-      else if (rsi14 < 40) { buyScore += 8;  buySignals.push({label:`RSI ${rsi14.toFixed(1)} — 약한 과매도`, strength:'weak'}); }
-    }
-    if (vs_ma200 !== null) {
-      if (vs_ma200 < -20)      { buyScore += 25; buySignals.push({label:`200일선 대비 ${vs_ma200.toFixed(1)}% — 역사적 저평가 🟢`, strength:'strong'}); }
-      else if (vs_ma200 < -15) { buyScore += 18; buySignals.push({label:`200일선 대비 ${vs_ma200.toFixed(1)}% — 강한 매수 구간`, strength:'strong'}); }
-      else if (vs_ma200 < -10) { buyScore += 10; buySignals.push({label:`200일선 대비 ${vs_ma200.toFixed(1)}% — 매수 후보`, strength:'medium'}); }
-    }
-    if (bbPos !== null && bbPos < 15) { buyScore += 15; buySignals.push({label:`볼린저밴드 하단 근접 (${bbPos.toFixed(0)}%) — 과매도 반등 후보`, strength:'medium'}); }
-    if (vs_high52 < -30) { buyScore += 10; buySignals.push({label:`52주 고점 대비 ${vs_high52.toFixed(1)}% — 대폭 조정 구간`, strength:'medium'}); }
-    if (ma20_slope !== null && ma20_slope < -3 && vs_ma200 < 0) { buyScore += 8; buySignals.push({label:`20일선 기울기 ${ma20_slope.toFixed(1)}% 하락 후 반등 조짐`, strength:'weak'}); }
-
-    // 4) 매도 점수
-    let sellScore = 0, sellSignals = [];
-    if (rsi14 !== null) {
-      if (rsi14 > 80)      { sellScore += 25; sellSignals.push({label:`RSI ${rsi14.toFixed(1)} — 극단 과매수 🔴`, strength:'strong'}); }
-      else if (rsi14 > 70) { sellScore += 18; sellSignals.push({label:`RSI ${rsi14.toFixed(1)} — 과매수 구간`, strength:'medium'}); }
-      else if (rsi14 > 65) { sellScore += 8;  sellSignals.push({label:`RSI ${rsi14.toFixed(1)} — 과열 주의`, strength:'weak'}); }
-    }
-    if (vs_ma200 !== null) {
-      if (vs_ma200 > 25)      { sellScore += 25; sellSignals.push({label:`200일선 대비 +${vs_ma200.toFixed(1)}% — 역사적 고평가 🔴`, strength:'strong'}); }
-      else if (vs_ma200 > 20) { sellScore += 18; sellSignals.push({label:`200일선 대비 +${vs_ma200.toFixed(1)}% — 강한 매도 구간`, strength:'strong'}); }
-      else if (vs_ma200 > 15) { sellScore += 10; sellSignals.push({label:`200일선 대비 +${vs_ma200.toFixed(1)}% — 과열 주의`, strength:'medium'}); }
-    }
-    if (bbPos !== null && bbPos > 85) { sellScore += 15; sellSignals.push({label:`볼린저밴드 상단 근접 (${bbPos.toFixed(0)}%) — 과매수 조정 후보`, strength:'medium'}); }
-    if (vs_low52 > 80)  { sellScore += 10; sellSignals.push({label:`52주 저점 대비 +${vs_low52.toFixed(1)}% — 상단 부담`, strength:'medium'}); }
-    if (volRatio !== null && volRatio > 200 && rsi14 > 65) { sellScore += 8; sellSignals.push({label:`거래량 평균 대비 ${volRatio.toFixed(0)}% — 고점 거래량 급증`, strength:'medium'}); }
-
-    buyScore  = Math.min(buyScore,  100);
-    sellScore = Math.min(sellScore, 100);
-
-    // 5) 지수 신호 결합
-    const mktBuy  = DATA?.buy_score  || 0;
-    const mktSell = DATA?.sell_score || 0;
-    const mktRisk = DATA?.risk_score || 0;
-    let combined = '', combinedBg = 'var(--blue-bg)';
-    if      (mktRisk >= 50 && buyScore >= 55 && mktBuy >= 35)   { combined = `🟢 강한 매수 — 시장 하락 + 종목 과매도 동시 충족. 분할 매수 적극 검토.`; combinedBg='var(--green-bg)'; }
-    else if (mktRisk >= 50 && buyScore >= 35)                    { combined = `🟡 약한 매수 — 시장 하락 확인, 종목 신호 일부 충족. 소량 선취매 가능.`; combinedBg='var(--amber-bg)'; }
-    else if (mktRisk >= 50 && buyScore < 35)                     { combined = `🔴 관망 — 시장 하락 중이나 종목 반등 조건 미충족. 추가 하락 가능.`; combinedBg='var(--red-bg)'; }
-    else if (mktSell >= 65 && sellScore >= 50)                   { combined = `🔴 강한 매도 — 시장 과열 + 종목 과매수 동시. 비중 축소 권장.`; combinedBg='var(--red-bg)'; }
-    else if (mktSell >= 40 && sellScore >= 40)                   { combined = `🟡 부분 익절 — 시장·종목 모두 과열 조짐. 일부 익절 고려.`; combinedBg='var(--amber-bg)'; }
-    else if (buyScore >= 60)                                     { combined = `🟡 종목 단독 매수 신호 — 시장 중립이나 종목 자체 과매도. 소량 가능, 시장 역풍 주의.`; combinedBg='var(--amber-bg)'; }
-    else if (sellScore >= 60)                                    { combined = `🟡 종목 단독 매도 신호 — 시장 중립이나 종목 자체 과매수. 일부 익절 고려.`; combinedBg='var(--amber-bg)'; }
-    else                                                          { combined = `⚪ 중립 / 홀딩 — 뚜렷한 시그널 없음. 현 포지션 유지 권장.`; combinedBg='var(--blue-bg)'; }
-
-    // 6) 배너 색
-    const buyColor  = buyScore>=60?'green':buyScore>=35?'amber':'blue';
-    const sellColor = sellScore>=65?'red':sellScore>=40?'amber':'blue';
-    const COLOR = {green:'var(--green)',amber:'var(--amber)',red:'var(--red)',blue:'var(--blue)'};
-
-    document.getElementById('stock-buy-banner').className  = `side-banner ${buyColor}`;
-    document.getElementById('stock-sell-banner').className = `side-banner ${sellColor}`;
-    const buyLabel  = buyScore>=60?'매수 신호':buyScore>=35?'약한 매수 신호':'중립·홀딩';
-    const sellLabel = sellScore>=65?'매도 신호':sellScore>=40?'부분 익절 검토':sellScore>=20?'과열 주의':'홀딩';
-    document.getElementById('stock-buy-label').textContent  = buyLabel;
-    document.getElementById('stock-sell-label').textContent = sellLabel;
-    document.getElementById('stock-buy-desc').textContent   = buySignals.length>0 ? buySignals[0].label : '과매도 조건 미충족';
-    document.getElementById('stock-sell-desc').textContent  = sellSignals.length>0 ? sellSignals[0].label : '과매수 조건 미충족';
-    document.getElementById('stock-buy-score').textContent  = buyScore;
-    document.getElementById('stock-sell-score').textContent = sellScore;
-    document.getElementById('stock-buy-score').style.color  = COLOR[buyScore>=60?'green':buyScore>=35?'amber':'red'];
-    document.getElementById('stock-sell-score').style.color = COLOR[sellScore>=65?'red':sellScore>=40?'amber':'blue'];
-
-    // 결합 판단
-    document.getElementById('stock-combined').style.background = combinedBg;
-    document.getElementById('stock-combined').innerHTML = `
-      <div style="font-size:14px;font-weight:500;margin-bottom:8px">${ticker} × 시장 신호 결합</div>
-      <div style="font-size:13px;line-height:1.8">${combined}</div>
-      <div style="margin-top:10px;font-size:12px;color:var(--muted)">시장 BuyScore: ${mktBuy} / SellScore: ${mktSell} / RiskScore: ${mktRisk}</div>`;
-
-    // 기술적 지표 카드
-    const fmt2 = (v,d=2)=>v!=null?Number(v).toFixed(d):'—';
-    const pct2 = v=>v!=null?(v>0?'+':'')+v.toFixed(1)+'%':'—';
-    const techItems = [
-      {lbl:'RSI (14일)',          val:fmt2(rsi14,1),      sub:rsiLabel(rsi14),  cls:rsiClass(rsi14)},
-      {lbl:'vs 200일 이평선',     val:pct2(vs_ma200),     sub:maLabel(vs_ma200), cls:maClass(vs_ma200)},
-      {lbl:'vs 50일 이평선',      val:pct2(vs_ma50),      sub:maLabel(vs_ma50),  cls:maClass(vs_ma50)},
-      {lbl:'20일선 기울기',       val:pct2(ma20_slope),
-       sub:ma20_slope!=null?(ma20_slope<-3?'하락 전환':ma20_slope>3?'상승 추세':'횡보'):'—',
-       cls:ma20_slope!=null?(ma20_slope<-3?'bullish':ma20_slope>5?'overbought':'neutral'):'neutral'},
-      {lbl:'볼린저밴드 위치',     val:bbPos!=null?bbPos.toFixed(0)+'%':'—',
-       sub:bbPos!=null?(bbPos<15?'하단 근접 🟢':bbPos>85?'상단 근접 🔴':'중간 구간'):'—',
-       cls:bbPos!=null?(bbPos<15?'bullish':bbPos>85?'overbought':'neutral'):'neutral'},
-      {lbl:'거래량 vs 20일 평균', val:volRatio!=null?volRatio.toFixed(0)+'%':'—',
-       sub:volRatio!=null?(volRatio>200?'급증':volRatio>120?'증가':volRatio<80?'감소':'보통'):'—',
-       cls:'neutral'},
-      {lbl:'52주 고점 대비',      val:pct2(vs_high52), sub:'', cls:vs_high52<-30?'bullish':vs_high52>-5?'overbought':'neutral'},
-      {lbl:'52주 저점 대비',      val:pct2(vs_low52),  sub:'', cls:vs_low52>80?'overbought':vs_low52<20?'bullish':'neutral'},
-    ];
-    document.getElementById('stock-tech-grid').innerHTML = techItems.map(ti=>`
-      <div class="tech-card ${ti.cls}">
-        <div class="metric-lbl">${ti.lbl}</div>
-        <div class="metric-val ${ti.cls==='bullish'?'c-green':ti.cls==='overbought'?'c-red':'c-muted'}">${ti.val}</div>
-        <div class="metric-sub ${ti.cls==='bullish'?'c-green':ti.cls==='overbought'?'c-red':'c-muted'}">${ti.sub}</div>
-      </div>`).join('');
-
-    // 가격 정보
-    const chg1d = ((current - prev) / prev * 100);
-    const s = DATA?.snapshot || {};
-    const rate = s.usdkrw || 1380;
-    document.getElementById('stock-price-grid').innerHTML = [
-      {lbl:`${ticker} 현재가`,   val:'$'+current.toFixed(2), color:'c-muted', sub:`₩${Math.round(current*rate).toLocaleString()}`},
-      {lbl:'전일 대비',          val:(chg1d>0?'+':'')+chg1d.toFixed(2)+'%', color:chg1d>0?'c-green':chg1d<0?'c-red':'c-muted', sub:''},
-      {lbl:'200일 이평선',       val:ma200?'$'+ma200.toFixed(2):'—', color:'c-muted', sub:''},
-      {lbl:'52주 고점',          val:'$'+high52.toFixed(2), color:'c-muted', sub:''},
-      {lbl:'52주 저점',          val:'$'+low52.toFixed(2),  color:'c-muted', sub:''},
-    ].map(c=>`<div class="metric-card"><div class="metric-lbl">${c.lbl}</div><div class="metric-val ${c.color}">${c.val}</div><div class="metric-sub c-muted">${c.sub}</div></div>`).join('');
-
-    document.getElementById('stock-loading').style.display = 'none';
-    document.getElementById('stock-result').style.display  = '';
-
-  } catch(e) {
-    document.getElementById('stock-loading').style.display = 'none';
-    showStockError(e.message || '데이터 로드 실패');
-  }
-}
-
-function calcRSI(closes, period) {
-  if (closes.length < period + 1) return null;
-  let gains = 0, losses = 0;
-  for (let i = closes.length - period; i < closes.length; i++) {
-    const diff = closes[i] - closes[i-1];
-    if (diff > 0) gains  += diff;
-    else          losses -= diff;
-  }
-  const avgGain = gains  / period;
-  const avgLoss = losses / period;
-  if (avgLoss === 0) return 100;
-  const rs = avgGain / avgLoss;
-  return parseFloat((100 - 100/(1+rs)).toFixed(2));
-}
-
-function showStockError(msg) {
-  const el = document.getElementById('stock-error');
-  el.textContent = msg;
-  el.style.display = '';
-}
-
-async function boot() {
-  try {
-    const r = await fetch(BASE_URL+'/data/indicators.json?v='+Date.now());
-    if (!r.ok) throw new Error('HTTP '+r.status);
-    DATA = await r.json();
-  } catch(e) {
-    document.getElementById('loader').innerHTML=`<div style="color:var(--muted);text-align:center;padding:2rem">로드 실패: ${e.message}</div>`;
-    return;
-  }
-  document.getElementById('loader').style.display='none';
-  document.getElementById('app').style.display='';
-  document.getElementById('updated-label').textContent='업데이트: '+(DATA.updated_kst||DATA.updated_at);
-  // FMP 키 복원
-  const savedKey = localStorage.getItem('fmp_key');
-  if (savedKey) document.getElementById('fmp-key').value = savedKey;
-  renderSignal();
-  renderMonitor();
-  renderCrashGrid();
-  renderGuide();
-}
 
 // ── 헬퍼 ─────────────────────────────────────────────────────────────
 function fmt(v,d=2){ return (v!=null&&!isNaN(v))?Number(v).toFixed(d):'—'; }
@@ -952,53 +551,20 @@ const CO={responsive:true,maintainAspectRatio:false,plugins:{legend:{display:fal
   scales:{x:{grid:{color:'rgba(128,128,128,0.07)'},ticks:{color:'#888',font:{size:10},maxTicksLimit:8}},
           y:{grid:{color:'rgba(128,128,128,0.07)'},ticks:{color:'#888',font:{size:10}}}}};
 
-// ── 라벨 헬퍼 ─────────────────────────────────────────────────────────
-function rsiLabel(v){ if(v==null)return''; if(v<25)return'극단 과매도 🟢'; if(v<30)return'과매도 ↑'; if(v<40)return'약한 과매도'; if(v>80)return'극단 과매수 🔴'; if(v>70)return'과매수 ↓'; if(v>65)return'과열 주의'; return'중립'; }
+function rsiLabel(v){ if(v==null)return''; if(v<25)return'극단 과매도 🟢'; if(v<30)return'과매도'; if(v<40)return'약한 과매도'; if(v>80)return'극단 과매수 🔴'; if(v>70)return'과매수'; if(v>65)return'과열 주의'; return'중립'; }
 function rsiClass(v){ if(v==null)return'neutral'; if(v<35)return'bullish'; if(v>65)return'overbought'; return'neutral'; }
-function maLabel(v){ if(v==null)return''; if(v<-20)return'역사적 저평가 🟢'; if(v<-15)return'강한 매수 구간 🟢'; if(v<-10)return'매수 후보 구간'; if(v<0)return'200일선 하방'; if(v>25)return'역사적 고평가 🔴'; if(v>20)return'강한 매도 구간 🔴'; if(v>15)return'과열 주의 ⚠️'; return'200일선 상방'; }
+function maLabel(v){ if(v==null)return''; if(v<-20)return'역사적 저평가 🟢'; if(v<-15)return'강한 매수 구간 🟢'; if(v<-10)return'매수 후보'; if(v<0)return'200일선 하방'; if(v>25)return'역사적 고평가 🔴'; if(v>20)return'강한 매도 구간 🔴'; if(v>15)return'과열 주의 ⚠️'; return'200일선 상방'; }
 function maClass(v){ if(v==null)return'neutral'; if(v<-10)return'bullish'; if(v>15)return'overbought'; return'neutral'; }
-function vixMaLabel(vsMA,slope){ if(vsMA==null)return''; if(vsMA>80)return'공포 극점 — 역발상 매수 🟢'; if(vsMA>50)return'공포 급증 구간'; if(vsMA<-25)return'변동성 극단 억제 🔴'; if(slope!=null&&slope<-5&&vsMA>10)return'하락 전환 — 안정화 신호 🟢'; if(slope!=null&&slope>10)return'상승 전환 — 경계'; return'20일선 근처 (중립)'; }
+function vixMaLabel(vsMA,slope){ if(vsMA==null)return''; if(vsMA>80)return'공포 극점 🟢'; if(vsMA>50)return'공포 급증'; if(vsMA<-25)return'방심 극점 🔴'; if(slope!=null&&slope<-5&&vsMA>10)return'하락 전환 🟢'; if(slope!=null&&slope>10)return'상승 전환 경계'; return'20일선 근처'; }
 function vixMaClass(vsMA,slope){ if(vsMA==null)return'neutral'; if(vsMA>50)return'bullish'; if(vsMA<-25)return'overbought'; if(slope!=null&&slope<-5&&vsMA>10)return'bullish'; return'neutral'; }
-function hyMaLabel(vsMA,slope){ if(slope!=null&&slope<-3)return'하락 전환 — 신용 안정화 🟢'; if(slope!=null&&slope>5&&vsMA!=null&&vsMA<5)return'저점 반등 — 위험 경계 🔴'; if(vsMA>10)return'20일선 위 (스트레스)'; if(vsMA<-10)return'20일선 대비 안정'; return'20일선 근처 (중립)'; }
+function hyMaLabel(vsMA,slope){ if(slope!=null&&slope<-3)return'하락 전환 — 안정화 🟢'; if(slope!=null&&slope>5&&vsMA!=null&&vsMA<5)return'저점 반등 — 경계 🔴'; if(vsMA>10)return'20일선 위 (스트레스)'; return'20일선 근처'; }
 function hyMaClass(vsMA,slope){ if(slope!=null&&slope<-3)return'bullish'; if(slope!=null&&slope>5)return'overbought'; return'neutral'; }
-function fgMaLabel(ma10,slope){ if(ma10==null)return''; if(ma10<25&&slope!=null&&slope<-5)return'공포 추세 가속 🟢'; if(ma10<30)return`10일 평균 ${fmt(ma10,0)} — 공포`; if(ma10>75&&slope!=null&&slope>5)return'탐욕 추세 가속 🔴'; if(ma10>70)return`10일 평균 ${fmt(ma10,0)} — 탐욕`; return`10일 평균 ${fmt(ma10,0)} — 중립`; }
+function fgMaLabel(ma10,slope){ if(ma10==null)return''; if(ma10<25&&slope!=null&&slope<-5)return'공포 추세 가속 🟢'; if(ma10<30)return`이평 ${fmt(ma10,0)} — 공포`; if(ma10>75&&slope!=null&&slope>5)return'탐욕 추세 가속 🔴'; if(ma10>70)return`이평 ${fmt(ma10,0)} — 탐욕`; return`이평 ${fmt(ma10,0)} — 중립`; }
 function fgMaClass(ma10){ if(ma10==null)return'neutral'; if(ma10<30)return'bullish'; if(ma10>70)return'overbought'; return'neutral'; }
+function rateDirectionLabel(change3m,name){ if(change3m==null)return'데이터 없음'; const arrow=change3m>0?'↑':change3m<0?'↓':'→'; const abs=Math.abs(change3m).toFixed(2); if(name==='t10y'){ if(change3m>0.5)return`${arrow} 3개월 +${abs}%p — 성장주 압박`; if(change3m>0.2)return`${arrow} 3개월 +${abs}%p 완만 상승`; if(change3m<-0.5)return`${arrow} 3개월 -${abs}%p — 침체 우려`; if(change3m<-0.2)return`${arrow} 3개월 -${abs}%p 완만 하락`; return`→ 3개월 보합`; } if(name==='fed'){ if(change3m>0.25)return`${arrow} 인상 중`; if(change3m<-0.25)return`${arrow} 인하 중`; return`→ 동결`; } return`${change3m>0?'+':''}${abs}%p`; }
+function rateDirectionColor(change3m,name){ if(change3m==null)return'c-muted'; if(name==='t10y'){ if(change3m>0.5)return'c-red'; if(change3m<-0.3)return'c-amber'; return'c-muted'; } if(name==='fed'){ if(change3m>0.25)return'c-amber'; return'c-green'; } return'c-muted'; }
 
-// 금리 방향 레이블
-function rateDirectionLabel(change3m, name) {
-  if (change3m == null) return '방향 데이터 없음';
-  const arrow = change3m > 0 ? '↑' : change3m < 0 ? '↓' : '→';
-  const abs = Math.abs(change3m).toFixed(2);
-  if (name === 't10y') {
-    if (change3m > 0.5)  return `${arrow} 3개월 +${abs}%p 상승 — 성장주 압박`;
-    if (change3m > 0.2)  return `${arrow} 3개월 +${abs}%p 완만 상승`;
-    if (change3m < -0.5) return `${arrow} 3개월 -${abs}%p 하락 — 침체 우려 or 인하 기대`;
-    if (change3m < -0.2) return `${arrow} 3개월 -${abs}%p 완만 하락`;
-    return `→ 3개월 보합 (${change3m>0?'+':''}${abs}%p)`;
-  }
-  if (name === 'fed') {
-    if (change3m > 0.25) return `${arrow} 인상 중 — 긴축 사이클`;
-    if (change3m < -0.25) return `${arrow} 인하 중 — 완화 사이클`;
-    return `→ 동결 유지`;
-  }
-  return `${arrow} ${change3m>0?'+':''}${abs}%p`;
-}
-function rateDirectionColor(change3m, name) {
-  if (change3m == null) return 'c-muted';
-  if (name === 't10y') {
-    if (change3m > 0.5)  return 'c-red';
-    if (change3m < -0.3) return 'c-amber';
-    return 'c-muted';
-  }
-  if (name === 'fed') {
-    if (change3m > 0.25)  return 'c-amber';
-    if (change3m < -0.25) return 'c-green';
-    return 'c-green';
-  }
-  return 'c-muted';
-}
-
-// ── SIGNAL 탭 ─────────────────────────────────────────────────────────
+// ── SIGNAL ────────────────────────────────────────────────────────────
 function renderSignal() {
   const s  = DATA.snapshot   || {};
   const t  = DATA.technicals || {};
@@ -1008,6 +574,29 @@ function renderSignal() {
   const bc = DATA.trade_color || 'blue';
   const sc = DATA.sell_color  || 'blue';
   const COLOR = {green:'var(--green)',amber:'var(--amber)',red:'var(--red)',blue:'var(--blue)'};
+
+  // 포트폴리오 비중 가이드
+  const pfGuide = (() => {
+    if (rs>=50&&bs>=60) return {label:'🟢 매수 타이밍 — 주식 비중 확대', desc:'현금의 약 30~40%를 주식으로 전환 권장. 2~3회 분할 진입.', ratio:70, color:'var(--green)', bg:'var(--green-bg)'};
+    if (rs>=50&&bs>=35) return {label:'🟡 분할 매수 — 소량 선취매', desc:'현금의 약 10~15% 선취매 권장. 나머지 현금 대기.', ratio:30, color:'var(--amber)', bg:'var(--amber-bg)'};
+    if (rs>=50&&bs<35)  return {label:'🔴 관망 — 현금 보유 유지', desc:'하락 중이나 반등 조건 미충족. 추가 매수 없이 현금 유지.', ratio:0, color:'var(--red)', bg:'var(--red-bg)'};
+    if (ss>=65)         return {label:'🔴 매도 타이밍 — 주식 전량 또는 대부분 매도', desc:'과열 신호 다수. 보유 주식 70~100% 매도 후 현금화.', ratio:0, color:'var(--red)', bg:'var(--red-bg)'};
+    if (ss>=40)         return {label:'🟡 부분 익절 — 보유 주식 일부 매도', desc:'과열 조짐. 보유 주식 20~30% 익절하여 현금 비중 확대.', ratio:30, color:'var(--amber)', bg:'var(--amber-bg)'};
+    return {label:'⚪ 중립 — 현 비중 그대로 유지', desc:'뚜렷한 매수·매도 신호 없음. 추가 매수도 매도도 불필요.', ratio:null, color:'var(--muted)', bg:'var(--surface)'};
+  })();
+
+  const guideBanner = document.getElementById('pf-guide-banner');
+  guideBanner.style.background = pfGuide.bg;
+  guideBanner.style.borderColor = pfGuide.ratio===70?'rgba(59,109,17,0.25)':pfGuide.ratio===0&&rs>=50?'rgba(226,75,74,0.25)':pfGuide.ratio===0&&ss>=65?'rgba(226,75,74,0.25)':pfGuide.ratio===30?'rgba(186,117,23,0.25)':'var(--border)';
+  document.getElementById('pf-guide-label').textContent = pfGuide.label;
+  document.getElementById('pf-guide-label').style.color  = pfGuide.color;
+  document.getElementById('pf-guide-desc').textContent   = pfGuide.desc;
+  const nowText = pfGuide.ratio!==null ? `주식 ${pfGuide.ratio}%` : '현 비중 유지';
+  document.getElementById('pf-guide-now').textContent    = nowText;
+  document.getElementById('pf-guide-now').style.color    = pfGuide.color;
+  const barW = pfGuide.ratio!==null ? pfGuide.ratio : 50;
+  document.getElementById('pf-guide-bar').style.width      = barW+'%';
+  document.getElementById('pf-guide-bar').style.background = pfGuide.color;
 
   // 배너
   document.getElementById('buy-banner').className = `side-banner ${bc}`;
@@ -1021,55 +610,41 @@ function renderSignal() {
   document.getElementById('sell-score-num').textContent    = ss;
   document.getElementById('sell-score-num').style.color    = COLOR[ss>=65?'red':ss>=40?'amber':'blue'];
 
-  // 위험경보 게이지
+  // 게이지
   document.getElementById('risk-fill').style.width = rs+'%';
   const rb = document.getElementById('risk-badge');
   rb.textContent = rs>=70?'위험':rs>=50?'경고':rs>=30?'주의':'안전';
   rb.className = `stage-badge ${rs>=70?'badge-red':rs>=50?'badge-amber':rs>=30?'badge-amber':'badge-green'}`;
-  document.getElementById('risk-detail').innerHTML =
-    `VIX: ${fmt(s.vix,1)} &nbsp;·&nbsp; F&amp;G: ${s.fear_greed?.value??'—'} &nbsp;·&nbsp; HY: ${fmt(s.hy_spread)}% &nbsp;·&nbsp; 수익률곡선: ${fmt(s.yield_curve)}%`;
-
-  // 반등 게이지
+  document.getElementById('risk-detail').innerHTML = `VIX: ${fmt(s.vix,1)} &nbsp;·&nbsp; F&amp;G: ${s.fear_greed?.value??'—'} &nbsp;·&nbsp; HY: ${fmt(s.hy_spread)}% &nbsp;·&nbsp; 수익률곡선: ${fmt(s.yield_curve)}%`;
   document.getElementById('buy-fill').style.width = bs+'%';
   const bb = document.getElementById('buy-gauge-badge');
   bb.textContent = bs>=60?'충족':bs>=35?'부분충족':'미충족';
   bb.className = `stage-badge ${bs>=60?'badge-green':bs>=35?'badge-amber':'badge-red'}`;
-  document.getElementById('buy-detail').innerHTML =
-    `RSI(SP500): ${fmt(t.rsi_sp500,1)} &nbsp;·&nbsp; 200일선: ${pct(t.ma200_sp500)} &nbsp;·&nbsp; VIX 20일선: ${pct(t.vix_vs_ma20)}`;
-
-  // 과열 게이지
+  document.getElementById('buy-detail').innerHTML = `RSI(SP500): ${fmt(t.rsi_sp500,1)} &nbsp;·&nbsp; 200일선: ${pct(t.ma200_sp500)} &nbsp;·&nbsp; VIX 20일선: ${pct(t.vix_vs_ma20)}`;
   document.getElementById('sell-fill').style.width = ss+'%';
   const sb = document.getElementById('sell-gauge-badge');
   sb.textContent = ss>=65?'강한과열':ss>=40?'과열주의':ss>=20?'경미과열':'정상';
   sb.className = `stage-badge ${ss>=65?'badge-red':ss>=40?'badge-amber':ss>=20?'badge-amber':'badge-green'}`;
-  document.getElementById('sell-detail').innerHTML =
-    `RSI(SP500): ${fmt(t.rsi_sp500,1)} &nbsp;·&nbsp; 200일선: ${pct(t.ma200_sp500)} &nbsp;·&nbsp; F&amp;G: ${s.fear_greed?.value??'—'}`;
+  document.getElementById('sell-detail').innerHTML = `RSI(SP500): ${fmt(t.rsi_sp500,1)} &nbsp;·&nbsp; 200일선: ${pct(t.ma200_sp500)} &nbsp;·&nbsp; F&amp;G: ${s.fear_greed?.value??'—'}`;
 
   // 신호 리스트
   const buySigs  = DATA.buy_signals  || [];
   const sellSigs = DATA.sell_signals || [];
-  document.getElementById('buy-sig-list').innerHTML  = buySigs.length===0
-    ? `<div class="no-sig">현재 반등 조건 신호 없음 — 시장 정상</div>`
-    : buySigs.map(sg=>`<li><span class="sig-dot sig-${sg.strength||'weak'}"></span>${sg.label}</li>`).join('');
-  document.getElementById('sell-sig-list').innerHTML = sellSigs.length===0
-    ? `<div class="no-sig">현재 과열 신호 없음 — 정상 범위</div>`
-    : sellSigs.map(sg=>`<li><span class="sig-dot sig-${sg.strength==='strong'?'strong-sell':sg.strength==='medium'?'medium-sell':'weak'}"></span>${sg.label}</li>`).join('');
+  document.getElementById('buy-sig-list').innerHTML  = buySigs.length===0 ? `<div class="no-sig">반등 조건 신호 없음 — 시장 정상</div>` : buySigs.map(sg=>`<li><span class="sig-dot sig-${sg.strength||'weak'}"></span>${sg.label}</li>`).join('');
+  document.getElementById('sell-sig-list').innerHTML = sellSigs.length===0 ? `<div class="no-sig">과열 신호 없음 — 정상 범위</div>`    : sellSigs.map(sg=>`<li><span class="sig-dot sig-${sg.strength==='strong'?'strong-sell':sg.strength==='medium'?'medium-sell':'weak'}"></span>${sg.label}</li>`).join('');
 
   // 기술적 지표 카드
   const techItems = [
-    {lbl:'RSI — S&P 500',        val:fmt(t.rsi_sp500,1),    sub:rsiLabel(t.rsi_sp500),   cls:rsiClass(t.rsi_sp500)},
-    {lbl:'RSI — NASDAQ',         val:fmt(t.rsi_nasdaq,1),   sub:rsiLabel(t.rsi_nasdaq),  cls:rsiClass(t.rsi_nasdaq)},
-    {lbl:'S&P vs 200일선',       val:pct(t.ma200_sp500),    sub:maLabel(t.ma200_sp500),  cls:maClass(t.ma200_sp500)},
-    {lbl:'S&P vs 50일선',        val:pct(t.ma50_sp500),     sub:maLabel(t.ma50_sp500),   cls:maClass(t.ma50_sp500)},
-    {lbl:'NASDAQ vs 200일선',    val:pct(t.ma200_nasdaq),   sub:maLabel(t.ma200_nasdaq), cls:maClass(t.ma200_nasdaq)},
-    {lbl:'VIX vs 20일선',        val:pct(t.vix_vs_ma20),
-      sub:vixMaLabel(t.vix_vs_ma20,t.vix_slope), cls:vixMaClass(t.vix_vs_ma20,t.vix_slope),
+    {lbl:'RSI — S&P 500',        val:fmt(t.rsi_sp500,1),  sub:rsiLabel(t.rsi_sp500),  cls:rsiClass(t.rsi_sp500)},
+    {lbl:'RSI — NASDAQ',         val:fmt(t.rsi_nasdaq,1), sub:rsiLabel(t.rsi_nasdaq), cls:rsiClass(t.rsi_nasdaq)},
+    {lbl:'S&P vs 200일선',       val:pct(t.ma200_sp500),  sub:maLabel(t.ma200_sp500), cls:maClass(t.ma200_sp500)},
+    {lbl:'S&P vs 50일선',        val:pct(t.ma50_sp500),   sub:maLabel(t.ma50_sp500),  cls:maClass(t.ma50_sp500)},
+    {lbl:'NASDAQ vs 200일선',    val:pct(t.ma200_nasdaq), sub:maLabel(t.ma200_nasdaq),cls:maClass(t.ma200_nasdaq)},
+    {lbl:'VIX vs 20일선',        val:pct(t.vix_vs_ma20),  sub:vixMaLabel(t.vix_vs_ma20,t.vix_slope), cls:vixMaClass(t.vix_vs_ma20,t.vix_slope),
       extra:`20일선: ${fmt(t.vix_ma20,1)} / 기울기: ${t.vix_slope!=null?(t.vix_slope>0?'+':'')+fmt(t.vix_slope,1)+'%':'—'}`},
-    {lbl:'HY스프레드 vs 20일선', val:pct(t.hy_vs_ma20),
-      sub:hyMaLabel(t.hy_vs_ma20,t.hy_slope), cls:hyMaClass(t.hy_vs_ma20,t.hy_slope),
+    {lbl:'HY vs 20일선',         val:pct(t.hy_vs_ma20),   sub:hyMaLabel(t.hy_vs_ma20,t.hy_slope),    cls:hyMaClass(t.hy_vs_ma20,t.hy_slope),
       extra:`20일선: ${fmt(t.hy_ma20,2)}% / 기울기: ${t.hy_slope!=null?(t.hy_slope>0?'+':'')+fmt(t.hy_slope,1)+'%':'—'}`},
-    {lbl:'F&G 10일 이평',        val:t.fg_ma10!=null?fmt(t.fg_ma10,1):'—',
-      sub:fgMaLabel(t.fg_ma10,t.fg_slope), cls:fgMaClass(t.fg_ma10),
+    {lbl:'F&G 10일 이평',        val:t.fg_ma10!=null?fmt(t.fg_ma10,1):'—', sub:fgMaLabel(t.fg_ma10,t.fg_slope), cls:fgMaClass(t.fg_ma10),
       extra:`현재 대비: ${pct(t.fg_vs_ma10)} / 기울기: ${t.fg_slope!=null?(t.fg_slope>0?'+':'')+fmt(t.fg_slope,1)+'%':'—'}`},
   ];
   document.getElementById('tech-grid').innerHTML = techItems.map(ti=>`
@@ -1082,11 +657,11 @@ function renderSignal() {
 
   // 리스크 신호 강도바
   const bars = [
-    {name:'VIX 위험도',        pct:s.vix?Math.min((s.vix/60)*100,100):0,              color:'#E24B4A', display:fmt(s.vix,1)},
-    {name:'Fear&Greed 역발산', pct:s.fear_greed?Math.max(100-s.fear_greed.value,0):0, color:'#D85A30', display:s.fear_greed?.value??'—'},
-    {name:'HY 스트레스',       pct:s.hy_spread?Math.min((s.hy_spread/12)*100,100):0,  color:'#BA7517', display:fmt(s.hy_spread)+'%'},
-    {name:'IG 스트레스',       pct:s.ig_spread?Math.min((s.ig_spread/3)*100,100):0,   color:'#185FA5', display:fmt(s.ig_spread)+'%'},
-    {name:'수익률곡선 경보',   pct:s.yield_curve!=null?Math.max((0.5-s.yield_curve)/1*100,0):0, color:'#534AB7', display:fmt(s.yield_curve)+'%'},
+    {name:'VIX 위험도',       pct:s.vix?Math.min((s.vix/60)*100,100):0,              color:'#E24B4A', display:fmt(s.vix,1)},
+    {name:'F&G 역발산',       pct:s.fear_greed?Math.max(100-s.fear_greed.value,0):0,  color:'#D85A30', display:s.fear_greed?.value??'—'},
+    {name:'HY 스트레스',      pct:s.hy_spread?Math.min((s.hy_spread/12)*100,100):0,   color:'#BA7517', display:fmt(s.hy_spread)+'%'},
+    {name:'IG 스트레스',      pct:s.ig_spread?Math.min((s.ig_spread/3)*100,100):0,    color:'#185FA5', display:fmt(s.ig_spread)+'%'},
+    {name:'수익률곡선 경보',  pct:s.yield_curve!=null?Math.max((0.5-s.yield_curve)/1*100,0):0, color:'#534AB7', display:fmt(s.yield_curve)+'%'},
   ];
   document.getElementById('signal-bars').innerHTML = bars.map(b=>`
     <div class="signal-row">
@@ -1096,163 +671,277 @@ function renderSignal() {
     </div>`).join('');
 }
 
-// ── MONITOR 탭 ────────────────────────────────────────────────────────
+// ── WATCHLIST ─────────────────────────────────────────────────────────
+function renderWatchlist() {
+  const wl = DATA.watchlist || [];
+  if (!wl.length) {
+    document.getElementById('watch-tbody').innerHTML = '<tr><td colspan="10" style="text-align:center;color:var(--muted);padding:2rem">워치리스트 데이터 없음</td></tr>';
+    return;
+  }
+
+  const mktBuy  = DATA.buy_score  || 0;
+  const mktSell = DATA.sell_score || 0;
+  const mktRisk = DATA.risk_score || 0;
+
+  // 테이블
+  document.getElementById('watch-tbody').innerHTML = wl.map(w => {
+    const bs = w.buy_score, ss = w.sell_score;
+    const chgColor = w.chg1d > 0 ? 'c-green' : w.chg1d < 0 ? 'c-red' : 'c-muted';
+
+    // 결합 신호
+    let sig = '⚪ 중립', sigColor = 'c-muted';
+    if      (mktRisk>=50&&bs>=55) { sig='🟢 매수';    sigColor='c-green'; }
+    else if (mktRisk>=50&&bs>=35) { sig='🟡 약매수';  sigColor='c-amber'; }
+    else if (mktRisk>=50&&bs<35)  { sig='🔴 관망';    sigColor='c-red'; }
+    else if (mktSell>=65&&ss>=50) { sig='🔴 매도';    sigColor='c-red'; }
+    else if (ss>=40)              { sig='🟡 익절검토'; sigColor='c-amber'; }
+    else if (bs>=60)              { sig='🟡 종목매수'; sigColor='c-amber'; }
+
+    const bbStr = w.bb_pos!=null ? `${w.bb_pos.toFixed(0)}%` : '—';
+    return `<tr>
+      <td><b>${w.ticker}</b></td>
+      <td style="color:var(--muted);font-size:11px">${w.name}</td>
+      <td>$${w.price.toFixed(2)}</td>
+      <td class="${chgColor}">${w.chg1d>0?'+':''}${w.chg1d.toFixed(2)}%</td>
+      <td class="${rsiClass(w.rsi)==='bullish'?'c-green':rsiClass(w.rsi)==='overbought'?'c-red':'c-muted'}">${fmt(w.rsi,1)}</td>
+      <td class="${maClass(w.vs_ma200)==='bullish'?'c-green':maClass(w.vs_ma200)==='overbought'?'c-red':'c-muted'}">${pct(w.vs_ma200)}</td>
+      <td class="${w.bb_pos!=null&&w.bb_pos<15?'c-green':w.bb_pos!=null&&w.bb_pos>85?'c-red':'c-muted'}">${bbStr}</td>
+      <td>
+        <div style="display:flex;align-items:center;gap:6px">
+          <div style="width:${bs}px;max-width:60px;height:5px;background:var(--green);border-radius:2px;opacity:0.8"></div>
+          <span class="c-green" style="font-size:12px;font-weight:500">${bs}</span>
+        </div>
+      </td>
+      <td>
+        <div style="display:flex;align-items:center;gap:6px">
+          <div style="width:${ss}px;max-width:60px;height:5px;background:var(--red);border-radius:2px;opacity:0.8"></div>
+          <span class="c-red" style="font-size:12px;font-weight:500">${ss}</span>
+        </div>
+      </td>
+      <td class="${sigColor}" style="font-weight:500;white-space:nowrap">${sig}</td>
+    </tr>`;
+  }).join('');
+
+  // 상세 카드
+  const rate = DATA.snapshot?.usdkrw || 1380;
+  document.getElementById('watch-detail-grid').innerHTML = wl.map(w => {
+    const bs = w.buy_score, ss = w.sell_score;
+    const topColor = bs>=60?'var(--green)':ss>=60?'var(--red)':bs>=35?'var(--amber)':'var(--faint)';
+    const buySigsHtml = w.buy_signals?.length
+      ? w.buy_signals.map(s=>`<div style="font-size:11px;color:var(--green);padding:2px 0">✓ ${s}</div>`).join('')
+      : '<div style="font-size:11px;color:var(--faint)">반등 신호 없음</div>';
+    const sellSigsHtml = w.sell_signals?.length
+      ? w.sell_signals.map(s=>`<div style="font-size:11px;color:var(--red);padding:2px 0">✗ ${s}</div>`).join('')
+      : '<div style="font-size:11px;color:var(--faint)">과열 신호 없음</div>';
+    return `
+      <div style="background:var(--surface);border:0.5px solid var(--border);border-top:3px solid ${topColor};border-radius:var(--r);padding:1rem">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+          <div>
+            <div style="font-size:15px;font-weight:700">${w.ticker}</div>
+            <div style="font-size:11px;color:var(--muted)">${w.name}</div>
+          </div>
+          <div style="text-align:right">
+            <div style="font-size:16px;font-weight:600">$${w.price.toFixed(2)}</div>
+            <div style="font-size:11px" class="${w.chg1d>0?'c-green':w.chg1d<0?'c-red':'c-muted'}">${w.chg1d>0?'+':''}${w.chg1d.toFixed(2)}% &nbsp;₩${Math.round(w.price*rate).toLocaleString()}</div>
+          </div>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:10px">
+          <div style="background:var(--bg);border-radius:var(--rsm);padding:6px;text-align:center">
+            <div style="font-size:10px;color:var(--faint)">RSI</div>
+            <div style="font-size:14px;font-weight:600" class="${rsiClass(w.rsi)==='bullish'?'c-green':rsiClass(w.rsi)==='overbought'?'c-red':'c-muted'}">${fmt(w.rsi,1)}</div>
+          </div>
+          <div style="background:var(--bg);border-radius:var(--rsm);padding:6px;text-align:center">
+            <div style="font-size:10px;color:var(--faint)">vs 200일선</div>
+            <div style="font-size:14px;font-weight:600" class="${maClass(w.vs_ma200)==='bullish'?'c-green':maClass(w.vs_ma200)==='overbought'?'c-red':'c-muted'}">${pct(w.vs_ma200)}</div>
+          </div>
+          <div style="background:var(--bg);border-radius:var(--rsm);padding:6px;text-align:center">
+            <div style="font-size:10px;color:var(--faint)">볼린저</div>
+            <div style="font-size:14px;font-weight:600" class="${w.bb_pos!=null&&w.bb_pos<15?'c-green':w.bb_pos!=null&&w.bb_pos>85?'c-red':'c-muted'}">${w.bb_pos!=null?w.bb_pos.toFixed(0)+'%':'—'}</div>
+          </div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px">
+          <div>
+            <div style="font-size:10px;color:var(--faint);margin-bottom:3px">매수 신호 (${bs}점)</div>
+            ${buySigsHtml}
+          </div>
+          <div>
+            <div style="font-size:10px;color:var(--faint);margin-bottom:3px">매도 신호 (${ss}점)</div>
+            ${sellSigsHtml}
+          </div>
+        </div>
+        <div style="font-size:10px;color:var(--faint)">52주: $${w.low52} ~ $${w.high52} &nbsp;·&nbsp; vs 고점 ${pct(w.vs_high52)} &nbsp;·&nbsp; 거래량 ${w.vol_ratio!=null?w.vol_ratio+'%':'—'}</div>
+      </div>`;
+  }).join('');
+}
+
+// ── PORTFOLIO ─────────────────────────────────────────────────────────
+function renderPortfolioDefaults() {
+  const s = DATA?.snapshot || {};
+  const rate = s.usdkrw || 1380;
+  document.getElementById('pf-usdkrw').textContent = `현재 환율: 1 USD = ${rate.toLocaleString()} KRW (FRED 기준)`;
+}
+
+function calcPortfolio() {
+  if (!DATA) return;
+  const s       = DATA.snapshot || {};
+  const rate    = s.usdkrw || 1380;
+  const dispCur = document.getElementById('pf-display-cur').value;
+  const cashRaw = parseFloat(document.getElementById('pf-cash').value)  || 0;
+  const stkRaw  = parseFloat(document.getElementById('pf-stock').value) || 0;
+  const cashCur = document.getElementById('pf-cash-cur').value;
+  const stkCur  = document.getElementById('pf-stock-cur').value;
+  const toKRW   = (v, cur) => cur==='USD' ? v*rate : v;
+  const cashKRW = toKRW(cashRaw, cashCur);
+  const stkKRW  = toKRW(stkRaw,  stkCur);
+  const total   = cashKRW + stkKRW;
+  const conv    = dispCur==='USD' ? 1/rate : 1;
+  const sym     = dispCur==='USD' ? '$' : '₩';
+  const fmtA    = v => sym+Math.round(v*conv).toLocaleString();
+  const curRatio= total>0 ? Math.round(stkKRW/total*100) : 0;
+
+  document.getElementById('pf-result').style.display = '';
+  document.getElementById('pf-current-cards').innerHTML = [
+    {lbl:'총 자산',        val:fmtA(total),   color:'c-muted'},
+    {lbl:'보유 현금',      val:fmtA(cashKRW), color:'c-blue'},
+    {lbl:'보유 주식',      val:fmtA(stkKRW),  color:'c-green'},
+    {lbl:'현재 주식 비중', val:curRatio+'%',  color:curRatio>80?'c-amber':'c-muted'},
+  ].map(c=>`<div class="metric-card"><div class="metric-lbl">${c.lbl}</div><div class="metric-val ${c.color}">${c.val}</div></div>`).join('');
+
+  const bs=DATA.buy_score||0, ss=DATA.sell_score||0, rs=DATA.risk_score||0;
+  let recRatio=curRatio, recLabel='현 비중 유지', recColor='blue', recDesc='', diffLabel='→ 변동 없음', diffKRW=0;
+  if (rs>=50&&bs>=60)      { recRatio=70; recLabel='적극 매수'; recColor='green'; recDesc='위험경보+반등조건 충족 — 주식 70%까지 확대 권장'; }
+  else if (rs>=50&&bs>=35) { recRatio=30; recLabel='분할 매수'; recColor='green'; recDesc='반등 조건 일부 충족 — 소량 선취매 후 대기'; }
+  else if (rs>=50&&bs<35)  { recRatio=0;  recLabel='관망';     recColor='amber'; recDesc='하락 중, 반등 조건 미충족 — 현금 유지'; }
+  else if (ss>=65)         { recRatio=0;  recLabel='매도';     recColor='red';   recDesc='과열 신호 다수 — 주식 비중 대폭 축소'; }
+  else if (ss>=40)         { recRatio=30; recLabel='부분 익절'; recColor='amber'; recDesc='과열 조짐 — 일부 익절 후 현금 비중 확대'; }
+  else                     { recDesc='뚜렷한 신호 없음 — 현 포지션 유지'; }
+
+  const recStk = total*recRatio/100;
+  const recCash= total-recStk;
+  diffKRW = recStk - stkKRW;
+  diffLabel = diffKRW>0 ? `→ ${fmtA(Math.abs(diffKRW))} 추가 매수` : diffKRW<0 ? `→ ${fmtA(Math.abs(diffKRW))} 매도` : '→ 변동 없음';
+  const diffColor = diffKRW>0?'var(--green)':diffKRW<0?'var(--red)':'var(--muted)';
+
+  document.getElementById('pf-recommendation').innerHTML = `
+    <div class="side-banner ${recColor}" style="display:block">
+      <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px">
+        <div><div class="side-label">${recLabel}</div><div class="side-desc" style="margin-bottom:0">${recDesc}</div></div>
+        <div style="text-align:right"><div style="font-size:28px;font-weight:700">주식 ${recRatio}%</div><div style="font-size:12px;opacity:0.8">현금 ${100-recRatio}%</div></div>
+      </div>
+      <div class="side-divider"></div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;text-align:center">
+        <div><div style="font-size:18px;font-weight:600">${fmtA(recStk)}</div><div style="font-size:11px;opacity:0.7">권장 주식 보유액</div></div>
+        <div><div style="font-size:18px;font-weight:600">${fmtA(recCash)}</div><div style="font-size:11px;opacity:0.7">권장 현금 보유액</div></div>
+        <div><div style="font-size:18px;font-weight:600;color:${diffColor}">${diffLabel}</div><div style="font-size:11px;opacity:0.7">현재 대비 액션</div></div>
+      </div>
+    </div>`;
+
+  document.getElementById('pf-scenarios').innerHTML = [
+    {label:'🟢 매수 타이밍', ratio:70, color:'green', cond:'위험경보 50+ AND 반등점수 60+', desc:'주식 70%까지 확대. 분할 매수 권장'},
+    {label:'⚪ 중립',        ratio:curRatio, color:'blue', cond:'뚜렷한 신호 없음', desc:'현 비중 유지'},
+    {label:'🔴 매도 타이밍', ratio:0,  color:'red',   cond:'과열점수 65+', desc:'주식 전량 or 대부분 현금화'},
+  ].map(sc=>`
+    <div class="side-banner ${sc.color}" style="display:block">
+      <div class="side-label" style="font-size:15px;margin-bottom:4px">${sc.label}</div>
+      <div style="font-size:11px;opacity:0.75;margin-bottom:8px">${sc.cond}</div>
+      <div class="side-divider"></div>
+      <div style="font-size:13px;font-weight:600;margin-bottom:4px">주식 ${sc.ratio}% / 현금 ${100-sc.ratio}%</div>
+      <div style="font-size:13px;font-weight:700;margin-bottom:6px">${fmtA(total*sc.ratio/100)}</div>
+      <div style="font-size:11px;opacity:0.8">${sc.desc}</div>
+    </div>`).join('');
+}
+
+// ── MONITOR ───────────────────────────────────────────────────────────
 function renderMonitor() {
   const s  = DATA.snapshot   || {};
   const t  = DATA.technicals || {};
   const fg = s.fear_greed;
   const vixC = s.vix>35?'c-red':s.vix>25?'c-amber':s.vix>18?'c-amber':'c-green';
 
-  // 지수
   document.getElementById('index-cards').innerHTML = [
     {lbl:'NASDAQ', val:fmtC(s.nasdaq), color:'c-muted', sub:'', sub2:''},
     {lbl:'S&P 500', val:fmtC(s.sp500), color:'c-muted', sub:'', sub2:''},
     {lbl:'DJIA',    val:fmtC(s.djia),  color:'c-muted', sub:'', sub2:''},
-    {lbl:'VIX',     val:fmt(s.vix,1),  color:vixC,
-     sub:s.vix>35?'위험':s.vix>25?'주의':s.vix<15?'방심 주의':'정상',
-     sub2:`20일선 대비: ${pct(t.vix_vs_ma20)}`},
+    {lbl:'VIX',     val:fmt(s.vix,1),  color:vixC, sub:s.vix>35?'위험':s.vix>25?'주의':s.vix<15?'방심 주의':'정상', sub2:`20일선 대비: ${pct(t.vix_vs_ma20)}`},
   ].map(c=>`<div class="metric-card"><div class="metric-lbl">${c.lbl}</div><div class="metric-val ${c.color}">${c.val}</div><div class="metric-sub ${c.color}">${c.sub}</div><div class="metric-sub2">${c.sub2}</div></div>`).join('');
 
-  // 변동성·심리
   const fgC = fg?(fg.value<25?'c-red':fg.value<45?'c-amber':fg.value>75?'c-red':'c-green'):'c-muted';
   document.getElementById('risk-cards').innerHTML = [
     {lbl:'Fear & Greed', val:fg?.value??'—', color:fgC, sub:fg?.classification??'—', sub2:`10일 이평: ${t.fg_ma10!=null?fmt(t.fg_ma10,1):'—'}`},
     {lbl:'VIX 20일선',   val:fmt(t.vix_ma20,1), color:'c-muted', sub:`기울기: ${t.vix_slope!=null?(t.vix_slope>0?'+':'')+fmt(t.vix_slope,1)+'%':'—'}`, sub2:vixMaLabel(t.vix_vs_ma20,t.vix_slope)},
   ].map(c=>`<div class="metric-card"><div class="metric-lbl">${c.lbl}</div><div class="metric-val ${c.color}">${c.val}</div><div class="metric-sub ${c.color}">${c.sub}</div><div class="metric-sub2">${c.sub2}</div></div>`).join('');
 
-  // 금리 방향성
-  const t10C  = rateDirectionColor(s.t10y_change_3m, 't10y');
-  const fedC  = rateDirectionColor(s.fedfunds_change_3m, 'fed');
-  const erpC  = s.erp!=null?(s.erp>1?'c-green':s.erp>0?'c-muted':'c-red'):'c-muted';
-  const realC = s.real_rate!=null?(s.real_rate>2.5?'c-red':s.real_rate>1.5?'c-amber':'c-green'):'c-muted';
+  const t10C=rateDirectionColor(s.t10y_change_3m,'t10y'), fedC=rateDirectionColor(s.fedfunds_change_3m,'fed');
+  const erpC=s.erp!=null?(s.erp>1?'c-green':s.erp>0?'c-muted':'c-red'):'c-muted';
+  const realC=s.real_rate!=null?(s.real_rate>2.5?'c-red':s.real_rate>1.5?'c-amber':'c-green'):'c-muted';
   document.getElementById('rate-cards').innerHTML = [
-    {lbl:'10년물 국채',    val:fmt(s.ten_yr)+'%', color:t10C,
-     sub:rateDirectionLabel(s.t10y_change_3m,'t10y'),
-     sub2:`1개월: ${s.t10y_change_1m!=null?(s.t10y_change_1m>0?'+':'')+fmt(s.t10y_change_1m,2)+'%p':'—'}`},
-    {lbl:'기준금리 (Fed)', val:fmt(s.fed_rate)+'%', color:fedC,
-     sub:rateDirectionLabel(s.fedfunds_change_3m,'fed'),
-     sub2:''},
-    {lbl:'실질금리',       val:s.real_rate!=null?fmt(s.real_rate)+'%':'—', color:realC,
-     sub:s.real_rate>2.5?'성장주 밸류에이션 압박':s.real_rate>1.5?'부담 구간':'성장주 우호',
-     sub2:'명목금리 - 기대인플레 2.3%'},
-    {lbl:'ERP (주식 프리미엄)', val:s.erp!=null?fmt(s.erp)+'%':'—', color:erpC,
-     sub:s.erp>1?'주식 매력 우위':s.erp>0?'중립':s.erp!=null?'채권 유리':'—',
-     sub2:'주식이익률 - 10년물'},
-    {lbl:'수익률곡선 2s10s', val:fmt(s.yield_curve)+'%',
-     color:s.yield_curve<0?'c-red':s.yield_curve<0.2?'c-amber':'c-green',
-     sub:s.yield_curve<0?'역전 중 — 침체 전조':s.yield_curve<0.3?'평탄화 주의':'정상',
-     sub2:''},
+    {lbl:'10년물 국채', val:fmt(s.ten_yr)+'%', color:t10C, sub:rateDirectionLabel(s.t10y_change_3m,'t10y'), sub2:`1개월: ${s.t10y_change_1m!=null?(s.t10y_change_1m>0?'+':'')+fmt(s.t10y_change_1m,2)+'%p':'—'}`},
+    {lbl:'기준금리',    val:fmt(s.fed_rate)+'%', color:fedC, sub:rateDirectionLabel(s.fedfunds_change_3m,'fed'), sub2:''},
+    {lbl:'실질금리',    val:s.real_rate!=null?fmt(s.real_rate)+'%':'—', color:realC, sub:s.real_rate>2.5?'성장주 압박':s.real_rate>1.5?'부담 구간':'성장주 우호', sub2:'명목금리 - 기대인플레 2.3%'},
+    {lbl:'ERP',         val:s.erp!=null?fmt(s.erp)+'%':'—', color:erpC, sub:s.erp>1?'주식 매력 우위':s.erp>0?'중립':s.erp!=null?'채권 유리':'—', sub2:'주식이익률 - 10년물'},
+    {lbl:'수익률곡선',  val:fmt(s.yield_curve)+'%', color:s.yield_curve<0?'c-red':s.yield_curve<0.2?'c-amber':'c-green', sub:s.yield_curve<0?'역전 중':s.yield_curve<0.3?'평탄화 주의':'정상', sub2:''},
   ].map(c=>`<div class="metric-card"><div class="metric-lbl">${c.lbl}</div><div class="metric-val ${c.color}">${c.val}</div><div class="metric-sub ${c.color}">${c.sub}</div><div class="metric-sub2">${c.sub2}</div></div>`).join('');
 
-  // 신용·유동성
-  const hyC = s.hy_spread>6?'c-red':s.hy_spread>4?'c-amber':s.hy_spread<3?'c-amber':'c-green';
+  const hyC=s.hy_spread>6?'c-red':s.hy_spread>4?'c-amber':s.hy_spread<3?'c-amber':'c-green';
   document.getElementById('credit-cards').innerHTML = [
-    {lbl:'HY 스프레드',  val:fmt(s.hy_spread)+'%', color:hyC,
-     sub:s.hy_spread>8?'위기':s.hy_spread>6?'위험':s.hy_spread>4?'주의':s.hy_spread<3?'과열(매도주의)':'안정',
-     sub2:`20일선 대비: ${pct(t.hy_vs_ma20)} / 기울기: ${t.hy_slope!=null?(t.hy_slope>0?'+':'')+fmt(t.hy_slope,1)+'%':'—'}`},
-    {lbl:'IG 스프레드',  val:fmt(s.ig_spread)+'%',
-     color:s.ig_spread>2?'c-amber':'c-green',
-     sub:s.ig_spread>2?'주의':'안정', sub2:''},
-    {lbl:'TED 스프레드', val:fmt(s.ted_spread)+'%',
-     color:s.ted_spread>0.5?'c-amber':'c-green',
-     sub:s.ted_spread>1?'금융 시스템 경보':s.ted_spread>0.5?'유동성 스트레스':'정상', sub2:''},
+    {lbl:'HY 스프레드',  val:fmt(s.hy_spread)+'%', color:hyC, sub:s.hy_spread>8?'위기':s.hy_spread>6?'위험':s.hy_spread>4?'주의':s.hy_spread<3?'과열(매도주의)':'안정', sub2:`20일선 기울기: ${t.hy_slope!=null?(t.hy_slope>0?'+':'')+fmt(t.hy_slope,1)+'%':'—'}`},
+    {lbl:'IG 스프레드',  val:fmt(s.ig_spread)+'%',  color:s.ig_spread>2?'c-amber':'c-green', sub:s.ig_spread>2?'주의':'안정', sub2:''},
+    {lbl:'TED 스프레드', val:fmt(s.ted_spread)+'%', color:s.ted_spread>0.5?'c-amber':'c-green', sub:s.ted_spread>1?'시스템 경보':s.ted_spread>0.5?'유동성 스트레스':'정상', sub2:''},
   ].map(c=>`<div class="metric-card"><div class="metric-lbl">${c.lbl}</div><div class="metric-val ${c.color}">${c.val}</div><div class="metric-sub ${c.color}">${c.sub}</div><div class="metric-sub2">${c.sub2}</div></div>`).join('');
 
-  // 이평선 분석 카드
   document.getElementById('ma-cards').innerHTML = [
-    {lbl:'VIX vs 20일선',         val:pct(t.vix_vs_ma20),
-     color:t.vix_vs_ma20>50?'c-green':t.vix_vs_ma20<-25?'c-red':'c-muted',
-     sub:vixMaLabel(t.vix_vs_ma20,t.vix_slope),
-     sub2:`20일선: ${fmt(t.vix_ma20,1)} / 기울기: ${t.vix_slope!=null?(t.vix_slope>0?'+':'')+fmt(t.vix_slope,1)+'%':'—'}`},
-    {lbl:'HY 20일선 기울기',      val:t.hy_slope!=null?(t.hy_slope>0?'+':'')+fmt(t.hy_slope,1)+'%':'—',
-     color:t.hy_slope<-3?'c-green':t.hy_slope>5?'c-red':'c-muted',
-     sub:hyMaLabel(t.hy_vs_ma20,t.hy_slope),
-     sub2:`20일선: ${fmt(t.hy_ma20,2)}%`},
-    {lbl:'F&G 10일 이평',         val:t.fg_ma10!=null?fmt(t.fg_ma10,1):'—',
-     color:t.fg_ma10<30?'c-green':t.fg_ma10>70?'c-red':'c-muted',
-     sub:fgMaLabel(t.fg_ma10,t.fg_slope),
-     sub2:`기울기: ${t.fg_slope!=null?(t.fg_slope>0?'+':'')+fmt(t.fg_slope,1)+'%':'—'}`},
+    {lbl:'VIX vs 20일선',    val:pct(t.vix_vs_ma20),  color:t.vix_vs_ma20>50?'c-green':t.vix_vs_ma20<-25?'c-red':'c-muted', sub:vixMaLabel(t.vix_vs_ma20,t.vix_slope), sub2:`20일선: ${fmt(t.vix_ma20,1)} / 기울기: ${t.vix_slope!=null?(t.vix_slope>0?'+':'')+fmt(t.vix_slope,1)+'%':'—'}`},
+    {lbl:'HY 20일선 기울기', val:t.hy_slope!=null?(t.hy_slope>0?'+':'')+fmt(t.hy_slope,1)+'%':'—', color:t.hy_slope<-3?'c-green':t.hy_slope>5?'c-red':'c-muted', sub:hyMaLabel(t.hy_vs_ma20,t.hy_slope), sub2:`20일선: ${fmt(t.hy_ma20,2)}%`},
+    {lbl:'F&G 10일 이평',    val:t.fg_ma10!=null?fmt(t.fg_ma10,1):'—', color:t.fg_ma10<30?'c-green':t.fg_ma10>70?'c-red':'c-muted', sub:fgMaLabel(t.fg_ma10,t.fg_slope), sub2:`기울기: ${t.fg_slope!=null?(t.fg_slope>0?'+':'')+fmt(t.fg_slope,1)+'%':'—'}`},
   ].map(c=>`<div class="metric-card"><div class="metric-lbl">${c.lbl}</div><div class="metric-val ${c.color}">${c.val}</div><div class="metric-sub ${c.color}">${c.sub}</div><div class="metric-sub2">${c.sub2}</div></div>`).join('');
 
-  // 실물경기
-  const jc = s.jobless_claims;
+  const jc=s.jobless_claims;
   document.getElementById('macro-cards').innerHTML = [
-    {lbl:'실업수당 청구', val:jc?Math.round(jc/1000)+'K':'—',
-     color:jc>300000?'c-amber':'c-green', sub:jc>300000?'고용 악화':'정상', sub2:'주간 신규 청구건수'},
-    {lbl:'Fed 자산규모',  val:s.fed_assets?'$'+(s.fed_assets/1e6).toFixed(1)+'T':'—',
-     color:'c-muted', sub:'주간 업데이트', sub2:'QE 확장=유동성 공급'},
+    {lbl:'실업수당 청구', val:jc?Math.round(jc/1000)+'K':'—', color:jc>300000?'c-amber':'c-green', sub:jc>300000?'고용 악화':'정상', sub2:'주간 신규 청구건수'},
+    {lbl:'Fed 자산규모',  val:s.fed_assets?'$'+(s.fed_assets/1e6).toFixed(1)+'T':'—', color:'c-muted', sub:'주간 업데이트', sub2:'QE 확장=유동성 공급'},
+    {lbl:'USD/KRW',       val:s.usdkrw?s.usdkrw.toLocaleString():'—', color:'c-muted', sub:'원/달러 환율', sub2:'FRED 기준'},
   ].map(c=>`<div class="metric-card"><div class="metric-lbl">${c.lbl}</div><div class="metric-val ${c.color}">${c.val}</div><div class="metric-sub ${c.color}">${c.sub}</div><div class="metric-sub2">${c.sub2}</div></div>`).join('');
 }
 
-// ── HISTORY 차트 ──────────────────────────────────────────────────────
+// ── HISTORY ───────────────────────────────────────────────────────────
 function renderHistory() {
   const h = DATA.history || {};
-  const t = DATA.technicals || {};
-
-  if (h.nasdaq?.length && h.sp500?.length && h.djia?.length) {
-    const norm = arr => { const b=arr[0].value; return arr.map(d=>+((d.value/b*100).toFixed(2))); };
-    mkChart('chart-indices',{type:'line',data:{
-      labels:h.nasdaq.map(d=>d.date.slice(5)),
-      datasets:[
-        {label:'NASDAQ',data:norm(h.nasdaq),borderColor:'#E24B4A',borderWidth:1.5,pointRadius:0,tension:0.3,fill:false},
-        {label:'S&P',   data:norm(h.sp500), borderColor:'#378ADD',borderWidth:1.5,pointRadius:0,tension:0.3,fill:false,borderDash:[4,2]},
-        {label:'DJIA',  data:norm(h.djia),  borderColor:'#3B6D11',borderWidth:1.5,pointRadius:0,tension:0.3,fill:false,borderDash:[8,3]},
-      ]},options:CO});
+  if (h.nasdaq?.length&&h.sp500?.length&&h.djia?.length) {
+    const norm=arr=>{const b=arr[0].value;return arr.map(d=>+((d.value/b*100).toFixed(2)));};
+    mkChart('chart-indices',{type:'line',data:{labels:h.nasdaq.map(d=>d.date.slice(5)),datasets:[
+      {label:'NASDAQ',data:norm(h.nasdaq),borderColor:'#E24B4A',borderWidth:1.5,pointRadius:0,tension:0.3,fill:false},
+      {label:'S&P',   data:norm(h.sp500), borderColor:'#378ADD',borderWidth:1.5,pointRadius:0,tension:0.3,fill:false,borderDash:[4,2]},
+      {label:'DJIA',  data:norm(h.djia),  borderColor:'#3B6D11',borderWidth:1.5,pointRadius:0,tension:0.3,fill:false,borderDash:[8,3]},
+    ]},options:CO});
   }
-
-  // VIX + 20일 이평선
   if (h.vix?.length) {
-    const vixVals = h.vix.map(d=>d.value);
-    // 롤링 20일 이평선 계산
-    const vixMA20 = vixVals.map((_,i)=>{
-      if (i < 19) return null;
-      return +(vixVals.slice(i-19,i+1).reduce((a,b)=>a+b,0)/20).toFixed(2);
-    });
-    mkChart('chart-vix',{type:'line',data:{
-      labels:h.vix.map(d=>d.date.slice(5)),
-      datasets:[
-        {label:'VIX',     data:vixVals, borderColor:'#E24B4A',borderWidth:1.5,pointRadius:0,tension:0.3,fill:true,backgroundColor:'rgba(226,75,74,0.07)'},
-        {label:'VIX MA20',data:vixMA20, borderColor:'rgba(226,75,74,0.5)',borderWidth:1,pointRadius:0,tension:0.3,fill:false,borderDash:[4,2],spanGaps:false},
-      ]},options:CO});
+    const vv=h.vix.map(d=>d.value);
+    const vm=vv.map((_,i)=>i<19?null:+(vv.slice(i-19,i+1).reduce((a,b)=>a+b,0)/20).toFixed(2));
+    mkChart('chart-vix',{type:'line',data:{labels:h.vix.map(d=>d.date.slice(5)),datasets:[
+      {label:'VIX',data:vv,borderColor:'#E24B4A',borderWidth:1.5,pointRadius:0,tension:0.3,fill:true,backgroundColor:'rgba(226,75,74,0.07)'},
+      {label:'MA20',data:vm,borderColor:'rgba(226,75,74,0.5)',borderWidth:1,pointRadius:0,tension:0.3,fill:false,borderDash:[4,2],spanGaps:false},
+    ]},options:CO});
   }
-
-  // F&G + 10일 이평선
   if (h.fear_greed?.length) {
-    const fgVals = h.fear_greed.map(d=>d.value);
-    const fgMA10 = fgVals.map((_,i)=>{
-      if (i < 9) return null;
-      return +(fgVals.slice(i-9,i+1).reduce((a,b)=>a+b,0)/10).toFixed(1);
-    });
-    mkChart('chart-fg',{type:'bar',data:{
-      labels:h.fear_greed.map(d=>d.date.slice(5)),
-      datasets:[
-        {label:'F&G', data:fgVals, backgroundColor:fgVals.map(v=>v<25?'rgba(226,75,74,0.6)':v>75?'rgba(226,75,74,0.4)':v<45?'rgba(186,117,23,0.6)':'rgba(59,109,17,0.6)'),borderWidth:0},
-        {label:'MA10',data:fgMA10, type:'line',borderColor:'#854F0B',borderWidth:1.5,pointRadius:0,tension:0.3,fill:false,spanGaps:false},
-      ]},options:{...CO,scales:{...CO.scales,y:{...CO.scales.y,min:0,max:100}}}});
+    const fv=h.fear_greed.map(d=>d.value);
+    const fm=fv.map((_,i)=>i<9?null:+(fv.slice(i-9,i+1).reduce((a,b)=>a+b,0)/10).toFixed(1));
+    mkChart('chart-fg',{type:'bar',data:{labels:h.fear_greed.map(d=>d.date.slice(5)),datasets:[
+      {label:'F&G',data:fv,backgroundColor:fv.map(v=>v<25?'rgba(226,75,74,0.6)':v>75?'rgba(226,75,74,0.4)':v<45?'rgba(186,117,23,0.6)':'rgba(59,109,17,0.6)'),borderWidth:0},
+      {label:'MA10',data:fm,type:'line',borderColor:'#854F0B',borderWidth:1.5,pointRadius:0,tension:0.3,fill:false,spanGaps:false},
+    ]},options:{...CO,scales:{...CO.scales,y:{...CO.scales.y,min:0,max:100}}}});
   }
-
-  // HY + IG + HY 20일선
-  if (h.hy_spread?.length || h.ig_spread?.length) {
-    const hyVals = h.hy_spread?.map(d=>d.value) || [];
-    const hyMA20 = hyVals.map((_,i)=>{
-      if (i < 19) return null;
-      return +(hyVals.slice(i-19,i+1).reduce((a,b)=>a+b,0)/20).toFixed(3);
-    });
-    const dset = [];
-    if (h.hy_spread?.length) {
-      dset.push({label:'HY',data:hyVals,borderColor:'#BA7517',borderWidth:1.5,pointRadius:0,tension:0.3});
-      dset.push({label:'HY MA20',data:hyMA20,borderColor:'rgba(186,117,23,0.5)',borderWidth:1,pointRadius:0,tension:0.3,borderDash:[4,2],spanGaps:false});
-    }
-    if (h.ig_spread?.length) dset.push({label:'IG',data:h.ig_spread.map(d=>d.value),borderColor:'#185FA5',borderWidth:1.5,pointRadius:0,tension:0.3,borderDash:[5,3]});
-    const lbl = (h.hy_spread||h.ig_spread).map(d=>d.date.slice(5));
-    mkChart('chart-spread',{type:'line',data:{labels:lbl,datasets:dset},options:CO});
-  }
-
-  // 10년물 + 수익률곡선
-  if (h.tnx?.length || h.yield_curve?.length) {
+  if (h.hy_spread?.length||h.ig_spread?.length) {
+    const hv=(h.hy_spread||[]).map(d=>d.value);
+    const hm=hv.map((_,i)=>i<19?null:+(hv.slice(i-19,i+1).reduce((a,b)=>a+b,0)/20).toFixed(3));
     const dset=[];
-    if (h.tnx?.length)         dset.push({label:'10년물', data:h.tnx.map(d=>d.value),borderColor:'#185FA5',borderWidth:1.5,pointRadius:0,tension:0.3});
-    if (h.yield_curve?.length) dset.push({label:'2s10s',  data:h.yield_curve.map(d=>d.value),borderColor:'#534AB7',borderWidth:1.5,pointRadius:0,tension:0.3,borderDash:[5,3]});
+    if(h.hy_spread?.length){dset.push({label:'HY',data:hv,borderColor:'#BA7517',borderWidth:1.5,pointRadius:0,tension:0.3});dset.push({label:'HY MA20',data:hm,borderColor:'rgba(186,117,23,0.5)',borderWidth:1,pointRadius:0,tension:0.3,borderDash:[4,2],spanGaps:false});}
+    if(h.ig_spread?.length) dset.push({label:'IG',data:h.ig_spread.map(d=>d.value),borderColor:'#185FA5',borderWidth:1.5,pointRadius:0,tension:0.3,borderDash:[5,3]});
+    mkChart('chart-spread',{type:'line',data:{labels:(h.hy_spread||h.ig_spread).map(d=>d.date.slice(5)),datasets:dset},options:CO});
+  }
+  if (h.tnx?.length||h.yield_curve?.length) {
+    const dset=[];
+    if(h.tnx?.length)         dset.push({label:'10년물',data:h.tnx.map(d=>d.value),borderColor:'#185FA5',borderWidth:1.5,pointRadius:0,tension:0.3});
+    if(h.yield_curve?.length) dset.push({label:'2s10s', data:h.yield_curve.map(d=>d.value),borderColor:'#534AB7',borderWidth:1.5,pointRadius:0,tension:0.3,borderDash:[5,3]});
     mkChart('chart-rates',{type:'line',data:{labels:(h.tnx||h.yield_curve).map(d=>d.date.slice(5)),datasets:dset},options:CO});
   }
 }
@@ -1267,7 +956,7 @@ function renderCrashGrid() {
     </div>`).join('');
 }
 function selectCrash(id) {
-  const crash = CRASHES.find(c=>c.id===id);
+  const crash=CRASHES.find(c=>c.id===id);
   document.querySelectorAll('.crash-card').forEach(c=>c.classList.remove('sel'));
   document.getElementById('cc-'+id).classList.add('sel');
   document.getElementById('crash-detail').style.display='';
@@ -1276,24 +965,13 @@ function selectCrash(id) {
   crash.weeks.forEach((w,i)=>{
     const prev=i>0?crash.weeks[i-1]:null;
     const fi=(v,d=2)=>typeof v==='number'?v.toFixed(d):'—';
-    const fxc=(v,k,bad=true)=>{
-      if(!prev) return fi(v);
-      const diff=v-prev[k],cls=bad?(diff>0.05?'c-red':diff<-0.05?'c-green':'c-muted'):(diff>0.05?'c-green':diff<-0.05?'c-red':'c-muted');
-      return `<span class="${cls}">${fi(v)}</span>`;
-    };
+    const fxc=(v,k,bad=true)=>{if(!prev)return fi(v);const diff=v-prev[k],cls=bad?(diff>0.05?'c-red':diff<-0.05?'c-green':'c-muted'):(diff>0.05?'c-green':diff<-0.05?'c-red':'c-muted');return`<span class="${cls}">${fi(v)}</span>`;};
     const fIdx=v=>`<span class="${v>0?'c-green':v<0?'c-red':'c-muted'}">${v>0?'+':''}${v.toFixed(1)}%</span>`;
-    tbl+=`<tr class="${w.crash?'tr-crash':''}">
-      <td><b>${w.l}</b></td>
-      <td class="td-idx">${fIdx(w.ndx)}</td><td class="td-idx">${fIdx(w.spx)}</td><td class="td-idx">${fIdx(w.djia)}</td>
-      <td>${fxc(w.vix,'vix',true)}</td><td>${fxc(w.fg,'fg',false)}</td><td>${fxc(w.t10,'t10',false)}</td>
-      <td>${fxc(w.hy,'hy',true)}</td>
-      <td><span class="${w.yc<0?'c-red':w.yc<0.2?'c-amber':'c-green'}">${w.yc.toFixed(2)}</span></td>
-    </tr>`;
+    tbl+=`<tr class="${w.crash?'tr-crash':''}"><td><b>${w.l}</b></td><td class="td-idx">${fIdx(w.ndx)}</td><td class="td-idx">${fIdx(w.spx)}</td><td class="td-idx">${fIdx(w.djia)}</td><td>${fxc(w.vix,'vix',true)}</td><td>${fxc(w.fg,'fg',false)}</td><td>${fxc(w.t10,'t10',false)}</td><td>${fxc(w.hy,'hy',true)}</td><td><span class="${w.yc<0?'c-red':w.yc<0.2?'c-amber':'c-green'}">${w.yc.toFixed(2)}</span></td></tr>`;
   });
   tbl+='</tbody></table>';
   document.getElementById('crash-tbl').innerHTML=tbl;
-  const co2={responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},
-    scales:{x:{grid:{color:'rgba(128,128,128,0.07)'},ticks:{color:'#888',font:{size:11}}},y:{grid:{color:'rgba(128,128,128,0.07)'},ticks:{color:'#888',font:{size:11}}}}};
+  const co2={responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{grid:{color:'rgba(128,128,128,0.07)'},ticks:{color:'#888',font:{size:11}}},y:{grid:{color:'rgba(128,128,128,0.07)'},ticks:{color:'#888',font:{size:11}}}}};
   const labels=crash.weeks.map(w=>w.l);
   mkChart('chart-crash-idx',{type:'line',data:{labels,datasets:[
     {label:'NASDAQ',data:crash.weeks.map(w=>w.ndx),borderColor:'#E24B4A',borderWidth:2,tension:0.3,pointRadius:3,fill:false},
@@ -1315,22 +993,38 @@ function renderGuide() {
       <div style="font-size:14px;font-weight:500;margin-bottom:6px">${g.name}</div>
       <div class="guide-desc">${g.desc}</div>
       <div class="guide-pill"><b>기준값:</b> ${g.threshold}</div><br>
-      <div class="guide-pill" style="color:var(--green)"><b>📈 매수 신호:</b> ${g.signal_buy}</div>
-      <div class="guide-pill" style="color:var(--red);margin-left:4px"><b>📉 매도 신호:</b> ${g.signal_sell}</div>
+      <div class="guide-pill" style="color:var(--green)"><b>📈 매수:</b> ${g.signal_buy}</div>
+      <div class="guide-pill" style="color:var(--red);margin-left:4px"><b>📉 매도:</b> ${g.signal_sell}</div>
     </div>`).join('');
 }
 
 // ── TABS ──────────────────────────────────────────────────────────────
+const TABS = ['signal','watchlist','portfolio','monitor','history','crashes','guide'];
 function showTab(name) {
-  const TABS = ['signal','portfolio','stock','monitor','history','crashes','guide'];
-  TABS.forEach(t=>{
-    document.getElementById('tab-'+t).style.display = t===name?'':'none';
-  });
-  document.querySelectorAll('.tab').forEach((tab,i)=>{
-    tab.classList.toggle('active', TABS[i]===name);
-  });
-  if (name==='history' && DATA) setTimeout(()=>renderHistory(), 100);
+  TABS.forEach(t=>{ document.getElementById('tab-'+t).style.display = t===name?'':'none'; });
+  document.querySelectorAll('.tab').forEach((tab,i)=>{ tab.classList.toggle('active', TABS[i]===name); });
+  if (name==='history'   && DATA) setTimeout(()=>renderHistory(), 100);
+  if (name==='watchlist' && DATA) renderWatchlist();
   if (name==='portfolio' && DATA) renderPortfolioDefaults();
+}
+
+// ── BOOT ──────────────────────────────────────────────────────────────
+async function boot() {
+  try {
+    const r = await fetch(BASE_URL+'/data/indicators.json?v='+Date.now());
+    if (!r.ok) throw new Error('HTTP '+r.status);
+    DATA = await r.json();
+  } catch(e) {
+    document.getElementById('loader').innerHTML=`<div style="color:var(--muted);text-align:center;padding:2rem">로드 실패: ${e.message}</div>`;
+    return;
+  }
+  document.getElementById('loader').style.display='none';
+  document.getElementById('app').style.display='';
+  document.getElementById('updated-label').textContent='업데이트: '+(DATA.updated_kst||DATA.updated_at);
+  renderSignal();
+  renderMonitor();
+  renderCrashGrid();
+  renderGuide();
 }
 
 boot();

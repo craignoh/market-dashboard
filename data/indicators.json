@@ -1,6 +1,6 @@
 {
   "updated_at": "2026-06-07",
-  "updated_kst": "2026-06-07 19:14 KST",
+  "updated_kst": "2026-06-08 02:20 KST",
   "snapshot": {
     "nasdaq": 26830.96,
     "sp500": 7584.31,
@@ -25,15 +25,28 @@
     "rsi_nasdaq": 54.35,
     "ma200_sp500": 10.66,
     "ma50_sp500": 6.22,
-    "ma200_nasdaq": 15.15
+    "ma200_nasdaq": 15.15,
+    "vix_ma20": 16.9065,
+    "vix_vs_ma20": -8.91,
+    "vix_slope": -2.461,
+    "hy_ma20": 2.7635,
+    "hy_vs_ma20": -0.85,
+    "hy_slope": -0.432,
+    "fg_ma10": 18.5,
+    "fg_vs_ma10": -35.14,
+    "fg_slope": -29.389
   },
   "risk_score": 25,
   "risk_label": "안전 — 리스크 낮음",
-  "buy_score": 20,
+  "buy_score": 30,
   "buy_signals": [
     {
       "label": "Fear&Greed 12 — 극단 공포 (역발상 매수)",
       "strength": "strong"
+    },
+    {
+      "label": "Fear&Greed 10일 이평 18.5 — 공포 추세 (역발상 구간)",
+      "strength": "medium"
     }
   ],
   "trade_signal": "중립",

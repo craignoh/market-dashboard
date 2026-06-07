@@ -5,7 +5,23 @@ import requests
 
 FRED_API_KEY = os.environ.get("FRED_API_KEY", "")
 FRED_BASE    = "https://api.stlouisfed.org/fred/series/observations"
+FMP_API_KEY  = os.environ.get("FMP_API_KEY", "")
+FMP_BASE     = "https://financialmodelingprep.com/api/v3"
 
+WATCHLIST = [
+    {"ticker": "SOXL",  "name": "반도체 3x 레버리지"},
+    {"ticker": "TQQQ",  "name": "나스닥 3x 레버리지"},
+    {"ticker": "XLK",   "name": "기술 섹터"},
+    {"ticker": "XLV",   "name": "헬스케어/바이오"},
+    {"ticker": "XLE",   "name": "정유/에너지"},
+    {"ticker": "XLF",   "name": "금융 섹터"},
+    {"ticker": "XLI",   "name": "산업/항공"},
+    {"ticker": "XLU",   "name": "유틸리티 (방어주)"},
+    {"ticker": "XLY",   "name": "소비재"},
+    {"ticker": "GLD",   "name": "금 (Gold)"},
+    {"ticker": "TLT",   "name": "장기국채 20년+"},
+    {"ticker": "ARKK",  "name": "혁신/테크 액티브"},
+]
 def fred_latest(series_id):
     if not FRED_API_KEY:
         return None
@@ -100,6 +116,134 @@ def calc_ma_deviation(values, period=200):
 def calc_ma_deviation_50(values):
     return calc_ma_deviation(values, 50)
 
+def calc_rsi_list(closes, period=14):
+    if len(closes) < period + 1:
+        return None
+    gains, losses = 0, 0
+    for i in range(len(closes) - period, len(closes)):
+        diff = closes[i] - closes[i-1]
+        if diff > 0: gains  += diff
+        else:        losses -= diff
+    avg_gain = gains  / period
+    avg_loss = losses / period
+    if avg_loss == 0: return 100.0
+    rs = avg_gain / avg_loss
+    return round(100 - 100 / (1 + rs), 2)
+
+def fetch_stock_technicals(ticker):
+    """FMP에서 종목 기술적 지표 수집 및 계산"""
+    if not FMP_API_KEY:
+        return None
+    try:
+        url = f"{FMP_BASE}/historical-price-full/{ticker}?timeseries=220&apikey={FMP_API_KEY}"
+        r = requests.get(url, timeout=20)
+        r.raise_for_status()
+        data = r.json()
+        hist = data.get("historical", [])
+        if not hist:
+            return None
+        hist = list(reversed(hist))  # 오래된 순
+        closes  = [d["close"]  for d in hist]
+        volumes = [d["volume"] for d in hist]
+        current = closes[-1]
+        prev    = closes[-2] if len(closes) > 1 else current
+
+        # RSI
+        rsi = calc_rsi_list(closes, 14)
+
+        # 이동평균
+        ma50  = round(sum(closes[-50:])/50,   2) if len(closes) >= 50  else None
+        ma200 = round(sum(closes[-200:])/200, 2) if len(closes) >= 200 else None
+        ma20  = round(sum(closes[-20:])/20,   2) if len(closes) >= 20  else None
+        ma20_5ago = round(sum(closes[-25:-5])/20, 2) if len(closes) >= 25 else None
+
+        vs_ma50   = round((current - ma50)  / ma50  * 100, 2) if ma50  else None
+        vs_ma200  = round((current - ma200) / ma200 * 100, 2) if ma200 else None
+        ma20_slope= round((ma20 - ma20_5ago) / ma20_5ago * 100, 2) if (ma20 and ma20_5ago) else None
+
+        # 볼린저밴드
+        bb_pos = None
+        if len(closes) >= 20:
+            sl   = closes[-20:]
+            mean = sum(sl) / 20
+            std  = (sum((v - mean)**2 for v in sl) / 20) ** 0.5
+            bb_upper = mean + 2 * std
+            bb_lower = mean - 2 * std
+            if bb_upper != bb_lower:
+                bb_pos = round((current - bb_lower) / (bb_upper - bb_lower) * 100, 1)
+
+        # 52주
+        w52      = closes[-252:] if len(closes) >= 252 else closes
+        high52   = max(w52)
+        low52    = min(w52)
+        vs_high52= round((current - high52) / high52 * 100, 2)
+        vs_low52 = round((current - low52)  / low52  * 100, 2)
+
+        # 거래량
+        vol20avg = sum(volumes[-21:-1]) / 20 if len(volumes) >= 21 else None
+        vol_ratio= round(volumes[-1] / vol20avg * 100, 1) if vol20avg else None
+
+        # 매수 점수
+        buy_score, buy_signals = 0, []
+        if rsi is not None:
+            if rsi < 25:   buy_score += 25; buy_signals.append(f"RSI {rsi} — 극단 과매도")
+            elif rsi < 30: buy_score += 18; buy_signals.append(f"RSI {rsi} — 과매도")
+            elif rsi < 40: buy_score += 8;  buy_signals.append(f"RSI {rsi} — 약한 과매도")
+        if vs_ma200 is not None:
+            if vs_ma200 < -20:   buy_score += 25; buy_signals.append(f"200일선 {vs_ma200}% — 역사적 저평가")
+            elif vs_ma200 < -15: buy_score += 18; buy_signals.append(f"200일선 {vs_ma200}% — 강한 매수")
+            elif vs_ma200 < -10: buy_score += 10; buy_signals.append(f"200일선 {vs_ma200}% — 매수 후보")
+        if bb_pos is not None and bb_pos < 15:
+            buy_score += 15; buy_signals.append(f"볼린저 하단 ({bb_pos}%) — 반등 후보")
+        if vs_high52 < -30:
+            buy_score += 10; buy_signals.append(f"52주 고점 대비 {vs_high52}%")
+
+        # 매도 점수
+        sell_score, sell_signals = 0, []
+        if rsi is not None:
+            if rsi > 80:   sell_score += 25; sell_signals.append(f"RSI {rsi} — 극단 과매수")
+            elif rsi > 70: sell_score += 18; sell_signals.append(f"RSI {rsi} — 과매수")
+            elif rsi > 65: sell_score += 8;  sell_signals.append(f"RSI {rsi} — 과열 주의")
+        if vs_ma200 is not None:
+            if vs_ma200 > 25:   sell_score += 25; sell_signals.append(f"200일선 +{vs_ma200}% — 역사적 고평가")
+            elif vs_ma200 > 20: sell_score += 18; sell_signals.append(f"200일선 +{vs_ma200}% — 강한 매도")
+            elif vs_ma200 > 15: sell_score += 10; sell_signals.append(f"200일선 +{vs_ma200}% — 과열 주의")
+        if bb_pos is not None and bb_pos > 85:
+            sell_score += 15; sell_signals.append(f"볼린저 상단 ({bb_pos}%) — 조정 후보")
+        if vs_low52 > 80:
+            sell_score += 10; sell_signals.append(f"52주 저점 대비 +{vs_low52}%")
+        if vol_ratio and vol_ratio > 200 and rsi and rsi > 65:
+            sell_score += 8; sell_signals.append(f"고점 거래량 급증 ({vol_ratio}%)")
+
+        buy_score  = min(buy_score,  100)
+        sell_score = min(sell_score, 100)
+
+        chg1d = round((current - prev) / prev * 100, 2)
+
+        return {
+            "ticker":       ticker,
+            "price":        round(current, 2),
+            "chg1d":        chg1d,
+            "rsi":          rsi,
+            "vs_ma50":      vs_ma50,
+            "vs_ma200":     vs_ma200,
+            "ma20_slope":   ma20_slope,
+            "bb_pos":       bb_pos,
+            "vs_high52":    vs_high52,
+            "vs_low52":     vs_low52,
+            "vol_ratio":    vol_ratio,
+            "high52":       round(high52, 2),
+            "low52":        round(low52,  2),
+            "ma200":        ma200,
+            "buy_score":    buy_score,
+            "sell_score":   sell_score,
+            "buy_signals":  buy_signals,
+            "sell_signals": sell_signals,
+        }
+    except Exception as e:
+        print(f"  [ERROR] {ticker}: {e}")
+        return None
+
 def fear_greed_latest():
     try:
         r = requests.get("https://api.alternative.me/fng/?limit=1&format=json", timeout=15)
@@ -178,6 +322,19 @@ def main():
     fg   = fear_greed_latest()
     fg_h = fear_greed_history(45)
 
+    # ── 종목 기술적 분석 (워치리스트) ─────────────────────────────────
+    print("  Fetching watchlist technicals...")
+    watchlist_data = []
+    for item in WATCHLIST:
+        print(f"    {item['ticker']}...", end=" ")
+        result = fetch_stock_technicals(item["ticker"])
+        if result:
+            result["name"] = item["name"]
+            watchlist_data.append(result)
+            print(f"buy={result['buy_score']} sell={result['sell_score']}")
+        else:
+            print("failed")
+    
     # ── 환율 (USD/KRW) ────────────────────────────────────────────────
     print("  Fetching USD/KRW rate...")
     usdkrw = fred_latest("DEXKOUS")   # FRED: 원/달러 환율
@@ -527,6 +684,7 @@ def main():
         "sell_signal":  sell_signal,
         "sell_color":   sell_color,
         "sell_desc":    sell_desc,
+        "watchlist": watchlist_data,
         "history": {
             "nasdaq":      nasdaq_chart,
             "sp500":       sp500_chart,

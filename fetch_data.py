@@ -160,6 +160,32 @@ def main():
     fg   = fear_greed_latest()
     fg_h = fear_greed_history(45)
 
+    # ── 이평선 분석 ────────────────────────────────────────────────────
+    print("  Calculating moving average analysis...")
+
+    # VIX 이평선
+    vix_vals    = [d["value"] for d in vix_h]
+    vix_ma20    = calc_ma(vix_vals, 20)
+    vix_vs_ma20 = calc_vs_ma(vix, vix_ma20)
+    vix_slope   = calc_ma_slope(vix_vals, 20)
+
+    # HY 스프레드 이평선
+    hy_hist     = fred_history("BAMLH0A0HYM2", 60)
+    hy_vals     = [d["value"] for d in hy_hist]
+    hy_ma20     = calc_ma(hy_vals, 20)
+    hy_vs_ma20  = calc_vs_ma(hy_spread, hy_ma20)
+    hy_slope    = calc_ma_slope(hy_vals, 20)
+
+    # Fear & Greed 10일 이평선
+    fg_vals     = [d["value"] for d in fg_h]
+    fg_ma10     = calc_ma(fg_vals, 10)
+    fg_vs_ma10  = calc_vs_ma(fg["value"] if fg else None, fg_ma10)
+    fg_slope    = calc_ma_slope(fg_vals, 10)
+
+    print(f"  VIX vs MA20={vix_vs_ma20}%, slope={vix_slope}%")
+    print(f"  HY  vs MA20={hy_vs_ma20}%, slope={hy_slope}%")
+    print(f"  F&G vs MA10={fg_vs_ma10}%, slope={fg_slope}%")
+
     # ── 35일 히스토리 (차트용) ─────────────────────────────────────────
     print("  Fetching 35-day history for charts...")
     tnx_h = fred_history("DGS10",        45)
@@ -204,7 +230,7 @@ def main():
         "주의 — 일부 지표 이상"   if risk >= 30 else
         "안전 — 리스크 낮음"
     )
-
+    
     # ── 매수 타이밍 점수 (반등 조건) ──────────────────────────────────
     buy_score = 0
     buy_signals = []
@@ -284,31 +310,7 @@ def main():
         buy_score += 10
         buy_signals.append({"label": f"Fear&Greed 10일 이평 {round(fg_ma10,1)} — 공포 추세 (역발상 구간)", "strength": "medium"})
     buy_score = min(buy_score, 100)
-    # ── 이평선 분석 ────────────────────────────────────────────────────
-    print("  Calculating moving average analysis...")
-
-    # VIX 이평선
-    vix_vals   = [d["value"] for d in vix_h]
-    vix_ma20   = calc_ma(vix_vals, 20)
-    vix_vs_ma20= calc_vs_ma(vix, vix_ma20)          # VIX가 20일선 대비 몇%
-    vix_slope  = calc_ma_slope(vix_vals, 20)         # 20일선 기울기
-
-    # HY 스프레드 이평선
-    hy_hist    = fred_history("BAMLH0A0HYM2", 60)
-    hy_vals    = [d["value"] for d in hy_hist]
-    hy_ma20    = calc_ma(hy_vals, 20)
-    hy_vs_ma20 = calc_vs_ma(hy_spread, hy_ma20)
-    hy_slope   = calc_ma_slope(hy_vals, 20)
-
-    # Fear & Greed 10일 이평선
-    fg_vals    = [d["value"] for d in fg_h]
-    fg_ma10    = calc_ma(fg_vals, 10)
-    fg_vs_ma10 = calc_vs_ma(fg["value"] if fg else None, fg_ma10)
-    fg_slope   = calc_ma_slope(fg_vals, 10)
-
-    print(f"  VIX vs MA20={vix_vs_ma20}%, slope={vix_slope}%")
-    print(f"  HY  vs MA20={hy_vs_ma20}%, slope={hy_slope}%")
-    print(f"  F&G vs MA10={fg_vs_ma10}%, slope={fg_slope}%")
+   
     # ── 매도 타이밍 점수 (과열 조건) ──────────────────────────────────
     sell_score = 0
     sell_signals = []

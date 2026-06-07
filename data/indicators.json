@@ -1,6 +1,6 @@
 {
   "updated_at": "2026-06-07",
-  "updated_kst": "2026-06-08 02:42 KST",
+  "updated_kst": "2026-06-08 02:52 KST",
   "snapshot": {
     "nasdaq": 26830.96,
     "sp500": 7584.31,
@@ -68,6 +68,7 @@
   "sell_signal": "홀딩",
   "sell_color": "blue",
   "sell_desc": "과열 신호 없음 — 현 포지션 유지",
+  "watchlist": [],
   "history": {
     "nasdaq": [
       {

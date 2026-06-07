@@ -586,18 +586,88 @@ function renderSignal() {
     : sellSigs.map(sg=>`<li><span class="sig-dot sig-${sg.strength==='strong'?'strong-sell':sg.strength==='medium'?'medium-sell':'weak'}"></span>${sg.label}</li>`).join('');
 
   // 기술적 지표 카드
+  const pct = (v, pos=true) => v!=null ? (v>0?'+':'')+fmt(v,1)+'%' : '—';
+
+  // VIX 이평선 해석
+  function vixMaLabel(vsMA, slope) {
+    if (vsMA == null) return '';
+    if (vsMA > 80)  return '공포 극점 — 역발상 매수 🟢';
+    if (vsMA > 50)  return '공포 급증 구간';
+    if (vsMA > 20)  return '20일선 위 (경계)';
+    if (vsMA < -25) return '변동성 극단 억제 🔴';
+    if (slope != null && slope < -5 && vsMA > 10) return '하락 전환 — 안정화 신호 🟢';
+    if (slope != null && slope > 10) return '상승 전환 — 경계';
+    return '20일선 근처 (중립)';
+  }
+  function vixMaClass(vsMA, slope) {
+    if (vsMA == null) return 'neutral';
+    if (vsMA > 50) return 'bullish';
+    if (vsMA < -25) return 'overbought';
+    if (slope != null && slope < -5 && vsMA > 10) return 'bullish';
+    return 'neutral';
+  }
+
+  // HY 이평선 해석
+  function hyMaLabel(vsMA, slope) {
+    if (vsMA == null) return '';
+    if (slope != null && slope < -3) return '하락 전환 — 신용 안정화 🟢';
+    if (slope != null && slope > 5 && vsMA != null && vsMA < 5) return '저점 반등 — 위험 경계 🔴';
+    if (vsMA > 10) return '20일선 위 (스트레스)';
+    if (vsMA < -10) return '20일선 대비 안정';
+    return '20일선 근처 (중립)';
+  }
+  function hyMaClass(vsMA, slope) {
+    if (slope != null && slope < -3) return 'bullish';
+    if (slope != null && slope > 5) return 'overbought';
+    return 'neutral';
+  }
+
+  // F&G 이평선 해석
+  function fgMaLabel(ma10, slope) {
+    if (ma10 == null) return '';
+    if (ma10 < 25 && slope != null && slope < -5) return '공포 추세 가속 🟢';
+    if (ma10 < 30) return `10일 평균 ${fmt(ma10,0)} — 공포 구간`;
+    if (ma10 > 75 && slope != null && slope > 5) return '탐욕 추세 가속 🔴';
+    if (ma10 > 70) return `10일 평균 ${fmt(ma10,0)} — 탐욕 구간`;
+    return `10일 평균 ${fmt(ma10,0)} — 중립`;
+  }
+  function fgMaClass(ma10, slope) {
+    if (ma10 == null) return 'neutral';
+    if (ma10 < 30) return 'bullish';
+    if (ma10 > 70) return 'overbought';
+    return 'neutral';
+  }
+
   const techItems = [
-    {lbl:'RSI — S&P 500',      val:fmt(t.rsi_sp500,1),  sub:rsiLabel(t.rsi_sp500),  cls:rsiClass(t.rsi_sp500)},
-    {lbl:'RSI — NASDAQ',       val:fmt(t.rsi_nasdaq,1),  sub:rsiLabel(t.rsi_nasdaq), cls:rsiClass(t.rsi_nasdaq)},
-    {lbl:'S&P vs 200일선',     val:(t.ma200_sp500!=null?(t.ma200_sp500>0?'+':'')+fmt(t.ma200_sp500,1)+'%':'—'), sub:maLabel(t.ma200_sp500), cls:maClass(t.ma200_sp500)},
-    {lbl:'S&P vs 50일선',      val:(t.ma50_sp500!=null?(t.ma50_sp500>0?'+':'')+fmt(t.ma50_sp500,1)+'%':'—'),   sub:maLabel(t.ma50_sp500),  cls:maClass(t.ma50_sp500)},
-    {lbl:'NASDAQ vs 200일선',  val:(t.ma200_nasdaq!=null?(t.ma200_nasdaq>0?'+':'')+fmt(t.ma200_nasdaq,1)+'%':'—'), sub:maLabel(t.ma200_nasdaq), cls:maClass(t.ma200_nasdaq)},
+    // ─ RSI ─
+    {lbl:'RSI — S&P 500',     val:fmt(t.rsi_sp500,1),   sub:rsiLabel(t.rsi_sp500),  cls:rsiClass(t.rsi_sp500)},
+    {lbl:'RSI — NASDAQ',      val:fmt(t.rsi_nasdaq,1),   sub:rsiLabel(t.rsi_nasdaq), cls:rsiClass(t.rsi_nasdaq)},
+    // ─ 이평선 괴리율 ─
+    {lbl:'S&P vs 200일선',    val:pct(t.ma200_sp500),    sub:maLabel(t.ma200_sp500),  cls:maClass(t.ma200_sp500)},
+    {lbl:'S&P vs 50일선',     val:pct(t.ma50_sp500),     sub:maLabel(t.ma50_sp500),   cls:maClass(t.ma50_sp500)},
+    {lbl:'NASDAQ vs 200일선', val:pct(t.ma200_nasdaq),   sub:maLabel(t.ma200_nasdaq), cls:maClass(t.ma200_nasdaq)},
+    // ─ VIX 이평선 ─
+    {lbl:'VIX vs 20일선',     val:pct(t.vix_vs_ma20),
+     sub:vixMaLabel(t.vix_vs_ma20, t.vix_slope),
+     cls:vixMaClass(t.vix_vs_ma20, t.vix_slope),
+     extra:`20일선: ${fmt(t.vix_ma20,1)} / 기울기: ${t.vix_slope!=null?(t.vix_slope>0?'+':'')+fmt(t.vix_slope,1)+'%':'—'}`},
+    // ─ HY 이평선 ─
+    {lbl:'HY스프레드 vs 20일선', val:pct(t.hy_vs_ma20),
+     sub:hyMaLabel(t.hy_vs_ma20, t.hy_slope),
+     cls:hyMaClass(t.hy_vs_ma20, t.hy_slope),
+     extra:`20일선: ${fmt(t.hy_ma20,2)}% / 기울기: ${t.hy_slope!=null?(t.hy_slope>0?'+':'')+fmt(t.hy_slope,1)+'%':'—'}`},
+    // ─ F&G 이평선 ─
+    {lbl:'Fear&Greed 10일 이평', val:t.fg_ma10!=null?fmt(t.fg_ma10,1):'—',
+     sub:fgMaLabel(t.fg_ma10, t.fg_slope),
+     cls:fgMaClass(t.fg_ma10, t.fg_slope),
+     extra:`현재값 대비: ${pct(t.fg_vs_ma10)} / 기울기: ${t.fg_slope!=null?(t.fg_slope>0?'+':'')+fmt(t.fg_slope,1)+'%':'—'}`},
   ];
   document.getElementById('tech-grid').innerHTML = techItems.map(ti=>`
     <div class="tech-card ${ti.cls}">
       <div class="metric-lbl">${ti.lbl}</div>
       <div class="metric-val ${ti.cls==='bullish'?'c-green':ti.cls==='overbought'?'c-red':'c-muted'}">${ti.val}</div>
       <div class="metric-sub ${ti.cls==='bullish'?'c-green':ti.cls==='overbought'?'c-red':'c-muted'}">${ti.sub}</div>
+      ${ti.extra?`<div style="font-size:10px;color:var(--faint);margin-top:5px;line-height:1.5">${ti.extra}</div>`:''}
     </div>`).join('');
 
   // 리스크 신호 강도바

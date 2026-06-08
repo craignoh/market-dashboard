@@ -1,24 +1,24 @@
 {
-  "updated_at": "2026-06-07",
-  "updated_kst": "2026-06-08 03:08 KST",
+  "updated_at": "2026-06-08",
+  "updated_kst": "2026-06-08 23:43 KST",
   "snapshot": {
     "nasdaq": 26830.96,
     "sp500": 7584.31,
     "djia": 51561.93,
-    "vix": 15.4,
+    "vix": 21.51,
     "ten_yr": 4.47,
     "fed_rate": 3.63,
-    "hy_spread": 2.74,
+    "hy_spread": 2.76,
     "ig_spread": 0.74,
     "ted_spread": 0.09,
     "yield_curve": 0.42,
     "fear_greed": {
-      "value": 12,
+      "value": 8,
       "classification": "Extreme Fear"
     },
     "usdkrw": 1503.96,
-    "t10y_change_3m": 0.35,
-    "t10y_change_1m": 0.09,
+    "t10y_change_3m": 0.32,
+    "t10y_change_1m": 0.05,
     "fedfunds_change_3m": null,
     "real_rate": 2.17,
     "erp": 0.08,
@@ -32,36 +32,36 @@
     "ma200_sp500": 10.66,
     "ma50_sp500": 6.22,
     "ma200_nasdaq": 15.15,
-    "vix_ma20": 16.9065,
-    "vix_vs_ma20": -8.91,
-    "vix_slope": -2.461,
-    "hy_ma20": 2.7635,
-    "hy_vs_ma20": -0.85,
-    "hy_slope": -0.432,
-    "fg_ma10": 18.5,
-    "fg_vs_ma10": -35.14,
-    "fg_slope": -29.389
+    "vix_ma20": 17.1225,
+    "vix_vs_ma20": 25.62,
+    "vix_slope": -0.736,
+    "hy_ma20": 2.762,
+    "hy_vs_ma20": -0.07,
+    "hy_slope": -0.415,
+    "fg_ma10": 17.0,
+    "fg_vs_ma10": -52.94,
+    "fg_slope": -31.452
   },
-  "risk_score": 25,
-  "risk_label": "안전 — 리스크 낮음",
+  "risk_score": 32,
+  "risk_label": "주의 — 일부 지표 이상",
   "buy_score": 30,
   "buy_signals": [
     {
-      "label": "Fear&Greed 12 — 극단 공포 (역발상 매수)",
+      "label": "Fear&Greed 8 — 극단 공포 (역발상 매수)",
       "strength": "strong"
     },
     {
-      "label": "Fear&Greed 10일 이평 18.5 — 공포 추세 (역발상 구간)",
+      "label": "Fear&Greed 10일 이평 17.0 — 공포 추세 (역발상 구간)",
       "strength": "medium"
     }
   ],
-  "trade_signal": "중립",
-  "trade_color": "blue",
-  "trade_desc": "시장 안정 — 급락 매수 기회 아님",
+  "trade_signal": "주의 관찰",
+  "trade_color": "amber",
+  "trade_desc": "불확실 구간 — 지표 추이 모니터링",
   "sell_score": 15,
   "sell_signals": [
     {
-      "label": "HY스프레드 2.74% — 리스크 프리미엄 소멸 (과열)",
+      "label": "HY스프레드 2.76% — 리스크 프리미엄 소멸 (과열)",
       "strength": "strong"
     }
   ],
@@ -770,10 +770,6 @@
     ],
     "vix": [
       {
-        "date": "2026-04-23",
-        "value": 19.31
-      },
-      {
         "date": "2026-04-24",
         "value": 18.71
       },
@@ -892,13 +888,13 @@
       {
         "date": "2026-06-04",
         "value": 15.4
+      },
+      {
+        "date": "2026-06-05",
+        "value": 21.51
       }
     ],
     "tnx": [
-      {
-        "date": "2026-04-23",
-        "value": 4.34
-      },
       {
         "date": "2026-04-24",
         "value": 4.31
@@ -1017,10 +1013,6 @@
       }
     ],
     "hy_spread": [
-      {
-        "date": "2026-04-23",
-        "value": 2.86
-      },
       {
         "date": "2026-04-24",
         "value": 2.86
@@ -1144,13 +1136,13 @@
       {
         "date": "2026-06-04",
         "value": 2.74
+      },
+      {
+        "date": "2026-06-05",
+        "value": 2.76
       }
     ],
     "ig_spread": [
-      {
-        "date": "2026-04-23",
-        "value": 0.8
-      },
       {
         "date": "2026-04-24",
         "value": 0.8
@@ -1274,13 +1266,13 @@
       {
         "date": "2026-06-04",
         "value": 0.74
+      },
+      {
+        "date": "2026-06-05",
+        "value": 0.74
       }
     ],
     "yield_curve": [
-      {
-        "date": "2026-04-23",
-        "value": 0.51
-      },
       {
         "date": "2026-04-24",
         "value": 0.53
@@ -1399,11 +1391,6 @@
       }
     ],
     "fear_greed": [
-      {
-        "date": "2026-04-24",
-        "value": 39,
-        "classification": "Fear"
-      },
       {
         "date": "2026-04-25",
         "value": 31,
@@ -1622,6 +1609,11 @@
       {
         "date": "2026-06-07",
         "value": 12,
+        "classification": "Extreme Fear"
+      },
+      {
+        "date": "2026-06-08",
+        "value": 8,
         "classification": "Extreme Fear"
       }
     ]

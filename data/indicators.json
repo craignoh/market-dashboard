@@ -1,6 +1,6 @@
 {
   "updated_at": "2026-06-09",
-  "updated_kst": "2026-06-10 01:41 KST",
+  "updated_kst": "2026-06-10 01:49 KST",
   "snapshot": {
     "nasdaq": 25929.66,
     "sp500": 7405.73,
@@ -13,12 +13,12 @@
     "ted_spread": 0.09,
     "yield_curve": 0.38,
     "fear_greed": {
-      "value": 64,
+      "value": 72,
       "classification": "Greed",
       "components": {
         "모멘텀": 80.8,
         "변동성폭": 69.0,
-        "풋콜대체": 24.2,
+        "풋콜비율": 69.6,
         "정크본드": 90.6,
         "변동성": 77.7,
         "안전자산": 46.0
@@ -106,15 +106,17 @@
       "vs_ma200": null,
       "ma20_slope": 3.71,
       "bb_pos": 33.0,
-      "vs_high52": -12.55,
+      "vs_high52": -35.54,
       "vs_low52": 101.29,
       "vol_ratio": 110.5,
-      "high52": 87.22,
+      "high52": 118.32,
       "low52": 37.89,
       "ma200": null,
-      "buy_score": 0,
+      "buy_score": 10,
       "sell_score": 10,
-      "buy_signals": [],
+      "buy_signals": [
+        "52주 고점 대비 -35.54%"
+      ],
       "sell_signals": [
         "52주 저점 대비 +101.29%"
       ],

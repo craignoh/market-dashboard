@@ -1,6 +1,6 @@
 {
   "updated_at": "2026-06-09",
-  "updated_kst": "2026-06-10 02:02 KST",
+  "updated_kst": "2026-06-10 02:08 KST",
   "snapshot": {
     "nasdaq": 25929.66,
     "sp500": 7405.73,
@@ -107,17 +107,15 @@
       "vs_ma200": null,
       "ma20_slope": 3.71,
       "bb_pos": 33.0,
-      "vs_high52": -35.54,
+      "vs_high52": -12.55,
       "vs_low52": 101.29,
       "vol_ratio": 110.5,
-      "high52": 118.32,
+      "high52": 87.22,
       "low52": 37.89,
       "ma200": null,
-      "buy_score": 10,
+      "buy_score": 0,
       "sell_score": 10,
-      "buy_signals": [
-        "52주 고점 대비 -35.54%"
-      ],
+      "buy_signals": [],
       "sell_signals": [
         "52주 저점 대비 +101.29%"
       ],
@@ -232,6 +230,29 @@
       "buy_signals": [],
       "sell_signals": [],
       "name": "산업/항공"
+    },
+    {
+      "ticker": "XLU",
+      "price": 43.52,
+      "chg1d": -1.87,
+      "rsi": 46.57,
+      "vs_ma50": -4.18,
+      "vs_ma200": null,
+      "ma20_slope": -0.98,
+      "bb_pos": 13.5,
+      "vs_high52": -8.82,
+      "vs_low52": 3.94,
+      "vol_ratio": 95.8,
+      "high52": 47.73,
+      "low52": 41.87,
+      "ma200": null,
+      "buy_score": 15,
+      "sell_score": 0,
+      "buy_signals": [
+        "볼린저 하단 (13.5%) — 반등 후보"
+      ],
+      "sell_signals": [],
+      "name": "유틸리티 (방어주)"
     },
     {
       "ticker": "XLY",
@@ -1372,229 +1393,229 @@
     ],
     "fear_greed": [
       {
-        "date": "2026-04-26",
-        "value": 33,
-        "classification": "Fear"
+        "date": "2026-04-08",
+        "value": 29,
+        "classification": ""
+      },
+      {
+        "date": "2026-04-09",
+        "value": 34,
+        "classification": ""
+      },
+      {
+        "date": "2026-04-10",
+        "value": 38,
+        "classification": ""
+      },
+      {
+        "date": "2026-04-13",
+        "value": 41,
+        "classification": ""
+      },
+      {
+        "date": "2026-04-14",
+        "value": 47,
+        "classification": ""
+      },
+      {
+        "date": "2026-04-15",
+        "value": 56,
+        "classification": ""
+      },
+      {
+        "date": "2026-04-16",
+        "value": 61,
+        "classification": ""
+      },
+      {
+        "date": "2026-04-17",
+        "value": 69,
+        "classification": ""
+      },
+      {
+        "date": "2026-04-20",
+        "value": 70,
+        "classification": ""
+      },
+      {
+        "date": "2026-04-21",
+        "value": 68,
+        "classification": ""
+      },
+      {
+        "date": "2026-04-22",
+        "value": 68,
+        "classification": ""
+      },
+      {
+        "date": "2026-04-23",
+        "value": 66,
+        "classification": ""
+      },
+      {
+        "date": "2026-04-24",
+        "value": 65,
+        "classification": ""
       },
       {
         "date": "2026-04-27",
-        "value": 47,
-        "classification": "Neutral"
+        "value": 66,
+        "classification": ""
       },
       {
         "date": "2026-04-28",
-        "value": 33,
-        "classification": "Fear"
+        "value": 67,
+        "classification": ""
       },
       {
         "date": "2026-04-29",
-        "value": 26,
-        "classification": "Fear"
+        "value": 66,
+        "classification": ""
       },
       {
         "date": "2026-04-30",
-        "value": 29,
-        "classification": "Fear"
+        "value": 70,
+        "classification": ""
       },
       {
         "date": "2026-05-01",
-        "value": 26,
-        "classification": "Fear"
-      },
-      {
-        "date": "2026-05-02",
-        "value": 39,
-        "classification": "Fear"
-      },
-      {
-        "date": "2026-05-03",
-        "value": 47,
-        "classification": "Neutral"
+        "value": 71,
+        "classification": ""
       },
       {
         "date": "2026-05-04",
-        "value": 40,
-        "classification": "Fear"
+        "value": 67,
+        "classification": ""
       },
       {
         "date": "2026-05-05",
-        "value": 50,
-        "classification": "Neutral"
+        "value": 67,
+        "classification": ""
       },
       {
         "date": "2026-05-06",
-        "value": 46,
-        "classification": "Fear"
+        "value": 69,
+        "classification": ""
       },
       {
         "date": "2026-05-07",
-        "value": 47,
-        "classification": "Neutral"
+        "value": 67,
+        "classification": ""
       },
       {
         "date": "2026-05-08",
-        "value": 38,
-        "classification": "Fear"
-      },
-      {
-        "date": "2026-05-09",
-        "value": 38,
-        "classification": "Fear"
-      },
-      {
-        "date": "2026-05-10",
-        "value": 47,
-        "classification": "Neutral"
+        "value": 67,
+        "classification": ""
       },
       {
         "date": "2026-05-11",
-        "value": 48,
-        "classification": "Neutral"
+        "value": 67,
+        "classification": ""
       },
       {
         "date": "2026-05-12",
-        "value": 49,
-        "classification": "Neutral"
+        "value": 66,
+        "classification": ""
       },
       {
         "date": "2026-05-13",
-        "value": 42,
-        "classification": "Fear"
+        "value": 65,
+        "classification": ""
       },
       {
         "date": "2026-05-14",
-        "value": 34,
-        "classification": "Fear"
+        "value": 66,
+        "classification": ""
       },
       {
         "date": "2026-05-15",
-        "value": 43,
-        "classification": "Fear"
-      },
-      {
-        "date": "2026-05-16",
-        "value": 31,
-        "classification": "Fear"
-      },
-      {
-        "date": "2026-05-17",
-        "value": 27,
-        "classification": "Fear"
+        "value": 63,
+        "classification": ""
       },
       {
         "date": "2026-05-18",
-        "value": 28,
-        "classification": "Fear"
+        "value": 62,
+        "classification": ""
       },
       {
         "date": "2026-05-19",
-        "value": 25,
-        "classification": "Extreme Fear"
+        "value": 59,
+        "classification": ""
       },
       {
         "date": "2026-05-20",
-        "value": 27,
-        "classification": "Fear"
+        "value": 60,
+        "classification": ""
       },
       {
         "date": "2026-05-21",
-        "value": 29,
-        "classification": "Fear"
+        "value": 58,
+        "classification": ""
       },
       {
         "date": "2026-05-22",
-        "value": 28,
-        "classification": "Fear"
-      },
-      {
-        "date": "2026-05-23",
-        "value": 28,
-        "classification": "Fear"
-      },
-      {
-        "date": "2026-05-24",
-        "value": 25,
-        "classification": "Extreme Fear"
-      },
-      {
-        "date": "2026-05-25",
-        "value": 30,
-        "classification": "Fear"
+        "value": 59,
+        "classification": ""
       },
       {
         "date": "2026-05-26",
-        "value": 34,
-        "classification": "Fear"
+        "value": 61,
+        "classification": ""
       },
       {
         "date": "2026-05-27",
-        "value": 25,
-        "classification": "Extreme Fear"
+        "value": 61,
+        "classification": ""
       },
       {
         "date": "2026-05-28",
-        "value": 22,
-        "classification": "Extreme Fear"
+        "value": 60,
+        "classification": ""
       },
       {
         "date": "2026-05-29",
-        "value": 23,
-        "classification": "Extreme Fear"
-      },
-      {
-        "date": "2026-05-30",
-        "value": 23,
-        "classification": "Extreme Fear"
-      },
-      {
-        "date": "2026-05-31",
-        "value": 28,
-        "classification": "Fear"
+        "value": 60,
+        "classification": ""
       },
       {
         "date": "2026-06-01",
-        "value": 29,
-        "classification": "Fear"
+        "value": 57,
+        "classification": ""
       },
       {
         "date": "2026-06-02",
-        "value": 23,
-        "classification": "Extreme Fear"
+        "value": 56,
+        "classification": ""
       },
       {
         "date": "2026-06-03",
-        "value": 11,
-        "classification": "Extreme Fear"
+        "value": 53,
+        "classification": ""
       },
       {
         "date": "2026-06-04",
-        "value": 12,
-        "classification": "Extreme Fear"
+        "value": 54,
+        "classification": ""
       },
       {
         "date": "2026-06-05",
-        "value": 12,
-        "classification": "Extreme Fear"
-      },
-      {
-        "date": "2026-06-06",
-        "value": 12,
-        "classification": "Extreme Fear"
-      },
-      {
-        "date": "2026-06-07",
-        "value": 12,
-        "classification": "Extreme Fear"
+        "value": 42,
+        "classification": ""
       },
       {
         "date": "2026-06-08",
-        "value": 8,
-        "classification": "Extreme Fear"
+        "value": 40,
+        "classification": ""
       },
       {
         "date": "2026-06-09",
-        "value": 10,
-        "classification": "Extreme Fear"
+        "value": 29,
+        "classification": ""
+      },
+      {
+        "date": "2026-06-09",
+        "value": 29,
+        "classification": ""
       }
     ]
   }

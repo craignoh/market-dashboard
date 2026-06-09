@@ -484,10 +484,11 @@ def main():
     hy_vs_ma20  = calc_vs_ma(hy_spread, hy_ma20)
     hy_slope    = calc_ma_slope(hy_vals, 20)
 
-    # Fear & Greed 10일 이평선
+    # Fear & Greed 10일 이평선 (자체계산 전이라 fg_crypto 사용)
     fg_vals     = [d["value"] for d in fg_h] if fg_h else []
     fg_ma10     = calc_ma(fg_vals, 10)
-    fg_vs_ma10  = calc_vs_ma(fg["value"] if fg else None, fg_ma10)
+    fg_crypto_val = fg_crypto["value"] if fg_crypto else None
+    fg_vs_ma10  = calc_vs_ma(fg_crypto_val, fg_ma10)
     fg_slope    = calc_ma_slope(fg_vals, 10)
 
     print(f"  VIX vs MA20={vix_vs_ma20}%, slope={vix_slope}%")

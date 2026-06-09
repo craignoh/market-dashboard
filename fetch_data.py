@@ -590,36 +590,36 @@ def main():
     print(f"  Fed 3M change={fedfunds_change_3m}")
     print(f"  RealRate={real_rate}%, ERP={erp}%")
 
-    # ── 지수 최신값 Polygon으로 보완 (FRED 1~2일 지연 대체) ───────────
-    print("  Fetching realtime index prices via Polygon...")
-    def fetch_polygon_latest(ticker):
+    # ── 지수 최신값 Polygon Indices API로 보완 (FRED 1~2일 지연 대체) ──
+    print("  Fetching realtime index prices via Polygon Indices API...")
+    def fetch_polygon_index(ticker):
+        """Polygon Indices API — I:COMP, I:SPX, I:DJI"""
         if not POLYGON_API_KEY:
             return None
         try:
-            url = f"https://api.polygon.io/v2/aggs/ticker/{ticker}/prev"
-            r = requests.get(url, params={"apiKey": POLYGON_API_KEY}, timeout=15)
+            url = f"https://api.polygon.io/v3/snapshot/indices"
+            r = requests.get(url, params={"ticker.any_of": ticker, "apiKey": POLYGON_API_KEY}, timeout=15)
             r.raise_for_status()
             results = r.json().get("results", [])
             if results:
-                return round(results[0]["c"], 2)
+                val = results[0].get("session", {}).get("close") or \
+                      results[0].get("value")
+                if val:
+                    return round(float(val), 2)
         except Exception as e:
-            print(f"  [WARN] Polygon {ticker}: {e}")
+            print(f"  [WARN] Polygon Index {ticker}: {e}")
         return None
 
-    qqq_price = fetch_polygon_latest("QQQ")
-    spy_price = fetch_polygon_latest("SPY")
-    dia_price = fetch_polygon_latest("DIA")
+    idx_nasdaq = fetch_polygon_index("I:COMP")
+    idx_sp500  = fetch_polygon_index("I:SPX")
+    idx_djia   = fetch_polygon_index("I:DJI")
     time.sleep(1)
 
-    # ETF → 지수 근사 환산 비율 (고정 배수, 참고용)
-    # QQQ ≈ NASDAQ/40, SPY ≈ SP500/10, DIA ≈ DJIA/1
-    if qqq_price: nasdaq = round(qqq_price * 40.5, 0)
-    if spy_price: sp500  = round(spy_price * 10.1, 0)
-    if dia_price: djia   = round(dia_price * 1.0,  0)
+    if idx_nasdaq: nasdaq = round(idx_nasdaq, 2)
+    if idx_sp500:  sp500  = round(idx_sp500,  2)
+    if idx_djia:   djia   = round(idx_djia,   2)
 
-    print(f"  QQQ={qqq_price} → NASDAQ≈{nasdaq}")
-    print(f"  SPY={spy_price} → SP500≈{sp500}")
-    print(f"  DIA={dia_price} → DJIA≈{djia}")
+    print(f"  NASDAQ={nasdaq}, SP500={sp500}, DJIA={djia}")
     
     # ── 이평선 분석 ────────────────────────────────────────────────────
     print("  Calculating moving average analysis...")

@@ -160,6 +160,40 @@ def calc_rsi_list(closes, period=14):
     rs = avg_gain / avg_loss
     return round(100 - 100 / (1 + rs), 2)
 
+def fetch_cnn_fear_greed():
+    """CNN Fear & Greed Index 스크래핑"""
+    import re
+    urls = [
+        "https://production.dataviz.cnn.io/index/fearandgreed/graphdata",
+        "https://fear-and-greed-index.p.rapidapi.com/v1/fgi",
+    ]
+    # 방법 1: CNN 내부 API 엔드포인트
+    try:
+        r = requests.get(
+            "https://production.dataviz.cnn.io/index/fearandgreed/graphdata",
+            headers={
+                "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36",
+                "Referer":    "https://www.cnn.com/markets/fear-and-greed",
+                "Accept":     "application/json",
+            },
+            timeout=15
+        )
+        if r.status_code == 200:
+            data  = r.json()
+            score = data.get("fear_and_greed", {}).get("score")
+            rating= data.get("fear_and_greed", {}).get("rating", "")
+            if score is not None:
+                print(f"  CNN F&G scraped: {score} ({rating})")
+                return {
+                    "value":          int(round(score)),
+                    "classification": rating,
+                    "source":         "cnn"
+                }
+    except Exception as e:
+        print(f"  [WARN] CNN scrape failed: {e}")
+
+    return None
+
 def fetch_cboe_putcall():
     """CBOE Equity Put/Call 비율 — 무료 CSV, 키 불필요"""
     url = "https://cdn.cboe.com/resources/options/volume_and_call_put_ratios/equitypc.csv"
@@ -561,6 +595,10 @@ def main():
     print(f"  VIX vs MA20={vix_vs_ma20}%, slope={vix_slope}%")
     print(f"  HY  vs MA20={hy_vs_ma20}%, slope={hy_slope}%")
     print(f"  F&G vs MA10={fg_vs_ma10}%, slope={fg_slope}%")
+
+    # ── CNN Fear & Greed 스크래핑 시도 ────────────────────────────────
+    print("  Trying CNN Fear & Greed scrape...")
+    fg_cnn = fetch_cnn_fear_greed()
     
     # ── Fear & Greed 자체 계산 ─────────────────────────────────────────
     print("  Calculating Fear & Greed index...")
@@ -578,11 +616,15 @@ def main():
         putcall      = putcall,
         putcall_hist = putcall_hist,
     )
-    if fg:
-        print(f"  F&G calculated={fg['value']} ({fg['classification']})")
-        print(f"  Components: {fg['components']}")
+    if fg_cnn:
+        # CNN 스크래핑 성공 — 자체 계산값을 components로 보관
+        fg_cnn["components"] = fg.get("components", {}) if fg else {}
+        fg = fg_cnn
+        print(f"  Using CNN F&G: {fg['value']} ({fg['classification']})")
+    elif fg:
+        print(f"  CNN failed, using calculated F&G: {fg['value']} ({fg['classification']})")
     else:
-        print("  F&G calculation failed, falling back to crypto index")
+        print("  All F&G failed, falling back to crypto index")
         fg = fg_crypto
 
     # ── 35일 히스토리 (차트용) ─────────────────────────────────────────

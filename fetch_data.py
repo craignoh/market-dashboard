@@ -160,7 +160,40 @@ def calc_rsi_list(closes, period=14):
     rs = avg_gain / avg_loss
     return round(100 - 100 / (1 + rs), 2)
 
-def calc_fear_greed_index(sp500_vals, vix_vals, hy_spread, yield_curve, t10y, fed_rate):
+def fetch_cboe_putcall():
+    """CBOE Equity Put/Call 비율 — 무료 CSV, 키 불필요"""
+    url = "https://cdn.cboe.com/resources/options/volume_and_call_put_ratios/equitypc.csv"
+    try:
+        r = requests.get(url, timeout=20, headers={"User-Agent": "Mozilla/5.0"})
+        r.raise_for_status()
+        lines = r.text.strip().splitlines()
+        # 헤더 찾기 (DATE 포함 줄)
+        data_lines = []
+        for line in lines:
+            parts = line.split(",")
+            if len(parts) >= 4:
+                try:
+                    float(parts[-1])  # P/C Ratio 파싱 가능한지 확인
+                    data_lines.append(parts)
+                except ValueError:
+                    continue
+        if not data_lines:
+            return None, []
+        # 최근값
+        latest = float(data_lines[-1][-1])
+        # 최근 252일치 히스토리
+        history = []
+        for parts in data_lines[-252:]:
+            try:
+                history.append(float(parts[-1]))
+            except:
+                continue
+        return latest, history
+    except Exception as e:
+        print(f"  [ERROR] CBOE Put/Call: {e}")
+        return None, []
+
+def calc_fear_greed_index(sp500_vals, vix_vals, hy_spread, yield_curve, t10y, fed_rate, putcall=None, putcall_hist=None):
     """
     CNN Fear & Greed Index 자체 계산 (7개 구성 요소)
     각 구성 요소를 0~100으로 정규화 후 동일 가중치 평균
@@ -195,13 +228,20 @@ def calc_fear_greed_index(sp500_vals, vix_vals, hy_spread, yield_curve, t10y, fe
             score = (1 - (vix_now - vix_min) / (vix_max - vix_min)) * 100
             scores.append(("변동성폭", round(score, 1)))
 
-    # 4. 풋/콜 비율 (직접 데이터 없음 → VIX 기울기로 대체)
-    if vix_vals and len(vix_vals) >= 20:
-        vix_now  = vix_vals[-1]
-        vix_20   = sum(vix_vals[-20:]) / 20
-        vix_dev  = (vix_now - vix_20) / vix_20 * 100
-        # 20일선 대비 -20%~+20% 범위를 역산
-        score = max(0, min(100, (-vix_dev + 20) / 40 * 100))
+    # 4. 풋/콜 비율 (CBOE Equity P/C)
+    if putcall is not None and putcall_hist and len(putcall_hist) >= 252:
+        pc_min  = min(putcall_hist[-252:])
+        pc_max  = max(putcall_hist[-252:])
+        if pc_max > pc_min:
+            # P/C 낮을수록(콜 우세=탐욕=100), 높을수록(풋 우세=공포=0)
+            score = (1 - (putcall - pc_min) / (pc_max - pc_min)) * 100
+            scores.append(("풋콜비율", round(score, 1)))
+    elif vix_vals and len(vix_vals) >= 20:
+        # CBOE 데이터 실패 시 VIX 기울기로 대체
+        vix_now = vix_vals[-1]
+        vix_20  = sum(vix_vals[-20:]) / 20
+        vix_dev = (vix_now - vix_20) / vix_20 * 100
+        score   = max(0, min(100, (-vix_dev + 20) / 40 * 100))
         scores.append(("풋콜대체", round(score, 1)))
 
     # 5. 정크본드 수요 (HY 스프레드 역산)
@@ -498,13 +538,18 @@ def main():
     # ── Fear & Greed 자체 계산 ─────────────────────────────────────────
     print("  Calculating Fear & Greed index...")
     vix_vals_long = [d["value"] for d in fred_history("VIXCLS", 400)]
+    print("  Fetching CBOE Put/Call ratio...")
+    putcall, putcall_hist = fetch_cboe_putcall()
+    print(f"  CBOE P/C={putcall}, history={len(putcall_hist)} days")
     fg = calc_fear_greed_index(
-        sp500_vals  = sp500_vals,
-        vix_vals    = vix_vals_long,
-        hy_spread   = hy_spread,
-        yield_curve = yield_curve,
-        t10y        = t10y,
-        fed_rate    = fed_rate,
+        sp500_vals   = sp500_vals,
+        vix_vals     = vix_vals_long,
+        hy_spread    = hy_spread,
+        yield_curve  = yield_curve,
+        t10y         = t10y,
+        fed_rate     = fed_rate,
+        putcall      = putcall,
+        putcall_hist = putcall_hist,
     )
     if fg:
         print(f"  F&G calculated={fg['value']} ({fg['classification']})")

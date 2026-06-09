@@ -514,6 +514,37 @@ def main():
     djia   = djia_vals[-1]   if djia_vals   else None
     vix    = vix_h[-1]["value"] if vix_h    else None
 
+    # ── 지수 최신값 Polygon으로 보완 (FRED 1~2일 지연 대체) ───────────
+    print("  Fetching realtime index prices via Polygon...")
+    def fetch_polygon_latest(ticker):
+        if not POLYGON_API_KEY:
+            return None
+        try:
+            url = f"https://api.polygon.io/v2/aggs/ticker/{ticker}/prev"
+            r = requests.get(url, params={"apiKey": POLYGON_API_KEY}, timeout=15)
+            r.raise_for_status()
+            results = r.json().get("results", [])
+            if results:
+                return round(results[0]["c"], 2)
+        except Exception as e:
+            print(f"  [WARN] Polygon {ticker}: {e}")
+        return None
+
+    qqq_price = fetch_polygon_latest("QQQ")
+    spy_price = fetch_polygon_latest("SPY")
+    dia_price = fetch_polygon_latest("DIA")
+    time.sleep(1)
+
+    # ETF → 지수 근사 환산 비율 (고정 배수, 참고용)
+    # QQQ ≈ NASDAQ/40, SPY ≈ SP500/10, DIA ≈ DJIA/1
+    if qqq_price: nasdaq = round(qqq_price * 40.5, 0)
+    if spy_price: sp500  = round(spy_price * 10.1, 0)
+    if dia_price: djia   = round(dia_price * 1.0,  0)
+
+    print(f"  QQQ={qqq_price} → NASDAQ≈{nasdaq}")
+    print(f"  SPY={spy_price} → SP500≈{sp500}")
+    print(f"  DIA={dia_price} → DJIA≈{djia}")
+
     # ── RSI 계산 ───────────────────────────────────────────────────────
     print("  Calculating RSI...")
     rsi_nasdaq = calc_rsi(nasdaq_vals)

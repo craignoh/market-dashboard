@@ -161,13 +161,7 @@ def calc_rsi_list(closes, period=14):
     return round(100 - 100 / (1 + rs), 2)
 
 def fetch_cnn_fear_greed():
-    """CNN Fear & Greed Index 스크래핑"""
-    import re
-    urls = [
-        "https://production.dataviz.cnn.io/index/fearandgreed/graphdata",
-        "https://fear-and-greed-index.p.rapidapi.com/v1/fgi",
-    ]
-    # 방법 1: CNN 내부 API 엔드포인트
+    """CNN Fear & Greed Index 스크래핑 — 현재값 + 히스토리"""
     try:
         r = requests.get(
             "https://production.dataviz.cnn.io/index/fearandgreed/graphdata",
@@ -178,21 +172,48 @@ def fetch_cnn_fear_greed():
             },
             timeout=15
         )
-        if r.status_code == 200:
-            data  = r.json()
-            score = data.get("fear_and_greed", {}).get("score")
-            rating= data.get("fear_and_greed", {}).get("rating", "")
-            if score is not None:
-                print(f"  CNN F&G scraped: {score} ({rating})")
-                return {
-                    "value":          int(round(score)),
-                    "classification": rating,
-                    "source":         "cnn"
-                }
+        if r.status_code != 200:
+            print(f"  [WARN] CNN F&G HTTP {r.status_code}")
+            return None, []
+
+        data  = r.json()
+        fg    = data.get("fear_and_greed", {})
+        score = fg.get("score")
+        rating= fg.get("rating", "")
+
+        if score is None:
+            return None, []
+
+        print(f"  CNN F&G scraped: {score} ({rating})")
+
+        # 히스토리 파싱 (최근 45일)
+        history = []
+        for item in data.get("fear_and_greed_historical", {}).get("data", []):
+            try:
+                ts  = item.get("x")   # Unix timestamp (ms)
+                val = item.get("y")
+                if ts and val is not None:
+                    date_str = datetime.utcfromtimestamp(int(ts)/1000).strftime("%Y-%m-%d")
+                    history.append({
+                        "date":           date_str,
+                        "value":          int(round(float(val))),
+                        "classification": ""
+                    })
+            except:
+                continue
+
+        # 날짜 오름차순 정렬, 최근 45일
+        history = sorted(history, key=lambda x: x["date"])[-45:]
+
+        return {
+            "value":          int(round(score)),
+            "classification": rating,
+            "source":         "cnn"
+        }, history
+
     except Exception as e:
         print(f"  [WARN] CNN scrape failed: {e}")
-
-    return None
+        return None, []
 
 def fetch_cboe_putcall():
     """CBOE Equity Put/Call 비율 — 무료 CSV, 키 불필요"""
@@ -598,7 +619,7 @@ def main():
 
     # ── CNN Fear & Greed 스크래핑 시도 ────────────────────────────────
     print("  Trying CNN Fear & Greed scrape...")
-    fg_cnn = fetch_cnn_fear_greed()
+    fg_cnn, fg_h_cnn = fetch_cnn_fear_greed()
     
     # ── Fear & Greed 자체 계산 ─────────────────────────────────────────
     print("  Calculating Fear & Greed index...")
@@ -617,12 +638,12 @@ def main():
         putcall_hist = putcall_hist,
     )
     if fg_cnn:
-        # CNN 스크래핑 성공 — 자체 계산값을 components로 보관
         fg_cnn["components"] = fg.get("components", {}) if fg else {}
-        fg = fg_cnn
-        print(f"  Using CNN F&G: {fg['value']} ({fg['classification']})")
+        fg   = fg_cnn
+        fg_h = fg_h_cnn if fg_h_cnn else fg_h  # CNN 히스토리 우선
+        print(f"  Using CNN F&G: {fg['value']} ({fg['classification']}), history={len(fg_h)} days")
     elif fg:
-        print(f"  CNN failed, using calculated F&G: {fg['value']} ({fg['classification']})")
+        print(f"  CNN failed, using calculated: {fg['value']} ({fg['classification']})")
     else:
         print("  All F&G failed, falling back to crypto index")
         fg = fg_crypto

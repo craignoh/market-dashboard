@@ -1,6 +1,6 @@
 {
   "updated_at": "2026-06-09",
-  "updated_kst": "2026-06-10 02:15 KST",
+  "updated_kst": "2026-06-10 02:22 KST",
   "snapshot": {
     "nasdaq": 29001.0,
     "sp500": 7466.0,
@@ -120,6 +120,74 @@
         "52주 저점 대비 +101.29%"
       ],
       "name": "나스닥 3x 레버리지"
+    },
+    {
+      "ticker": "XLK",
+      "price": 184.18,
+      "chg1d": 2.15,
+      "rsi": 59.96,
+      "vs_ma50": 12.28,
+      "vs_ma200": null,
+      "ma20_slope": 3.07,
+      "bb_pos": 53.1,
+      "vs_high52": -7.08,
+      "vs_low52": 44.45,
+      "vol_ratio": 107.1,
+      "high52": 198.21,
+      "low52": 127.5,
+      "ma200": null,
+      "buy_score": 0,
+      "sell_score": 0,
+      "buy_signals": [],
+      "sell_signals": [],
+      "name": "기술 섹터"
+    },
+    {
+      "ticker": "XLV",
+      "price": 152.65,
+      "chg1d": -0.24,
+      "rsi": 67.54,
+      "vs_ma50": 3.91,
+      "vs_ma200": null,
+      "ma20_slope": 0.96,
+      "bb_pos": 94.6,
+      "vs_high52": -4.71,
+      "vs_low52": 6.87,
+      "vol_ratio": 97.4,
+      "high52": 160.2,
+      "low52": 142.84,
+      "ma200": null,
+      "buy_score": 0,
+      "sell_score": 23,
+      "buy_signals": [],
+      "sell_signals": [
+        "RSI 67.54 — 과열 주의",
+        "볼린저 상단 (94.6%) — 조정 후보"
+      ],
+      "name": "헬스케어/바이오"
+    },
+    {
+      "ticker": "XLE",
+      "price": 58.33,
+      "chg1d": 1.14,
+      "rsi": 39.42,
+      "vs_ma50": 0.41,
+      "vs_ma200": null,
+      "ma20_slope": 0.34,
+      "bb_pos": 49.6,
+      "vs_high52": -6.76,
+      "vs_low52": 33.8,
+      "vol_ratio": 68.9,
+      "high52": 62.56,
+      "low52": 43.59,
+      "ma200": null,
+      "buy_score": 8,
+      "sell_score": 0,
+      "buy_signals": [
+        "RSI 39.42 — 약한 과매도"
+      ],
+      "sell_signals": [],
+      "name": "정유/에너지"
     },
     {
       "ticker": "XLF",

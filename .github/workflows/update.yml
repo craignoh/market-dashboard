@@ -2,7 +2,11 @@ name: Daily Market Data Update
 
 on:
   schedule:
-    - cron: "0 0 * * *"
+    - cron: '0 10 * * *'   # 한국 19:00 (미장 개장 전)
+    - cron: '0 13 * * *'   # 한국 22:00 (미장 중반)
+    - cron: '0 16 * * *'   # 한국 01:00 (미장 후반)
+    - cron: '0 18 * * *'   # 한국 03:00 (미장 마감 직후)
+    - cron: '0 1 * * *'    # 한국 10:00 (전날 마감 정리)
   workflow_dispatch:
 
 permissions:

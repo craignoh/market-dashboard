@@ -1,6 +1,6 @@
 {
   "updated_at": "2026-06-09",
-  "updated_kst": "2026-06-10 01:54 KST",
+  "updated_kst": "2026-06-10 02:02 KST",
   "snapshot": {
     "nasdaq": 25929.66,
     "sp500": 7405.73,
@@ -13,8 +13,9 @@
     "ted_spread": 0.09,
     "yield_curve": 0.38,
     "fear_greed": {
-      "value": 63,
-      "classification": "Greed",
+      "value": 29,
+      "classification": "fear",
+      "source": "cnn",
       "components": {
         "모멘텀": 79.4,
         "주식강도": 36.4,
@@ -23,8 +24,7 @@
         "정크본드": 92.1,
         "변동성단기": 49.0,
         "안전자산": 50.0
-      },
-      "source": "calculated"
+      }
     },
     "usdkrw": 1555.96,
     "t10y_change_3m": 0.34,
@@ -52,7 +52,7 @@
     "fg_vs_ma10": -36.31,
     "fg_slope": -31.739
   },
-  "risk_score": 7,
+  "risk_score": 22,
   "risk_label": "안전 — 리스크 낮음",
   "buy_score": 10,
   "buy_signals": [
@@ -234,27 +234,25 @@
       "name": "산업/항공"
     },
     {
-      "ticker": "XLU",
-      "price": 43.52,
-      "chg1d": -1.87,
-      "rsi": 46.57,
-      "vs_ma50": -4.18,
+      "ticker": "XLY",
+      "price": 115.39,
+      "chg1d": 0.46,
+      "rsi": 47.28,
+      "vs_ma50": -0.86,
       "vs_ma200": null,
-      "ma20_slope": -0.98,
-      "bb_pos": 13.5,
-      "vs_high52": -8.82,
-      "vs_low52": 3.94,
-      "vol_ratio": 95.8,
-      "high52": 47.73,
-      "low52": 41.87,
+      "ma20_slope": -0.58,
+      "bb_pos": 15.0,
+      "vs_high52": -7.33,
+      "vs_low52": 9.21,
+      "vol_ratio": 82.1,
+      "high52": 124.52,
+      "low52": 105.66,
       "ma200": null,
-      "buy_score": 15,
+      "buy_score": 0,
       "sell_score": 0,
-      "buy_signals": [
-        "볼린저 하단 (13.5%) — 반등 후보"
-      ],
+      "buy_signals": [],
       "sell_signals": [],
-      "name": "유틸리티 (방어주)"
+      "name": "소비재"
     },
     {
       "ticker": "GLD",

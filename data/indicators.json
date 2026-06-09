@@ -1,20 +1,29 @@
 {
   "updated_at": "2026-06-09",
-  "updated_kst": "2026-06-09 20:47 KST",
+  "updated_kst": "2026-06-10 01:41 KST",
   "snapshot": {
     "nasdaq": 25929.66,
     "sp500": 7405.73,
     "djia": 50786.01,
-    "vix": 21.51,
+    "vix": 18.92,
     "ten_yr": 4.55,
     "fed_rate": 3.63,
-    "hy_spread": 2.76,
-    "ig_spread": 0.74,
+    "hy_spread": 2.75,
+    "ig_spread": 0.75,
     "ted_spread": 0.09,
     "yield_curve": 0.38,
     "fear_greed": {
-      "value": 10,
-      "classification": "Extreme Fear"
+      "value": 64,
+      "classification": "Greed",
+      "components": {
+        "모멘텀": 80.8,
+        "변동성폭": 69.0,
+        "풋콜대체": 24.2,
+        "정크본드": 90.6,
+        "변동성": 77.7,
+        "안전자산": 46.0
+      },
+      "source": "calculated"
     },
     "usdkrw": 1555.96,
     "t10y_change_3m": 0.34,
@@ -32,36 +41,32 @@
     "ma200_sp500": 7.9,
     "ma50_sp500": 3.22,
     "ma200_nasdaq": 11.07,
-    "vix_ma20": 17.1225,
-    "vix_vs_ma20": 25.62,
-    "vix_slope": -0.736,
-    "hy_ma20": 2.762,
-    "hy_vs_ma20": -0.07,
-    "hy_slope": -0.415,
+    "vix_ma20": 17.1495,
+    "vix_vs_ma20": 10.32,
+    "vix_slope": 0.07,
+    "hy_ma20": 2.7585,
+    "hy_vs_ma20": -0.31,
+    "hy_slope": -0.451,
     "fg_ma10": 15.7,
     "fg_vs_ma10": -36.31,
     "fg_slope": -31.739
   },
-  "risk_score": 32,
-  "risk_label": "주의 — 일부 지표 이상",
-  "buy_score": 30,
+  "risk_score": 7,
+  "risk_label": "안전 — 리스크 낮음",
+  "buy_score": 10,
   "buy_signals": [
-    {
-      "label": "Fear&Greed 10 — 극단 공포 (역발상 매수)",
-      "strength": "strong"
-    },
     {
       "label": "Fear&Greed 10일 이평 15.7 — 공포 추세 (역발상 구간)",
       "strength": "medium"
     }
   ],
-  "trade_signal": "주의 관찰",
-  "trade_color": "amber",
-  "trade_desc": "불확실 구간 — 지표 추이 모니터링",
+  "trade_signal": "중립",
+  "trade_color": "blue",
+  "trade_desc": "시장 안정 — 급락 매수 기회 아님",
   "sell_score": 15,
   "sell_signals": [
     {
-      "label": "HY스프레드 2.76% — 리스크 프리미엄 소멸 (과열)",
+      "label": "HY스프레드 2.75% — 리스크 프리미엄 소멸 (과열)",
       "strength": "strong"
     }
   ],
@@ -883,6 +888,10 @@
       {
         "date": "2026-06-05",
         "value": 21.51
+      },
+      {
+        "date": "2026-06-08",
+        "value": 18.92
       }
     ],
     "tnx": [
@@ -1127,6 +1136,10 @@
       {
         "date": "2026-06-05",
         "value": 2.76
+      },
+      {
+        "date": "2026-06-08",
+        "value": 2.75
       }
     ],
     "ig_spread": [
@@ -1253,6 +1266,10 @@
       {
         "date": "2026-06-05",
         "value": 0.74
+      },
+      {
+        "date": "2026-06-08",
+        "value": 0.75
       }
     ],
     "yield_curve": [

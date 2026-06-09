@@ -1,19 +1,19 @@
 {
   "updated_at": "2026-06-09",
-  "updated_kst": "2026-06-10 02:29 KST",
+  "updated_kst": "2026-06-10 08:07 KST",
   "snapshot": {
     "nasdaq": 25929.66,
     "sp500": 7405.73,
-    "djia": 50786.01,
+    "djia": 50872.11,
     "vix": 18.92,
-    "ten_yr": 4.55,
+    "ten_yr": 4.56,
     "fed_rate": 3.63,
     "hy_spread": 2.75,
     "ig_spread": 0.75,
     "ted_spread": 0.09,
-    "yield_curve": 0.38,
+    "yield_curve": 0.41,
     "fear_greed": {
-      "value": 30,
+      "value": 33,
       "classification": "fear",
       "source": "cnn",
       "components": {
@@ -23,15 +23,15 @@
         "풋콜비율": 69.6,
         "정크본드": 92.1,
         "변동성단기": 49.0,
-        "안전자산": 50.0
+        "안전자산": 54.2
       }
     },
     "usdkrw": 1555.96,
-    "t10y_change_3m": 0.34,
-    "t10y_change_1m": 0.13,
+    "t10y_change_3m": 0.35,
+    "t10y_change_1m": 0.14,
     "fedfunds_change_3m": null,
-    "real_rate": 2.25,
-    "erp": 0.0,
+    "real_rate": 2.26,
+    "erp": -0.01,
     "put_call": null,
     "jobless_claims": 225000.0,
     "fed_assets": 6711495.0
@@ -274,6 +274,51 @@
       "buy_signals": [],
       "sell_signals": [],
       "name": "소비재"
+    },
+    {
+      "ticker": "GLD",
+      "price": 397.27,
+      "chg1d": 0.26,
+      "rsi": 32.6,
+      "vs_ma50": -6.43,
+      "vs_ma200": null,
+      "ma20_slope": -1.25,
+      "bb_pos": 3.9,
+      "vs_high52": -19.89,
+      "vs_low52": 9.65,
+      "vol_ratio": 134.1,
+      "high52": 495.9,
+      "low52": 362.32,
+      "ma200": null,
+      "buy_score": 23,
+      "sell_score": 0,
+      "buy_signals": [
+        "RSI 32.6 — 약한 과매도",
+        "볼린저 하단 (3.9%) — 반등 후보"
+      ],
+      "sell_signals": [],
+      "name": "금 (Gold)"
+    },
+    {
+      "ticker": "TLT",
+      "price": 84.62,
+      "chg1d": -0.52,
+      "rsi": 60.27,
+      "vs_ma50": -1.33,
+      "vs_ma200": null,
+      "ma20_slope": -0.12,
+      "bb_pos": 42.8,
+      "vs_high52": -6.83,
+      "vs_low52": 1.93,
+      "vol_ratio": 83.9,
+      "high52": 90.82,
+      "low52": 83.02,
+      "ma200": null,
+      "buy_score": 0,
+      "sell_score": 0,
+      "buy_signals": [],
+      "sell_signals": [],
+      "name": "장기국채 20년+"
     },
     {
       "ticker": "ARKK",
@@ -584,10 +629,6 @@
     ],
     "djia": [
       {
-        "date": "2026-04-20",
-        "value": 49442.56
-      },
-      {
         "date": "2026-04-21",
         "value": 49149.38
       },
@@ -722,6 +763,10 @@
       {
         "date": "2026-06-08",
         "value": 50786.01
+      },
+      {
+        "date": "2026-06-09",
+        "value": 50872.11
       }
     ],
     "vix": [
@@ -966,6 +1011,10 @@
       {
         "date": "2026-06-05",
         "value": 4.55
+      },
+      {
+        "date": "2026-06-08",
+        "value": 4.56
       }
     ],
     "hy_spread": [
@@ -1344,6 +1393,10 @@
       {
         "date": "2026-06-05",
         "value": 0.38
+      },
+      {
+        "date": "2026-06-08",
+        "value": 0.41
       }
     ],
     "fear_greed": [
@@ -1564,12 +1617,12 @@
       },
       {
         "date": "2026-06-09",
-        "value": 30,
+        "value": 33,
         "classification": ""
       },
       {
         "date": "2026-06-09",
-        "value": 30,
+        "value": 33,
         "classification": ""
       }
     ]

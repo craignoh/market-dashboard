@@ -195,73 +195,100 @@ def fetch_cboe_putcall():
 
 def calc_fear_greed_index(sp500_vals, vix_vals, hy_spread, yield_curve, t10y, fed_rate, putcall=None, putcall_hist=None):
     """
-    CNN Fear & Greed Index 자체 계산 (7개 구성 요소)
-    각 구성 요소를 0~100으로 정규화 후 동일 가중치 평균
+    CNN Fear & Greed Index — 2년치 min/max 정규화 방식
+    각 구성 요소를 최근 504일(2년) 범위 기준으로 0~100 스케일링
     """
+    def normalize(current, history, invert=False):
+        """현재값을 히스토리 min/max 기준 0~100으로 정규화"""
+        if current is None or not history or len(history) < 20:
+            return None
+        h = history[-504:] if len(history) >= 504 else history
+        lo, hi = min(h), max(h)
+        if hi == lo:
+            return 50.0
+        score = (current - lo) / (hi - lo) * 100
+        if invert:
+            score = 100 - score
+        return round(max(0, min(100, score)), 1)
+
     scores = []
 
-    # 1. 시장 모멘텀 (S&P500 vs 125일 이평선)
+    # 1. 시장 모멘텀 — S&P500 vs 125일 이평선 괴리율
     if len(sp500_vals) >= 125:
         ma125 = sum(sp500_vals[-125:]) / 125
-        current = sp500_vals[-1]
-        deviation = (current - ma125) / ma125 * 100
-        # -10% ~ +10% 범위를 0~100으로 정규화
-        score = max(0, min(100, (deviation + 10) / 20 * 100))
-        scores.append(("모멘텀", round(score, 1)))
+        deviations = []
+        for i in range(125, len(sp500_vals)):
+            ma = sum(sp500_vals[i-125:i]) / 125
+            deviations.append((sp500_vals[i] - ma) / ma * 100)
+        current_dev = (sp500_vals[-1] - ma125) / ma125 * 100
+        score = normalize(current_dev, deviations)
+        if score is not None:
+            scores.append(("모멘텀", score))
 
-    # 2. 주식 강도 (S&P500 RSI 14일, 1년 기준 정규화)
-    if len(sp500_vals) >= 252:
-        # 최근 252일간 RSI 분포에서 현재 위치
+    # 2. 주식 강도 — S&P500 RSI 14일
+    if len(sp500_vals) >= 30:
+        rsi_history = []
+        for i in range(14, len(sp500_vals)):
+            r = calc_rsi_list(sp500_vals[:i+1], 14)
+            if r is not None:
+                rsi_history.append(r)
         rsi_now = calc_rsi_list(sp500_vals, 14)
-        if rsi_now is not None:
-            # RSI 자체를 0~100 스케일로 사용 (이미 0~100)
-            scores.append(("주식강도", round(rsi_now, 1)))
+        score = normalize(rsi_now, rsi_history)
+        if score is not None:
+            scores.append(("주식강도", score))
 
-    # 3. 주식 폭 (VIX 기반 역산 — 실제 McClellan은 FRED 무료 없음)
-    # VIX로 대체: 낮을수록 탐욕, 높을수록 공포
-    if vix_vals and len(vix_vals) >= 252:
+    # 3. 변동성 폭 — VIX (낮을수록 탐욕)
+    if vix_vals and len(vix_vals) >= 20:
         vix_now = vix_vals[-1]
-        vix_hist = vix_vals[-252:]
-        vix_min, vix_max = min(vix_hist), max(vix_hist)
-        if vix_max > vix_min:
-            # VIX 낮을수록 탐욕(100), 높을수록 공포(0)
-            score = (1 - (vix_now - vix_min) / (vix_max - vix_min)) * 100
-            scores.append(("변동성폭", round(score, 1)))
+        score = normalize(vix_now, vix_vals, invert=True)
+        if score is not None:
+            scores.append(("변동성폭", score))
 
-    # 4. 풋/콜 비율 (CBOE Equity P/C)
-    if putcall is not None and putcall_hist and len(putcall_hist) >= 252:
-        pc_min  = min(putcall_hist[-252:])
-        pc_max  = max(putcall_hist[-252:])
-        if pc_max > pc_min:
-            # P/C 낮을수록(콜 우세=탐욕=100), 높을수록(풋 우세=공포=0)
-            score = (1 - (putcall - pc_min) / (pc_max - pc_min)) * 100
-            scores.append(("풋콜비율", round(score, 1)))
+    # 4. 풋/콜 비율 — CBOE Equity (낮을수록 탐욕)
+    if putcall is not None and putcall_hist and len(putcall_hist) >= 20:
+        score = normalize(putcall, putcall_hist, invert=True)
+        if score is not None:
+            scores.append(("풋콜비율", score))
     elif vix_vals and len(vix_vals) >= 20:
-        # CBOE 데이터 실패 시 VIX 기울기로 대체
         vix_now = vix_vals[-1]
         vix_20  = sum(vix_vals[-20:]) / 20
         vix_dev = (vix_now - vix_20) / vix_20 * 100
         score   = max(0, min(100, (-vix_dev + 20) / 40 * 100))
         scores.append(("풋콜대체", round(score, 1)))
 
-    # 5. 정크본드 수요 (HY 스프레드 역산)
+    # 5. 정크본드 수요 — HY 스프레드 (낮을수록 탐욕)
     if hy_spread is not None:
-        # 2~10% 범위: 낮을수록(2%) 탐욕=100, 높을수록(10%) 공포=0
-        score = max(0, min(100, (1 - (hy_spread - 2) / 8) * 100))
-        scores.append(("정크본드", round(score, 1)))
+        hy_hist = [d["value"] for d in fred_history("BAMLH0A0HYM2", 600)]
+        score = normalize(hy_spread, hy_hist, invert=True)
+        if score is not None:
+            scores.append(("정크본드", score))
 
-    # 6. 시장 변동성 (VIX 절대값)
-    if vix_vals:
+    # 6. 시장 변동성 — VIX (낮을수록 탐욕, 단기 관점)
+    if vix_vals and len(vix_vals) >= 20:
         vix_now = vix_vals[-1]
-        # VIX 10~50 범위: 낮을수록 탐욕=100
-        score = max(0, min(100, (1 - (vix_now - 10) / 40) * 100))
-        scores.append(("변동성", round(score, 1)))
+        vix_20avg = sum(vix_vals[-20:]) / 20
+        # VIX가 20일 평균 대비 낮을수록 탐욕
+        vix_dev_hist = []
+        for i in range(20, len(vix_vals)):
+            avg = sum(vix_vals[i-20:i]) / 20
+            vix_dev_hist.append(vix_vals[i] - avg)
+        current_vix_dev = vix_now - vix_20avg
+        score = normalize(current_vix_dev, vix_dev_hist, invert=True)
+        if score is not None:
+            scores.append(("변동성단기", score))
 
-    # 7. 안전자산 수요 (수익률곡선 — 역전일수록 공포)
+    # 7. 안전자산 수요 — 수익률 곡선 (높을수록 탐욕)
     if yield_curve is not None:
-        # -1% ~ +2% 범위를 0~100으로
-        score = max(0, min(100, (yield_curve + 1) / 3 * 100))
-        scores.append(("안전자산", round(score, 1)))
+        yc_hist = []
+        t10_hist = fred_history("DGS10", 600)
+        t2_hist  = fred_history("DGS2",  600)
+        t2_map   = {d["date"]: d["value"] for d in t2_hist}
+        for d in t10_hist:
+            if d["date"] in t2_map:
+                yc_hist.append(d["value"] - t2_map[d["date"]])
+        score = normalize(yield_curve, yc_hist)
+        if score is not None:
+            scores.append(("안전자산", score))
 
     if not scores:
         return None

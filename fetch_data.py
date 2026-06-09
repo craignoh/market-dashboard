@@ -160,6 +160,90 @@ def calc_rsi_list(closes, period=14):
     rs = avg_gain / avg_loss
     return round(100 - 100 / (1 + rs), 2)
 
+def calc_fear_greed_index(sp500_vals, vix_vals, hy_spread, yield_curve, t10y, fed_rate):
+    """
+    CNN Fear & Greed Index 자체 계산 (7개 구성 요소)
+    각 구성 요소를 0~100으로 정규화 후 동일 가중치 평균
+    """
+    scores = []
+
+    # 1. 시장 모멘텀 (S&P500 vs 125일 이평선)
+    if len(sp500_vals) >= 125:
+        ma125 = sum(sp500_vals[-125:]) / 125
+        current = sp500_vals[-1]
+        deviation = (current - ma125) / ma125 * 100
+        # -10% ~ +10% 범위를 0~100으로 정규화
+        score = max(0, min(100, (deviation + 10) / 20 * 100))
+        scores.append(("모멘텀", round(score, 1)))
+
+    # 2. 주식 강도 (S&P500 RSI 14일, 1년 기준 정규화)
+    if len(sp500_vals) >= 252:
+        # 최근 252일간 RSI 분포에서 현재 위치
+        rsi_now = calc_rsi_list(sp500_vals, 14)
+        if rsi_now is not None:
+            # RSI 자체를 0~100 스케일로 사용 (이미 0~100)
+            scores.append(("주식강도", round(rsi_now, 1)))
+
+    # 3. 주식 폭 (VIX 기반 역산 — 실제 McClellan은 FRED 무료 없음)
+    # VIX로 대체: 낮을수록 탐욕, 높을수록 공포
+    if vix_vals and len(vix_vals) >= 252:
+        vix_now = vix_vals[-1]
+        vix_hist = vix_vals[-252:]
+        vix_min, vix_max = min(vix_hist), max(vix_hist)
+        if vix_max > vix_min:
+            # VIX 낮을수록 탐욕(100), 높을수록 공포(0)
+            score = (1 - (vix_now - vix_min) / (vix_max - vix_min)) * 100
+            scores.append(("변동성폭", round(score, 1)))
+
+    # 4. 풋/콜 비율 (직접 데이터 없음 → VIX 기울기로 대체)
+    if vix_vals and len(vix_vals) >= 20:
+        vix_now  = vix_vals[-1]
+        vix_20   = sum(vix_vals[-20:]) / 20
+        vix_dev  = (vix_now - vix_20) / vix_20 * 100
+        # 20일선 대비 -20%~+20% 범위를 역산
+        score = max(0, min(100, (-vix_dev + 20) / 40 * 100))
+        scores.append(("풋콜대체", round(score, 1)))
+
+    # 5. 정크본드 수요 (HY 스프레드 역산)
+    if hy_spread is not None:
+        # 2~10% 범위: 낮을수록(2%) 탐욕=100, 높을수록(10%) 공포=0
+        score = max(0, min(100, (1 - (hy_spread - 2) / 8) * 100))
+        scores.append(("정크본드", round(score, 1)))
+
+    # 6. 시장 변동성 (VIX 절대값)
+    if vix_vals:
+        vix_now = vix_vals[-1]
+        # VIX 10~50 범위: 낮을수록 탐욕=100
+        score = max(0, min(100, (1 - (vix_now - 10) / 40) * 100))
+        scores.append(("변동성", round(score, 1)))
+
+    # 7. 안전자산 수요 (수익률곡선 — 역전일수록 공포)
+    if yield_curve is not None:
+        # -1% ~ +2% 범위를 0~100으로
+        score = max(0, min(100, (yield_curve + 1) / 3 * 100))
+        scores.append(("안전자산", round(score, 1)))
+
+    if not scores:
+        return None
+
+    total = sum(s for _, s in scores)
+    avg   = round(total / len(scores), 1)
+
+    classification = (
+        "Extreme Fear"  if avg < 25 else
+        "Fear"          if avg < 45 else
+        "Neutral"       if avg < 55 else
+        "Greed"         if avg < 75 else
+        "Extreme Greed"
+    )
+
+    return {
+        "value":          int(avg),
+        "classification": classification,
+        "components":     dict(scores),
+        "source":         "calculated"
+    }
+
 def fetch_stock_technicals(ticker):
     """FMP 무료 엔드포인트로 종목 기술적 지표 수집"""
     try:
@@ -341,8 +425,8 @@ def main():
 
     # ── Fear & Greed ───────────────────────────────────────────────────
     print("  Fetching Fear & Greed...")
-    fg   = fear_greed_latest()
-    fg_h = fear_greed_history(45)
+    fg_crypto = fear_greed_latest()    # 크립토 F&G (히스토리용으로만 보관)
+    fg_h      = fear_greed_history(45) # 히스토리 차트용
 
     # ── 종목 기술적 분석 (워치리스트) ─────────────────────────────────
     print("  Fetching watchlist technicals...")
@@ -401,7 +485,7 @@ def main():
     hy_slope    = calc_ma_slope(hy_vals, 20)
 
     # Fear & Greed 10일 이평선
-    fg_vals     = [d["value"] for d in fg_h]
+    fg_vals     = [d["value"] for d in fg_h] if fg_h else []
     fg_ma10     = calc_ma(fg_vals, 10)
     fg_vs_ma10  = calc_vs_ma(fg["value"] if fg else None, fg_ma10)
     fg_slope    = calc_ma_slope(fg_vals, 10)
@@ -409,6 +493,24 @@ def main():
     print(f"  VIX vs MA20={vix_vs_ma20}%, slope={vix_slope}%")
     print(f"  HY  vs MA20={hy_vs_ma20}%, slope={hy_slope}%")
     print(f"  F&G vs MA10={fg_vs_ma10}%, slope={fg_slope}%")
+    
+    # ── Fear & Greed 자체 계산 ─────────────────────────────────────────
+    print("  Calculating Fear & Greed index...")
+    vix_vals_long = [d["value"] for d in fred_history("VIXCLS", 400)]
+    fg = calc_fear_greed_index(
+        sp500_vals  = sp500_vals,
+        vix_vals    = vix_vals_long,
+        hy_spread   = hy_spread,
+        yield_curve = yield_curve,
+        t10y        = t10y,
+        fed_rate    = fed_rate,
+    )
+    if fg:
+        print(f"  F&G calculated={fg['value']} ({fg['classification']})")
+        print(f"  Components: {fg['components']}")
+    else:
+        print("  F&G calculation failed, falling back to crypto index")
+        fg = fg_crypto
 
     # ── 35일 히스토리 (차트용) ─────────────────────────────────────────
     print("  Fetching 35-day history for charts...")

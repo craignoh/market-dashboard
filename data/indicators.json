@@ -1,17 +1,17 @@
 {
   "updated_at": "2026-06-12",
-  "updated_kst": "2026-06-13 02:58 KST",
+  "updated_kst": "2026-06-13 05:59 KST",
   "snapshot": {
     "nasdaq": 25809.66,
     "sp500": 7394.3,
     "djia": 50848.75,
     "vix": 19.44,
-    "ten_yr": 4.55,
+    "ten_yr": 4.45,
     "fed_rate": 3.63,
-    "hy_spread": 2.8,
+    "hy_spread": 2.78,
     "ig_spread": 0.75,
     "ted_spread": 0.09,
-    "yield_curve": 0.42,
+    "yield_curve": 0.4,
     "fear_greed": {
       "value": 34,
       "classification": "fear",
@@ -21,17 +21,17 @@
         "주식강도": 31.3,
         "변동성폭": 66.0,
         "풋콜비율": 69.6,
-        "정크본드": 89.6,
+        "정크본드": 90.6,
         "변동성단기": 48.4,
-        "안전자산": 55.6
+        "안전자산": 52.8
       }
     },
     "usdkrw": 1555.96,
-    "t10y_change_3m": 0.32,
-    "t10y_change_1m": 0.09,
+    "t10y_change_3m": 0.22,
+    "t10y_change_1m": -0.01,
     "fedfunds_change_3m": null,
-    "real_rate": 2.25,
-    "erp": 0.0,
+    "real_rate": 2.15,
+    "erp": 0.1,
     "put_call": null,
     "jobless_claims": 229000.0,
     "fed_assets": 6725397.0
@@ -45,9 +45,9 @@
     "vix_ma20": 17.57,
     "vix_vs_ma20": 10.64,
     "vix_slope": 3.925,
-    "hy_ma20": 2.7585,
-    "hy_vs_ma20": 1.5,
-    "hy_slope": -0.307,
+    "hy_ma20": 2.7575,
+    "hy_vs_ma20": 0.82,
+    "hy_slope": -0.217,
     "fg_ma10": 11.0,
     "fg_vs_ma10": 9.09,
     "fg_slope": -40.541
@@ -67,7 +67,7 @@
   "sell_score": 15,
   "sell_signals": [
     {
-      "label": "HY스프레드 2.8% — 리스크 프리미엄 소멸 (과열)",
+      "label": "HY스프레드 2.78% — 리스크 프리미엄 소멸 (과열)",
       "strength": "strong"
     }
   ],
@@ -1026,6 +1026,10 @@
       {
         "date": "2026-06-10",
         "value": 4.55
+      },
+      {
+        "date": "2026-06-11",
+        "value": 4.45
       }
     ],
     "hy_spread": [
@@ -1160,6 +1164,10 @@
       {
         "date": "2026-06-10",
         "value": 2.8
+      },
+      {
+        "date": "2026-06-11",
+        "value": 2.78
       }
     ],
     "ig_spread": [
@@ -1294,6 +1302,10 @@
       {
         "date": "2026-06-10",
         "value": 0.75
+      },
+      {
+        "date": "2026-06-11",
+        "value": 0.75
       }
     ],
     "yield_curve": [
@@ -1420,6 +1432,10 @@
       {
         "date": "2026-06-10",
         "value": 0.42
+      },
+      {
+        "date": "2026-06-11",
+        "value": 0.4
       }
     ],
     "fear_greed": [

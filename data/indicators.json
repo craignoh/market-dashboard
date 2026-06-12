@@ -1,11 +1,11 @@
 {
   "updated_at": "2026-06-12",
-  "updated_kst": "2026-06-12 21:46 KST",
+  "updated_kst": "2026-06-13 02:58 KST",
   "snapshot": {
     "nasdaq": 25809.66,
     "sp500": 7394.3,
     "djia": 50848.75,
-    "vix": 22.22,
+    "vix": 19.44,
     "ten_yr": 4.55,
     "fed_rate": 3.63,
     "hy_spread": 2.8,
@@ -13,16 +13,16 @@
     "ted_spread": 0.09,
     "yield_curve": 0.42,
     "fear_greed": {
-      "value": 31,
+      "value": 34,
       "classification": "fear",
       "source": "cnn",
       "components": {
         "모멘텀": 77.3,
         "주식강도": 31.3,
-        "변동성폭": 50.2,
+        "변동성폭": 66.0,
         "풋콜비율": 69.6,
         "정크본드": 89.6,
-        "변동성단기": 30.1,
+        "변동성단기": 48.4,
         "안전자산": 55.6
       }
     },
@@ -42,9 +42,9 @@
     "ma200_sp500": 7.52,
     "ma50_sp500": 2.26,
     "ma200_nasdaq": 10.25,
-    "vix_ma20": 17.461,
-    "vix_vs_ma20": 27.26,
-    "vix_slope": 2.769,
+    "vix_ma20": 17.57,
+    "vix_vs_ma20": 10.64,
+    "vix_slope": 3.925,
     "hy_ma20": 2.7585,
     "hy_vs_ma20": 1.5,
     "hy_slope": -0.307,
@@ -896,6 +896,10 @@
       {
         "date": "2026-06-10",
         "value": 22.22
+      },
+      {
+        "date": "2026-06-11",
+        "value": 19.44
       }
     ],
     "tnx": [
@@ -1511,7 +1515,7 @@
       },
       {
         "date": "2026-05-07",
-        "value": 67,
+        "value": 66,
         "classification": ""
       },
       {
@@ -1521,22 +1525,22 @@
       },
       {
         "date": "2026-05-11",
-        "value": 67,
-        "classification": ""
-      },
-      {
-        "date": "2026-05-12",
-        "value": 66,
-        "classification": ""
-      },
-      {
-        "date": "2026-05-13",
         "value": 65,
         "classification": ""
       },
       {
+        "date": "2026-05-12",
+        "value": 65,
+        "classification": ""
+      },
+      {
+        "date": "2026-05-13",
+        "value": 64,
+        "classification": ""
+      },
+      {
         "date": "2026-05-14",
-        "value": 66,
+        "value": 65,
         "classification": ""
       },
       {
@@ -1631,17 +1635,17 @@
       },
       {
         "date": "2026-06-11",
-        "value": 31,
+        "value": 32,
         "classification": ""
       },
       {
         "date": "2026-06-12",
-        "value": 31,
+        "value": 34,
         "classification": ""
       },
       {
         "date": "2026-06-12",
-        "value": 31,
+        "value": 34,
         "classification": ""
       }
     ]

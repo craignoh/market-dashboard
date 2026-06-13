@@ -1,6 +1,6 @@
 {
   "updated_at": "2026-06-13",
-  "updated_kst": "2026-06-13 19:22 KST",
+  "updated_kst": "2026-06-14 00:54 KST",
   "snapshot": {
     "nasdaq": 25888.84,
     "sp500": 7431.46,
@@ -252,6 +252,27 @@
       "name": "유틸리티 (방어주)"
     },
     {
+      "ticker": "XLY",
+      "price": 116.6,
+      "chg1d": 0.26,
+      "rsi": 42.69,
+      "vs_ma50": -0.37,
+      "vs_ma200": null,
+      "ma20_slope": -0.74,
+      "bb_pos": 39.9,
+      "vs_high52": -6.36,
+      "vs_low52": 10.35,
+      "vol_ratio": 95.0,
+      "high52": 124.52,
+      "low52": 105.66,
+      "ma200": null,
+      "buy_score": 0,
+      "sell_score": 0,
+      "buy_signals": [],
+      "sell_signals": [],
+      "name": "소비재"
+    },
+    {
       "ticker": "GLD",
       "price": 386.54,
       "chg1d": 0.06,
@@ -274,6 +295,27 @@
       ],
       "sell_signals": [],
       "name": "금 (Gold)"
+    },
+    {
+      "ticker": "TLT",
+      "price": 85.77,
+      "chg1d": -0.24,
+      "rsi": 60.88,
+      "vs_ma50": 0.09,
+      "vs_ma200": null,
+      "ma20_slope": 0.01,
+      "bb_pos": 76.0,
+      "vs_high52": -5.56,
+      "vs_low52": 3.31,
+      "vol_ratio": 84.6,
+      "high52": 90.82,
+      "low52": 83.02,
+      "ma200": null,
+      "buy_score": 0,
+      "sell_score": 0,
+      "buy_signals": [],
+      "sell_signals": [],
+      "name": "장기국채 20년+"
     },
     {
       "ticker": "ARKK",

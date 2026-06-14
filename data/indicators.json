@@ -1,6 +1,6 @@
 {
-  "updated_at": "2026-06-13",
-  "updated_kst": "2026-06-14 06:55 KST",
+  "updated_at": "2026-06-14",
+  "updated_kst": "2026-06-14 20:18 KST",
   "snapshot": {
     "nasdaq": 25888.84,
     "sp500": 7431.46,
@@ -28,7 +28,7 @@
     },
     "usdkrw": 1555.96,
     "t10y_change_3m": 0.22,
-    "t10y_change_1m": -0.02,
+    "t10y_change_1m": -0.14,
     "fedfunds_change_3m": null,
     "real_rate": 2.15,
     "erp": 0.1,
@@ -48,16 +48,16 @@
     "hy_ma20": 2.7575,
     "hy_vs_ma20": 0.82,
     "hy_slope": -0.217,
-    "fg_ma10": 11.2,
-    "fg_vs_ma10": 16.07,
-    "fg_slope": -34.118
+    "fg_ma10": 11.8,
+    "fg_vs_ma10": 52.54,
+    "fg_slope": -24.841
   },
   "risk_score": 22,
   "risk_label": "안전 — 리스크 낮음",
   "buy_score": 10,
   "buy_signals": [
     {
-      "label": "Fear&Greed 10일 이평 11.2 — 공포 추세 (역발상 구간)",
+      "label": "Fear&Greed 10일 이평 11.8 — 공포 추세 (역발상 구간)",
       "strength": "medium"
     }
   ],
@@ -173,10 +173,10 @@
       "ma20_slope": 0.21,
       "bb_pos": 34.4,
       "vs_high52": -8.01,
-      "vs_low52": 31.66,
+      "vs_low52": 31.36,
       "vol_ratio": 82.7,
       "high52": 62.56,
-      "low52": 43.71,
+      "low52": 43.81,
       "ma200": null,
       "buy_score": 0,
       "sell_score": 0,
@@ -326,10 +326,10 @@
       "vs_ma200": null,
       "ma20_slope": -1.18,
       "bb_pos": 37.3,
-      "vs_high52": -10.99,
+      "vs_high52": -9.09,
       "vs_low52": 19.1,
       "vol_ratio": 143.8,
-      "high52": 84.99,
+      "high52": 83.21,
       "low52": 63.52,
       "ma200": null,
       "buy_score": 0,
@@ -768,10 +768,6 @@
     ],
     "vix": [
       {
-        "date": "2026-04-29",
-        "value": 18.81
-      },
-      {
         "date": "2026-04-30",
         "value": 16.89
       },
@@ -898,10 +894,6 @@
     ],
     "tnx": [
       {
-        "date": "2026-04-29",
-        "value": 4.42
-      },
-      {
         "date": "2026-04-30",
         "value": 4.4
       },
@@ -1023,10 +1015,6 @@
       }
     ],
     "hy_spread": [
-      {
-        "date": "2026-04-29",
-        "value": 2.82
-      },
       {
         "date": "2026-04-30",
         "value": 2.83
@@ -1158,10 +1146,6 @@
     ],
     "ig_spread": [
       {
-        "date": "2026-04-29",
-        "value": 0.81
-      },
-      {
         "date": "2026-04-30",
         "value": 0.81
       },
@@ -1291,10 +1275,6 @@
       }
     ],
     "yield_curve": [
-      {
-        "date": "2026-04-29",
-        "value": 0.5
-      },
       {
         "date": "2026-04-30",
         "value": 0.52

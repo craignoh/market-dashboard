@@ -1,19 +1,19 @@
 {
   "updated_at": "2026-06-17",
-  "updated_kst": "2026-06-18 03:41 KST",
+  "updated_kst": "2026-06-18 05:40 KST",
   "snapshot": {
     "nasdaq": 26376.34,
     "sp500": 7511.35,
     "djia": 51999.67,
     "vix": 16.41,
-    "ten_yr": 4.47,
+    "ten_yr": 4.43,
     "fed_rate": 3.63,
     "hy_spread": 2.71,
     "ig_spread": 0.75,
     "ted_spread": 0.09,
-    "yield_curve": 0.4,
+    "yield_curve": 0.38,
     "fear_greed": {
-      "value": 38,
+      "value": 33,
       "classification": "fear",
       "source": "cnn",
       "components": {
@@ -23,15 +23,15 @@
         "풋콜비율": 69.6,
         "정크본드": 94.1,
         "변동성단기": 66.3,
-        "안전자산": 52.8
+        "안전자산": 50.0
       }
     },
     "usdkrw": 1518.87,
-    "t10y_change_3m": 0.22,
-    "t10y_change_1m": -0.14,
+    "t10y_change_3m": 0.18,
+    "t10y_change_1m": -0.18,
     "fedfunds_change_3m": null,
-    "real_rate": 2.17,
-    "erp": 0.08,
+    "real_rate": 2.13,
+    "erp": 0.12,
     "put_call": null,
     "jobless_claims": 229000.0,
     "fed_assets": 6725397.0
@@ -52,7 +52,7 @@
     "fg_vs_ma10": 49.66,
     "fg_slope": 33.636
   },
-  "risk_score": 8,
+  "risk_score": 15,
   "risk_label": "안전 — 리스크 낮음",
   "buy_score": 0,
   "buy_signals": [],
@@ -248,6 +248,27 @@
       "buy_signals": [],
       "sell_signals": [],
       "name": "유틸리티 (방어주)"
+    },
+    {
+      "ticker": "XLY",
+      "price": 118.46,
+      "chg1d": -0.09,
+      "rsi": 41.1,
+      "vs_ma50": 0.88,
+      "vs_ma200": null,
+      "ma20_slope": -0.22,
+      "bb_pos": 58.5,
+      "vs_high52": -4.87,
+      "vs_low52": 12.11,
+      "vol_ratio": 76.1,
+      "high52": 124.52,
+      "low52": 105.66,
+      "ma200": null,
+      "buy_score": 0,
+      "sell_score": 0,
+      "buy_signals": [],
+      "sell_signals": [],
+      "name": "소비재"
     },
     {
       "ticker": "GLD",
@@ -990,6 +1011,10 @@
       {
         "date": "2026-06-15",
         "value": 4.47
+      },
+      {
+        "date": "2026-06-16",
+        "value": 4.43
       }
     ],
     "hy_spread": [
@@ -1380,6 +1405,10 @@
       {
         "date": "2026-06-15",
         "value": 0.4
+      },
+      {
+        "date": "2026-06-16",
+        "value": 0.38
       }
     ],
     "fear_greed": [
@@ -1600,12 +1629,12 @@
       },
       {
         "date": "2026-06-17",
-        "value": 38,
+        "value": 33,
         "classification": ""
       },
       {
         "date": "2026-06-17",
-        "value": 38,
+        "value": 33,
         "classification": ""
       }
     ]

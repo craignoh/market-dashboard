@@ -1,19 +1,19 @@
 {
   "updated_at": "2026-06-22",
-  "updated_kst": "2026-06-23 03:09 KST",
+  "updated_kst": "2026-06-23 05:28 KST",
   "snapshot": {
     "nasdaq": 26517.93,
     "sp500": 7500.58,
-    "djia": 51492.55,
+    "djia": 51564.7,
     "vix": 16.78,
-    "ten_yr": 4.49,
+    "ten_yr": 4.46,
     "fed_rate": 3.63,
     "hy_spread": 2.66,
     "ig_spread": 0.74,
     "ted_spread": 0.09,
-    "yield_curve": 0.29,
+    "yield_curve": 0.27,
     "fear_greed": {
-      "value": 36,
+      "value": 35,
       "classification": "fear",
       "source": "cnn",
       "components": {
@@ -23,15 +23,15 @@
         "풋콜비율": 69.6,
         "정크본드": 96.5,
         "변동성단기": 64.2,
-        "안전자산": 37.5
+        "안전자산": 34.7
       }
     },
-    "usdkrw": 1518.87,
-    "t10y_change_3m": 0.1,
-    "t10y_change_1m": -0.01,
+    "usdkrw": 1540.64,
+    "t10y_change_3m": 0.07,
+    "t10y_change_1m": -0.04,
     "fedfunds_change_3m": null,
-    "real_rate": 2.19,
-    "erp": 0.06,
+    "real_rate": 2.16,
+    "erp": 0.09,
     "put_call": null,
     "jobless_claims": 226000.0,
     "fed_assets": 6736424.0
@@ -626,10 +626,6 @@
     ],
     "djia": [
       {
-        "date": "2026-04-29",
-        "value": 48861.81
-      },
-      {
         "date": "2026-04-30",
         "value": 49652.14
       },
@@ -764,6 +760,10 @@
       {
         "date": "2026-06-17",
         "value": 51492.55
+      },
+      {
+        "date": "2026-06-18",
+        "value": 51564.7
       }
     ],
     "vix": [
@@ -1004,6 +1004,10 @@
       {
         "date": "2026-06-17",
         "value": 4.49
+      },
+      {
+        "date": "2026-06-18",
+        "value": 4.46
       }
     ],
     "hy_spread": [
@@ -1378,6 +1382,10 @@
       {
         "date": "2026-06-17",
         "value": 0.29
+      },
+      {
+        "date": "2026-06-18",
+        "value": 0.27
       }
     ],
     "fear_greed": [
@@ -1598,12 +1606,12 @@
       },
       {
         "date": "2026-06-22",
-        "value": 36,
+        "value": 35,
         "classification": ""
       },
       {
         "date": "2026-06-22",
-        "value": 36,
+        "value": 35,
         "classification": ""
       }
     ]

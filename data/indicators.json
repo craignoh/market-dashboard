@@ -1,34 +1,34 @@
 {
-  "updated_at": "2026-06-21",
-  "updated_kst": "2026-06-22 07:25 KST",
+  "updated_at": "2026-06-22",
+  "updated_kst": "2026-06-23 03:09 KST",
   "snapshot": {
     "nasdaq": 26517.93,
     "sp500": 7500.58,
     "djia": 51492.55,
-    "vix": 18.44,
+    "vix": 16.78,
     "ten_yr": 4.49,
     "fed_rate": 3.63,
-    "hy_spread": 2.63,
+    "hy_spread": 2.66,
     "ig_spread": 0.74,
     "ted_spread": 0.09,
     "yield_curve": 0.29,
     "fear_greed": {
-      "value": 37,
+      "value": 36,
       "classification": "fear",
       "source": "cnn",
       "components": {
         "모멘텀": 84.1,
         "주식강도": 30.6,
-        "변동성폭": 71.7,
+        "변동성폭": 81.2,
         "풋콜비율": 69.6,
-        "정크본드": 98.0,
-        "변동성단기": 53.8,
+        "정크본드": 96.5,
+        "변동성단기": 64.2,
         "안전자산": 37.5
       }
     },
     "usdkrw": 1518.87,
-    "t10y_change_3m": 0.15,
-    "t10y_change_1m": -0.07,
+    "t10y_change_3m": 0.1,
+    "t10y_change_1m": -0.01,
     "fedfunds_change_3m": null,
     "real_rate": 2.19,
     "erp": 0.06,
@@ -42,17 +42,17 @@
     "ma200_sp500": 8.66,
     "ma50_sp500": 2.53,
     "ma200_nasdaq": 12.7,
-    "vix_ma20": 17.419,
-    "vix_vs_ma20": 5.86,
-    "vix_slope": -0.241,
-    "hy_ma20": 2.7295,
-    "hy_vs_ma20": -3.65,
-    "hy_slope": -1.051,
-    "fg_ma10": 18.3,
-    "fg_vs_ma10": 25.68,
-    "fg_slope": 33.577
+    "vix_ma20": 17.405,
+    "vix_vs_ma20": -3.59,
+    "vix_slope": -0.727,
+    "hy_ma20": 2.7215,
+    "hy_vs_ma20": -2.26,
+    "hy_slope": -1.09,
+    "fg_ma10": 19.1,
+    "fg_vs_ma10": 4.71,
+    "fg_slope": 29.932
   },
-  "risk_score": 19,
+  "risk_score": 12,
   "risk_label": "안전 — 리스크 낮음",
   "buy_score": 0,
   "buy_signals": [],
@@ -62,7 +62,7 @@
   "sell_score": 15,
   "sell_signals": [
     {
-      "label": "HY스프레드 2.63% — 리스크 프리미엄 소멸 (과열)",
+      "label": "HY스프레드 2.66% — 리스크 프리미엄 소멸 (과열)",
       "strength": "strong"
     }
   ],
@@ -768,10 +768,6 @@
     ],
     "vix": [
       {
-        "date": "2026-05-07",
-        "value": 17.08
-      },
-      {
         "date": "2026-05-08",
         "value": 17.19
       },
@@ -886,13 +882,17 @@
       {
         "date": "2026-06-17",
         "value": 18.44
+      },
+      {
+        "date": "2026-06-18",
+        "value": 16.4
+      },
+      {
+        "date": "2026-06-19",
+        "value": 16.78
       }
     ],
     "tnx": [
-      {
-        "date": "2026-05-07",
-        "value": 4.41
-      },
       {
         "date": "2026-05-08",
         "value": 4.38
@@ -1007,10 +1007,6 @@
       }
     ],
     "hy_spread": [
-      {
-        "date": "2026-05-07",
-        "value": 2.79
-      },
       {
         "date": "2026-05-08",
         "value": 2.81
@@ -1130,13 +1126,17 @@
       {
         "date": "2026-06-17",
         "value": 2.63
+      },
+      {
+        "date": "2026-06-18",
+        "value": 2.66
+      },
+      {
+        "date": "2026-06-19",
+        "value": 2.66
       }
     ],
     "ig_spread": [
-      {
-        "date": "2026-05-07",
-        "value": 0.79
-      },
       {
         "date": "2026-05-08",
         "value": 0.79
@@ -1256,13 +1256,17 @@
       {
         "date": "2026-06-17",
         "value": 0.74
+      },
+      {
+        "date": "2026-06-18",
+        "value": 0.74
+      },
+      {
+        "date": "2026-06-19",
+        "value": 0.74
       }
     ],
     "yield_curve": [
-      {
-        "date": "2026-05-07",
-        "value": 0.49
-      },
       {
         "date": "2026-05-08",
         "value": 0.48
@@ -1377,11 +1381,6 @@
       }
     ],
     "fear_greed": [
-      {
-        "date": "2026-04-20",
-        "value": 70,
-        "classification": ""
-      },
       {
         "date": "2026-04-21",
         "value": 68,
@@ -1589,17 +1588,22 @@
       },
       {
         "date": "2026-06-18",
-        "value": 37,
+        "value": 38,
         "classification": ""
       },
       {
         "date": "2026-06-19",
-        "value": 37,
+        "value": 32,
         "classification": ""
       },
       {
-        "date": "2026-06-19",
-        "value": 37,
+        "date": "2026-06-22",
+        "value": 36,
+        "classification": ""
+      },
+      {
+        "date": "2026-06-22",
+        "value": 36,
         "classification": ""
       }
     ]

@@ -1,12 +1,12 @@
 {
   "updated_at": "2026-06-23",
-  "updated_kst": "2026-06-24 04:35 KST",
+  "updated_kst": "2026-06-24 06:55 KST",
   "snapshot": {
     "nasdaq": 26166.6,
     "sp500": 7472.79,
     "djia": 51712.71,
     "vix": 17.28,
-    "ten_yr": 4.46,
+    "ten_yr": 4.51,
     "fed_rate": 3.63,
     "hy_spread": 2.65,
     "ig_spread": 0.74,
@@ -27,11 +27,11 @@
       }
     },
     "usdkrw": 1540.64,
-    "t10y_change_3m": 0.13,
-    "t10y_change_1m": -0.04,
+    "t10y_change_3m": 0.18,
+    "t10y_change_1m": 0.01,
     "fedfunds_change_3m": null,
-    "real_rate": 2.16,
-    "erp": 0.09,
+    "real_rate": 2.21,
+    "erp": 0.04,
     "put_call": null,
     "jobless_claims": 226000.0,
     "fed_assets": 6736424.0
@@ -1005,6 +1005,10 @@
       {
         "date": "2026-06-18",
         "value": 4.46
+      },
+      {
+        "date": "2026-06-22",
+        "value": 4.51
       }
     ],
     "hy_spread": [
@@ -1378,6 +1382,10 @@
       },
       {
         "date": "2026-06-18",
+        "value": 0.27
+      },
+      {
+        "date": "2026-06-22",
         "value": 0.27
       }
     ],

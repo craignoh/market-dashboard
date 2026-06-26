@@ -1,6 +1,6 @@
 {
   "updated_at": "2026-06-26",
-  "updated_kst": "2026-06-27 00:31 KST",
+  "updated_kst": "2026-06-27 02:45 KST",
   "snapshot": {
     "nasdaq": 25358.6,
     "sp500": 7357.49,
@@ -1473,7 +1473,7 @@
       },
       {
         "date": "2026-05-07",
-        "value": 66,
+        "value": 67,
         "classification": ""
       },
       {
@@ -1483,22 +1483,22 @@
       },
       {
         "date": "2026-05-11",
-        "value": 65,
+        "value": 67,
         "classification": ""
       },
       {
         "date": "2026-05-12",
-        "value": 65,
+        "value": 66,
         "classification": ""
       },
       {
         "date": "2026-05-13",
-        "value": 64,
+        "value": 65,
         "classification": ""
       },
       {
         "date": "2026-05-14",
-        "value": 65,
+        "value": 66,
         "classification": ""
       },
       {
@@ -1623,7 +1623,7 @@
       },
       {
         "date": "2026-06-19",
-        "value": 32,
+        "value": 38,
         "classification": ""
       },
       {

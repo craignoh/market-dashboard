@@ -1,6 +1,6 @@
 {
-  "updated_at": "2026-06-28",
-  "updated_kst": "2026-06-29 04:08 KST",
+  "updated_at": "2026-06-29",
+  "updated_kst": "2026-06-29 14:55 KST",
   "snapshot": {
     "nasdaq": 25297.62,
     "sp500": 7354.02,
@@ -27,8 +27,8 @@
       }
     },
     "usdkrw": 1540.64,
-    "t10y_change_3m": 0.05,
-    "t10y_change_1m": -0.05,
+    "t10y_change_3m": 0.1,
+    "t10y_change_1m": -0.07,
     "fedfunds_change_3m": null,
     "real_rate": 2.1,
     "erp": 0.15,
@@ -48,16 +48,16 @@
     "hy_ma20": 2.723,
     "hy_vs_ma20": 2.09,
     "hy_slope": -0.092,
-    "fg_ma10": 17.8,
-    "fg_vs_ma10": 1.12,
-    "fg_slope": -11.443
+    "fg_ma10": 17.6,
+    "fg_vs_ma10": -31.82,
+    "fg_slope": -12.0
   },
   "risk_score": 22,
   "risk_label": "안전 — 리스크 낮음",
   "buy_score": 10,
   "buy_signals": [
     {
-      "label": "Fear&Greed 10일 이평 17.8 — 공포 추세 (역발상 구간)",
+      "label": "Fear&Greed 10일 이평 17.6 — 공포 추세 (역발상 구간)",
       "strength": "medium"
     }
   ],
@@ -85,16 +85,16 @@
       "ma20_slope": 4.24,
       "bb_pos": 33.1,
       "vs_high52": -28.32,
-      "vs_low52": 599.77,
+      "vs_low52": 579.48,
       "vol_ratio": 86.1,
       "high52": 300.77,
-      "low52": 30.81,
+      "low52": 31.73,
       "ma200": null,
       "buy_score": 0,
       "sell_score": 10,
       "buy_signals": [],
       "sell_signals": [
-        "52주 저점 대비 +599.77%"
+        "52주 저점 대비 +579.48%"
       ],
       "name": "반도체 3x 레버리지"
     },
@@ -220,10 +220,10 @@
       "ma20_slope": 1.17,
       "bb_pos": 79.0,
       "vs_high52": -1.59,
-      "vs_low52": 22.57,
+      "vs_low52": 21.1,
       "vol_ratio": 105.5,
       "high52": 184.12,
-      "low52": 147.83,
+      "low52": 149.63,
       "ma200": null,
       "buy_score": 0,
       "sell_score": 0,
@@ -774,10 +774,6 @@
     ],
     "vix": [
       {
-        "date": "2026-05-14",
-        "value": 17.26
-      },
-      {
         "date": "2026-05-15",
         "value": 18.43
       },
@@ -900,10 +896,6 @@
     ],
     "tnx": [
       {
-        "date": "2026-05-14",
-        "value": 4.47
-      },
-      {
         "date": "2026-05-15",
         "value": 4.59
       },
@@ -1017,10 +1009,6 @@
       }
     ],
     "hy_spread": [
-      {
-        "date": "2026-05-14",
-        "value": 2.76
-      },
       {
         "date": "2026-05-15",
         "value": 2.8
@@ -1148,10 +1136,6 @@
     ],
     "ig_spread": [
       {
-        "date": "2026-05-14",
-        "value": 0.76
-      },
-      {
         "date": "2026-05-15",
         "value": 0.75
       },
@@ -1277,10 +1261,6 @@
       }
     ],
     "yield_curve": [
-      {
-        "date": "2026-05-14",
-        "value": 0.47
-      },
       {
         "date": "2026-05-15",
         "value": 0.5

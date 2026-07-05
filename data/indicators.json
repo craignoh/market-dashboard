@@ -1,6 +1,6 @@
 {
-  "updated_at": "2026-07-04",
-  "updated_kst": "2026-07-05 04:01 KST",
+  "updated_at": "2026-07-05",
+  "updated_kst": "2026-07-05 14:02 KST",
   "snapshot": {
     "nasdaq": 25832.67,
     "sp500": 7483.24,
@@ -28,7 +28,7 @@
     },
     "usdkrw": 1533.44,
     "t10y_change_3m": 0.14,
-    "t10y_change_1m": 0.01,
+    "t10y_change_1m": -0.07,
     "fedfunds_change_3m": null,
     "real_rate": 2.18,
     "erp": 0.07,
@@ -48,19 +48,14 @@
     "hy_ma20": 2.7335,
     "hy_vs_ma20": 0.6,
     "hy_slope": 0.386,
-    "fg_ma10": 15.8,
-    "fg_vs_ma10": 39.24,
-    "fg_slope": -10.227
+    "fg_ma10": 16.9,
+    "fg_vs_ma10": 36.09,
+    "fg_slope": 0.595
   },
   "risk_score": 15,
   "risk_label": "안전 — 리스크 낮음",
-  "buy_score": 10,
-  "buy_signals": [
-    {
-      "label": "Fear&Greed 10일 이평 15.8 — 공포 추세 (역발상 구간)",
-      "strength": "medium"
-    }
-  ],
+  "buy_score": 0,
+  "buy_signals": [],
   "trade_signal": "중립",
   "trade_color": "blue",
   "trade_desc": "시장 안정 — 급락 매수 기회 아님",
@@ -776,10 +771,6 @@
     ],
     "vix": [
       {
-        "date": "2026-05-20",
-        "value": 17.44
-      },
-      {
         "date": "2026-05-21",
         "value": 16.76
       },
@@ -902,10 +893,6 @@
     ],
     "tnx": [
       {
-        "date": "2026-05-20",
-        "value": 4.57
-      },
-      {
         "date": "2026-05-21",
         "value": 4.57
       },
@@ -1019,10 +1006,6 @@
       }
     ],
     "hy_spread": [
-      {
-        "date": "2026-05-20",
-        "value": 2.8
-      },
       {
         "date": "2026-05-21",
         "value": 2.78
@@ -1154,10 +1137,6 @@
     ],
     "ig_spread": [
       {
-        "date": "2026-05-20",
-        "value": 0.75
-      },
-      {
         "date": "2026-05-21",
         "value": 0.75
       },
@@ -1287,10 +1266,6 @@
       }
     ],
     "yield_curve": [
-      {
-        "date": "2026-05-20",
-        "value": 0.53
-      },
       {
         "date": "2026-05-21",
         "value": 0.49

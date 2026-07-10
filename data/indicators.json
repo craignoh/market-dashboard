@@ -1,6 +1,6 @@
 {
   "updated_at": "2026-07-10",
-  "updated_kst": "2026-07-11 02:45 KST",
+  "updated_kst": "2026-07-11 04:21 KST",
   "snapshot": {
     "nasdaq": 26206.89,
     "sp500": 7543.64,
@@ -13,7 +13,7 @@
     "ted_spread": 0.09,
     "yield_curve": 0.35,
     "fear_greed": {
-      "value": 48,
+      "value": 49,
       "classification": "neutral",
       "source": "cnn",
       "components": {
@@ -70,98 +70,6 @@
   "sell_color": "blue",
   "sell_desc": "과열 신호 없음 — 현 포지션 유지",
   "watchlist": [
-    {
-      "ticker": "SOXL",
-      "price": 192.45,
-      "chg1d": 10.08,
-      "rsi": 44.88,
-      "vs_ma50": -4.07,
-      "vs_ma200": null,
-      "ma20_slope": -4.86,
-      "bb_pos": 27.0,
-      "vs_high52": -36.01,
-      "vs_low52": 434.43,
-      "vol_ratio": 85.2,
-      "high52": 300.77,
-      "low52": 36.01,
-      "ma200": null,
-      "buy_score": 10,
-      "sell_score": 10,
-      "buy_signals": [
-        "52주 고점 대비 -36.01%"
-      ],
-      "sell_signals": [
-        "52주 저점 대비 +434.43%"
-      ],
-      "name": "반도체 3x 레버리지"
-    },
-    {
-      "ticker": "TQQQ",
-      "price": 76.34,
-      "chg1d": 4.98,
-      "rsi": 48.75,
-      "vs_ma50": 0.54,
-      "vs_ma200": null,
-      "ma20_slope": -1.53,
-      "bb_pos": 48.5,
-      "vs_high52": -12.47,
-      "vs_low52": 101.48,
-      "vol_ratio": 65.5,
-      "high52": 87.22,
-      "low52": 37.89,
-      "ma200": null,
-      "buy_score": 0,
-      "sell_score": 10,
-      "buy_signals": [],
-      "sell_signals": [
-        "52주 저점 대비 +101.48%"
-      ],
-      "name": "나스닥 3x 레버리지"
-    },
-    {
-      "ticker": "XLK",
-      "price": 185.35,
-      "chg1d": 2.18,
-      "rsi": 49.58,
-      "vs_ma50": 2.7,
-      "vs_ma200": null,
-      "ma20_slope": -0.66,
-      "bb_pos": 53.1,
-      "vs_high52": -6.49,
-      "vs_low52": 45.37,
-      "vol_ratio": 56.2,
-      "high52": 198.21,
-      "low52": 127.5,
-      "ma200": null,
-      "buy_score": 0,
-      "sell_score": 0,
-      "buy_signals": [],
-      "sell_signals": [],
-      "name": "기술 섹터"
-    },
-    {
-      "ticker": "XLV",
-      "price": 162.17,
-      "chg1d": -0.08,
-      "rsi": 71.75,
-      "vs_ma50": 7.39,
-      "vs_ma200": null,
-      "ma20_slope": 1.78,
-      "bb_pos": 79.0,
-      "vs_high52": -1.38,
-      "vs_low52": 13.53,
-      "vol_ratio": 83.8,
-      "high52": 164.44,
-      "low52": 142.84,
-      "ma200": null,
-      "buy_score": 0,
-      "sell_score": 18,
-      "buy_signals": [],
-      "sell_signals": [
-        "RSI 71.75 — 과매수"
-      ],
-      "name": "헬스케어/바이오"
-    },
     {
       "ticker": "XLE",
       "price": 54.82,
@@ -1625,12 +1533,12 @@
       },
       {
         "date": "2026-07-10",
-        "value": 48,
+        "value": 49,
         "classification": ""
       },
       {
         "date": "2026-07-10",
-        "value": 48,
+        "value": 49,
         "classification": ""
       }
     ]

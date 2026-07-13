@@ -1,6 +1,6 @@
 {
   "updated_at": "2026-07-13",
-  "updated_kst": "2026-07-13 13:34 KST",
+  "updated_kst": "2026-07-13 21:36 KST",
   "snapshot": {
     "nasdaq": 26281.61,
     "sp500": 7575.39,
@@ -1369,11 +1369,6 @@
     ],
     "fear_greed": [
       {
-        "date": "2026-05-11",
-        "value": 67,
-        "classification": ""
-      },
-      {
         "date": "2026-05-12",
         "value": 66,
         "classification": ""
@@ -1589,7 +1584,12 @@
         "classification": ""
       },
       {
-        "date": "2026-07-10",
+        "date": "2026-07-13",
+        "value": 49,
+        "classification": ""
+      },
+      {
+        "date": "2026-07-13",
         "value": 49,
         "classification": ""
       }

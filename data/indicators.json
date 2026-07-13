@@ -1,6 +1,6 @@
 {
   "updated_at": "2026-07-13",
-  "updated_kst": "2026-07-14 00:48 KST",
+  "updated_kst": "2026-07-14 02:53 KST",
   "snapshot": {
     "nasdaq": 26281.61,
     "sp500": 7575.39,
@@ -13,8 +13,8 @@
     "ted_spread": 0.09,
     "yield_curve": 0.38,
     "fear_greed": {
-      "value": 45,
-      "classification": "neutral",
+      "value": 44,
+      "classification": "fear",
       "source": "cnn",
       "components": {
         "모멘텀": 84.7,
@@ -52,7 +52,7 @@
     "fg_vs_ma10": 16.18,
     "fg_slope": 24.227
   },
-  "risk_score": 0,
+  "risk_score": 8,
   "risk_label": "안전 — 리스크 낮음",
   "buy_score": 0,
   "buy_signals": [],
@@ -1597,12 +1597,12 @@
       },
       {
         "date": "2026-07-13",
-        "value": 45,
+        "value": 44,
         "classification": ""
       },
       {
         "date": "2026-07-13",
-        "value": 45,
+        "value": 44,
         "classification": ""
       }
     ]

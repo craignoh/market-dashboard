@@ -1,6 +1,6 @@
 {
   "updated_at": "2026-07-14",
-  "updated_kst": "2026-07-14 13:02 KST",
+  "updated_kst": "2026-07-14 20:30 KST",
   "snapshot": {
     "nasdaq": 25873.18,
     "sp500": 7515.34,
@@ -72,50 +72,53 @@
   "watchlist": [
     {
       "ticker": "SOXL",
-      "price": 192.26,
-      "chg1d": -0.1,
-      "rsi": 37.88,
-      "vs_ma50": -4.94,
+      "price": 165.37,
+      "chg1d": -13.99,
+      "rsi": 31.42,
+      "vs_ma50": -18.62,
       "vs_ma200": null,
-      "ma20_slope": -2.58,
-      "bb_pos": 26.0,
-      "vs_high52": -36.08,
-      "vs_low52": 433.91,
-      "vol_ratio": 64.8,
+      "ma20_slope": -2.41,
+      "bb_pos": 11.7,
+      "vs_high52": -45.02,
+      "vs_low52": 359.23,
+      "vol_ratio": 95.5,
       "high52": 300.77,
       "low52": 36.01,
       "ma200": null,
-      "buy_score": 18,
+      "buy_score": 33,
       "sell_score": 10,
       "buy_signals": [
-        "RSI 37.88 — 약한 과매도",
-        "52주 고점 대비 -36.08%"
+        "RSI 31.42 — 약한 과매도",
+        "볼린저 하단 (11.7%) — 반등 후보",
+        "52주 고점 대비 -45.02%"
       ],
       "sell_signals": [
-        "52주 저점 대비 +433.91%"
+        "52주 저점 대비 +359.23%"
       ],
       "name": "반도체 3x 레버리지"
     },
     {
       "ticker": "TQQQ",
-      "price": 77.03,
-      "chg1d": 0.9,
-      "rsi": 43.24,
-      "vs_ma50": 1.02,
+      "price": 72.64,
+      "chg1d": -5.7,
+      "rsi": 39.5,
+      "vs_ma50": -5.01,
       "vs_ma200": null,
-      "ma20_slope": -0.17,
-      "bb_pos": 50.5,
-      "vs_high52": -11.68,
-      "vs_low52": 103.3,
-      "vol_ratio": 61.4,
+      "ma20_slope": 0.18,
+      "bb_pos": 21.9,
+      "vs_high52": -16.72,
+      "vs_low52": 91.71,
+      "vol_ratio": 87.1,
       "high52": 87.22,
       "low52": 37.89,
       "ma200": null,
-      "buy_score": 0,
+      "buy_score": 8,
       "sell_score": 10,
-      "buy_signals": [],
+      "buy_signals": [
+        "RSI 39.5 — 약한 과매도"
+      ],
       "sell_signals": [
-        "52주 저점 대비 +103.3%"
+        "52주 저점 대비 +91.71%"
       ],
       "name": "나스닥 3x 레버리지"
     },
@@ -1376,11 +1379,6 @@
     ],
     "fear_greed": [
       {
-        "date": "2026-05-12",
-        "value": 66,
-        "classification": ""
-      },
-      {
         "date": "2026-05-13",
         "value": 65,
         "classification": ""
@@ -1596,7 +1594,12 @@
         "classification": ""
       },
       {
-        "date": "2026-07-13",
+        "date": "2026-07-14",
+        "value": 44,
+        "classification": ""
+      },
+      {
+        "date": "2026-07-14",
         "value": 44,
         "classification": ""
       }

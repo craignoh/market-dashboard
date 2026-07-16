@@ -1,6 +1,6 @@
 {
   "updated_at": "2026-07-16",
-  "updated_kst": "2026-07-17 02:11 KST",
+  "updated_kst": "2026-07-17 04:02 KST",
   "snapshot": {
     "nasdaq": 26269.23,
     "sp500": 7572.4,
@@ -13,8 +13,8 @@
     "ted_spread": 0.09,
     "yield_curve": 0.4,
     "fear_greed": {
-      "value": 46,
-      "classification": "neutral",
+      "value": 42,
+      "classification": "fear",
       "source": "cnn",
       "components": {
         "모멘텀": 83.2,
@@ -52,7 +52,7 @@
     "fg_vs_ma10": 2.46,
     "fg_slope": 7.489
   },
-  "risk_score": 0,
+  "risk_score": 8,
   "risk_label": "안전 — 리스크 낮음",
   "buy_score": 0,
   "buy_signals": [],
@@ -122,6 +122,48 @@
         "52주 저점 대비 +96.46%"
       ],
       "name": "나스닥 3x 레버리지"
+    },
+    {
+      "ticker": "XLK",
+      "price": 181.58,
+      "chg1d": -1.11,
+      "rsi": 48.44,
+      "vs_ma50": -0.42,
+      "vs_ma200": null,
+      "ma20_slope": 0.01,
+      "bb_pos": 28.0,
+      "vs_high52": -8.39,
+      "vs_low52": 42.42,
+      "vol_ratio": 83.4,
+      "high52": 198.21,
+      "low52": 127.5,
+      "ma200": null,
+      "buy_score": 0,
+      "sell_score": 0,
+      "buy_signals": [],
+      "sell_signals": [],
+      "name": "기술 섹터"
+    },
+    {
+      "ticker": "XLV",
+      "price": 158.29,
+      "chg1d": 0.0,
+      "rsi": 59.46,
+      "vs_ma50": 3.98,
+      "vs_ma200": null,
+      "ma20_slope": 1.05,
+      "bb_pos": 52.4,
+      "vs_high52": -3.74,
+      "vs_low52": 10.82,
+      "vol_ratio": 98.2,
+      "high52": 164.44,
+      "low52": 142.84,
+      "ma200": null,
+      "buy_score": 0,
+      "sell_score": 0,
+      "buy_signals": [],
+      "sell_signals": [],
+      "name": "헬스케어/바이오"
     },
     {
       "ticker": "XLE",
@@ -1375,6 +1417,21 @@
     ],
     "fear_greed": [
       {
+        "date": "2026-05-12",
+        "value": 66,
+        "classification": ""
+      },
+      {
+        "date": "2026-05-13",
+        "value": 65,
+        "classification": ""
+      },
+      {
+        "date": "2026-05-14",
+        "value": 66,
+        "classification": ""
+      },
+      {
         "date": "2026-05-15",
         "value": 63,
         "classification": ""
@@ -1391,7 +1448,7 @@
       },
       {
         "date": "2026-05-20",
-        "value": 60,
+        "value": 61,
         "classification": ""
       },
       {
@@ -1401,12 +1458,12 @@
       },
       {
         "date": "2026-05-22",
-        "value": 59,
+        "value": 58,
         "classification": ""
       },
       {
         "date": "2026-05-26",
-        "value": 61,
+        "value": 60,
         "classification": ""
       },
       {
@@ -1416,7 +1473,7 @@
       },
       {
         "date": "2026-05-28",
-        "value": 60,
+        "value": 61,
         "classification": ""
       },
       {
@@ -1426,22 +1483,22 @@
       },
       {
         "date": "2026-06-01",
-        "value": 57,
+        "value": 59,
         "classification": ""
       },
       {
         "date": "2026-06-02",
-        "value": 56,
+        "value": 57,
         "classification": ""
       },
       {
         "date": "2026-06-03",
-        "value": 53,
+        "value": 55,
         "classification": ""
       },
       {
         "date": "2026-06-04",
-        "value": 54,
+        "value": 55,
         "classification": ""
       },
       {
@@ -1451,12 +1508,12 @@
       },
       {
         "date": "2026-06-08",
-        "value": 40,
+        "value": 39,
         "classification": ""
       },
       {
         "date": "2026-06-09",
-        "value": 32,
+        "value": 34,
         "classification": ""
       },
       {
@@ -1466,47 +1523,42 @@
       },
       {
         "date": "2026-06-11",
-        "value": 32,
+        "value": 30,
         "classification": ""
       },
       {
         "date": "2026-06-12",
-        "value": 36,
+        "value": 34,
         "classification": ""
       },
       {
         "date": "2026-06-15",
-        "value": 42,
+        "value": 40,
         "classification": ""
       },
       {
         "date": "2026-06-16",
-        "value": 39,
+        "value": 40,
         "classification": ""
       },
       {
         "date": "2026-06-17",
-        "value": 32,
+        "value": 33,
         "classification": ""
       },
       {
         "date": "2026-06-18",
-        "value": 38,
-        "classification": ""
-      },
-      {
-        "date": "2026-06-19",
-        "value": 38,
+        "value": 37,
         "classification": ""
       },
       {
         "date": "2026-06-22",
-        "value": 32,
+        "value": 34,
         "classification": ""
       },
       {
         "date": "2026-06-23",
-        "value": 27,
+        "value": 28,
         "classification": ""
       },
       {
@@ -1516,7 +1568,7 @@
       },
       {
         "date": "2026-06-25",
-        "value": 24,
+        "value": 25,
         "classification": ""
       },
       {
@@ -1531,72 +1583,62 @@
       },
       {
         "date": "2026-06-30",
-        "value": 31,
-        "classification": ""
-      },
-      {
-        "date": "2026-07-01",
         "value": 30,
         "classification": ""
       },
       {
-        "date": "2026-07-02",
-        "value": 37,
-        "classification": ""
-      },
-      {
-        "date": "2026-07-03",
+        "date": "2026-07-01",
         "value": 32,
         "classification": ""
       },
       {
+        "date": "2026-07-02",
+        "value": 33,
+        "classification": ""
+      },
+      {
         "date": "2026-07-06",
-        "value": 44,
-        "classification": ""
-      },
-      {
-        "date": "2026-07-07",
-        "value": 44,
-        "classification": ""
-      },
-      {
-        "date": "2026-07-08",
-        "value": 44,
-        "classification": ""
-      },
-      {
-        "date": "2026-07-09",
-        "value": 46,
-        "classification": ""
-      },
-      {
-        "date": "2026-07-10",
-        "value": 48,
-        "classification": ""
-      },
-      {
-        "date": "2026-07-13",
         "value": 42,
         "classification": ""
       },
       {
-        "date": "2026-07-14",
+        "date": "2026-07-07",
+        "value": 40,
+        "classification": ""
+      },
+      {
+        "date": "2026-07-08",
+        "value": 39,
+        "classification": ""
+      },
+      {
+        "date": "2026-07-09",
         "value": 45,
         "classification": ""
       },
       {
-        "date": "2026-07-15",
-        "value": 48,
+        "date": "2026-07-10",
+        "value": 47,
+        "classification": ""
+      },
+      {
+        "date": "2026-07-13",
+        "value": 41,
+        "classification": ""
+      },
+      {
+        "date": "2026-07-14",
+        "value": 41,
         "classification": ""
       },
       {
         "date": "2026-07-16",
-        "value": 46,
+        "value": 42,
         "classification": ""
       },
       {
         "date": "2026-07-16",
-        "value": 46,
+        "value": 42,
         "classification": ""
       }
     ]

@@ -1,6 +1,6 @@
 {
   "updated_at": "2026-07-16",
-  "updated_kst": "2026-07-17 00:11 KST",
+  "updated_kst": "2026-07-17 02:11 KST",
   "snapshot": {
     "nasdaq": 26269.23,
     "sp500": 7572.4,
@@ -13,7 +13,7 @@
     "ted_spread": 0.09,
     "yield_curve": 0.4,
     "fear_greed": {
-      "value": 48,
+      "value": 46,
       "classification": "neutral",
       "source": "cnn",
       "components": {
@@ -122,48 +122,6 @@
         "52주 저점 대비 +96.46%"
       ],
       "name": "나스닥 3x 레버리지"
-    },
-    {
-      "ticker": "XLK",
-      "price": 181.58,
-      "chg1d": -1.11,
-      "rsi": 48.44,
-      "vs_ma50": -0.42,
-      "vs_ma200": null,
-      "ma20_slope": 0.01,
-      "bb_pos": 28.0,
-      "vs_high52": -8.39,
-      "vs_low52": 42.42,
-      "vol_ratio": 83.4,
-      "high52": 198.21,
-      "low52": 127.5,
-      "ma200": null,
-      "buy_score": 0,
-      "sell_score": 0,
-      "buy_signals": [],
-      "sell_signals": [],
-      "name": "기술 섹터"
-    },
-    {
-      "ticker": "XLV",
-      "price": 158.29,
-      "chg1d": 0.0,
-      "rsi": 59.46,
-      "vs_ma50": 3.98,
-      "vs_ma200": null,
-      "ma20_slope": 1.05,
-      "bb_pos": 52.4,
-      "vs_high52": -3.74,
-      "vs_low52": 10.82,
-      "vol_ratio": 98.2,
-      "high52": 164.44,
-      "low52": 142.84,
-      "ma200": null,
-      "buy_score": 0,
-      "sell_score": 0,
-      "buy_signals": [],
-      "sell_signals": [],
-      "name": "헬스케어/바이오"
     },
     {
       "ticker": "XLE",
@@ -1633,12 +1591,12 @@
       },
       {
         "date": "2026-07-16",
-        "value": 48,
+        "value": 46,
         "classification": ""
       },
       {
         "date": "2026-07-16",
-        "value": 48,
+        "value": 46,
         "classification": ""
       }
     ]

@@ -1,11 +1,11 @@
 {
   "updated_at": "2026-07-17",
-  "updated_kst": "2026-07-17 20:26 KST",
+  "updated_kst": "2026-07-17 23:51 KST",
   "snapshot": {
     "nasdaq": 25881.95,
     "sp500": 7533.77,
     "djia": 52552.97,
-    "vix": 15.67,
+    "vix": 16.73,
     "ten_yr": 4.55,
     "fed_rate": 3.63,
     "hy_spread": 2.71,
@@ -13,16 +13,16 @@
     "ted_spread": 0.09,
     "yield_curve": 0.42,
     "fear_greed": {
-      "value": 43,
+      "value": 39,
       "classification": "fear",
       "source": "cnn",
       "components": {
         "모멘텀": 79.4,
         "주식강도": 59.1,
-        "변동성폭": 87.5,
+        "변동성폭": 81.5,
         "풋콜비율": 69.6,
         "정크본드": 94.1,
-        "변동성단기": 67.8,
+        "변동성단기": 61.2,
         "안전자산": 55.6
       }
     },
@@ -42,9 +42,9 @@
     "ma200_sp500": 7.88,
     "ma50_sp500": 0.98,
     "ma200_nasdaq": 8.46,
-    "vix_ma20": 16.8665,
-    "vix_vs_ma20": -7.09,
-    "vix_slope": -2.308,
+    "vix_ma20": 16.883,
+    "vix_vs_ma20": -0.91,
+    "vix_slope": -1.182,
     "hy_ma20": 2.7215,
     "hy_vs_ma20": -0.42,
     "hy_slope": 0.037,
@@ -908,6 +908,10 @@
       {
         "date": "2026-07-15",
         "value": 15.67
+      },
+      {
+        "date": "2026-07-16",
+        "value": 16.73
       }
     ],
     "tnx": [
@@ -1627,17 +1631,17 @@
       },
       {
         "date": "2026-07-16",
-        "value": 43,
+        "value": 41,
         "classification": ""
       },
       {
         "date": "2026-07-17",
-        "value": 43,
+        "value": 39,
         "classification": ""
       },
       {
         "date": "2026-07-17",
-        "value": 43,
+        "value": 39,
         "classification": ""
       }
     ]

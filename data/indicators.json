@@ -1,11 +1,11 @@
 {
   "updated_at": "2026-07-22",
-  "updated_kst": "2026-07-22 20:53 KST",
+  "updated_kst": "2026-07-23 00:11 KST",
   "snapshot": {
     "nasdaq": 25837.21,
     "sp500": 7509.2,
     "djia": 52224.64,
-    "vix": 18.65,
+    "vix": 17.05,
     "ten_yr": 4.6,
     "fed_rate": 3.63,
     "hy_spread": 2.69,
@@ -13,16 +13,16 @@
     "ted_spread": 0.09,
     "yield_curve": 0.39,
     "fear_greed": {
-      "value": 41,
+      "value": 43,
       "classification": "fear",
       "source": "cnn",
       "components": {
         "모멘텀": 76.0,
         "주식강도": 37.3,
-        "변동성폭": 70.5,
+        "변동성폭": 79.6,
         "풋콜비율": 69.6,
         "정크본드": 95.0,
-        "변동성단기": 50.1,
+        "변동성단기": 59.5,
         "안전자산": 51.4
       }
     },
@@ -42,17 +42,17 @@
     "ma200_sp500": 7.35,
     "ma50_sp500": 0.53,
     "ma200_nasdaq": 8.07,
-    "vix_ma20": 17.051,
-    "vix_vs_ma20": 9.38,
-    "vix_slope": 0.297,
-    "hy_ma20": 2.7295,
-    "hy_vs_ma20": -1.45,
-    "hy_slope": 0.46,
+    "vix_ma20": 16.929,
+    "vix_vs_ma20": 0.71,
+    "vix_slope": -0.447,
+    "hy_ma20": 2.7285,
+    "hy_vs_ma20": -1.41,
+    "hy_slope": 0.405,
     "fg_ma10": 26.7,
     "fg_vs_ma10": 23.6,
     "fg_slope": 9.426
   },
-  "risk_score": 15,
+  "risk_score": 8,
   "risk_label": "안전 — 리스크 낮음",
   "buy_score": 0,
   "buy_signals": [],
@@ -894,6 +894,10 @@
       {
         "date": "2026-07-20",
         "value": 18.65
+      },
+      {
+        "date": "2026-07-21",
+        "value": 17.05
       }
     ],
     "tnx": [
@@ -1138,6 +1142,10 @@
       {
         "date": "2026-07-20",
         "value": 2.69
+      },
+      {
+        "date": "2026-07-21",
+        "value": 2.69
       }
     ],
     "ig_spread": [
@@ -1263,6 +1271,10 @@
       },
       {
         "date": "2026-07-20",
+        "value": 0.78
+      },
+      {
+        "date": "2026-07-21",
         "value": 0.78
       }
     ],
@@ -1597,17 +1609,17 @@
       },
       {
         "date": "2026-07-21",
-        "value": 41,
+        "value": 43,
         "classification": ""
       },
       {
         "date": "2026-07-22",
-        "value": 41,
+        "value": 43,
         "classification": ""
       },
       {
         "date": "2026-07-22",
-        "value": 41,
+        "value": 43,
         "classification": ""
       }
     ]

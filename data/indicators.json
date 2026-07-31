@@ -1,9 +1,9 @@
 {
   "updated_at": "2026-07-31",
-  "updated_kst": "2026-08-01 00:26 KST",
+  "updated_kst": "2026-08-01 02:25 KST",
   "snapshot": {
     "nasdaq": 25122.18,
-    "sp500": 7316.15,
+    "sp500": 7437.63,
     "djia": 52208.06,
     "vix": 17.09,
     "ten_yr": 4.67,
@@ -13,12 +13,12 @@
     "ted_spread": 0.09,
     "yield_curve": 0.45,
     "fear_greed": {
-      "value": 41,
+      "value": 43,
       "classification": "fear",
       "source": "cnn",
       "components": {
-        "모멘텀": 57.2,
-        "주식강도": 9.3,
+        "모멘텀": 67.3,
+        "주식강도": 22.0,
         "변동성폭": 79.4,
         "풋콜비율": 69.6,
         "정크본드": 87.6,
@@ -37,10 +37,10 @@
     "fed_assets": 6738190.0
   },
   "technicals": {
-    "rsi_sp500": 30.32,
+    "rsi_sp500": 39.68,
     "rsi_nasdaq": 35.39,
-    "ma200_sp500": 4.29,
-    "ma50_sp500": -2.03,
+    "ma200_sp500": 5.95,
+    "ma50_sp500": -0.42,
     "ma200_nasdaq": 4.74,
     "vix_ma20": 17.218,
     "vix_vs_ma20": -0.74,
@@ -57,7 +57,7 @@
   "buy_score": 8,
   "buy_signals": [
     {
-      "label": "S&P500 RSI 30.32 — 약한 과매도",
+      "label": "S&P500 RSI 39.68 — 약한 과매도",
       "strength": "weak"
     }
   ],
@@ -495,10 +495,6 @@
     ],
     "sp500": [
       {
-        "date": "2026-06-09",
-        "value": 7386.65
-      },
-      {
         "date": "2026-06-10",
         "value": 7266.99
       },
@@ -633,6 +629,10 @@
       {
         "date": "2026-07-29",
         "value": 7316.15
+      },
+      {
+        "date": "2026-07-30",
+        "value": 7437.63
       }
     ],
     "djia": [
@@ -1641,12 +1641,12 @@
       },
       {
         "date": "2026-07-31",
-        "value": 41,
+        "value": 43,
         "classification": ""
       },
       {
         "date": "2026-07-31",
-        "value": 41,
+        "value": 43,
         "classification": ""
       }
     ]

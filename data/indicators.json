@@ -1,6 +1,6 @@
 {
   "updated_at": "2026-07-31",
-  "updated_kst": "2026-08-01 02:25 KST",
+  "updated_kst": "2026-08-01 04:13 KST",
   "snapshot": {
     "nasdaq": 25122.18,
     "sp500": 7437.63,
@@ -1641,7 +1641,7 @@
       },
       {
         "date": "2026-07-31",
-        "value": 43,
+        "value": 44,
         "classification": ""
       },
       {

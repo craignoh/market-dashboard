@@ -1,6 +1,6 @@
 {
   "updated_at": "2026-08-03",
-  "updated_kst": "2026-08-04 00:50 KST",
+  "updated_kst": "2026-08-04 02:47 KST",
   "snapshot": {
     "nasdaq": 25373.85,
     "sp500": 7489.72,
@@ -14,7 +14,7 @@
     "yield_curve": 0.45,
     "fear_greed": {
       "value": 45,
-      "classification": "fear",
+      "classification": "neutral",
       "source": "cnn",
       "components": {
         "모멘텀": 71.4,

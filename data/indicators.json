@@ -1,6 +1,6 @@
 {
   "updated_at": "2026-08-07",
-  "updated_kst": "2026-08-07 23:18 KST",
+  "updated_kst": "2026-08-08 01:47 KST",
   "snapshot": {
     "nasdaq": 26348.35,
     "sp500": 7709.96,
@@ -8,12 +8,12 @@
     "vix": 15.15,
     "ten_yr": 4.63,
     "fed_rate": 3.63,
-    "hy_spread": 2.75,
+    "hy_spread": 2.71,
     "ig_spread": 0.78,
     "ted_spread": 0.09,
     "yield_curve": 0.45,
     "fear_greed": {
-      "value": 63,
+      "value": 64,
       "classification": "greed",
       "source": "cnn",
       "components": {
@@ -21,7 +21,7 @@
         "주식강도": 58.6,
         "변동성폭": 90.4,
         "풋콜비율": 69.6,
-        "정크본드": 92.1,
+        "정크본드": 94.1,
         "변동성단기": 73.0,
         "안전자산": 51.7
       }
@@ -45,9 +45,9 @@
     "vix_ma20": 17.171,
     "vix_vs_ma20": -11.77,
     "vix_slope": -0.273,
-    "hy_ma20": 2.752,
-    "hy_vs_ma20": -0.07,
-    "hy_slope": 0.677,
+    "hy_ma20": 2.7525,
+    "hy_vs_ma20": -1.54,
+    "hy_slope": 0.53,
     "fg_ma10": 27.0,
     "fg_vs_ma10": 7.41,
     "fg_slope": -2.174
@@ -66,7 +66,7 @@
       "strength": "weak"
     },
     {
-      "label": "HY스프레드 2.75% — 리스크 프리미엄 소멸 (과열)",
+      "label": "HY스프레드 2.71% — 리스크 프리미엄 소멸 (과열)",
       "strength": "strong"
     }
   ],
@@ -1159,6 +1159,10 @@
       {
         "date": "2026-08-05",
         "value": 2.75
+      },
+      {
+        "date": "2026-08-06",
+        "value": 2.71
       }
     ],
     "ig_spread": [
@@ -1288,6 +1292,10 @@
       },
       {
         "date": "2026-08-05",
+        "value": 0.78
+      },
+      {
+        "date": "2026-08-06",
         "value": 0.78
       }
     ],
@@ -1635,12 +1643,12 @@
       },
       {
         "date": "2026-08-07",
-        "value": 63,
+        "value": 64,
         "classification": ""
       },
       {
         "date": "2026-08-07",
-        "value": 63,
+        "value": 64,
         "classification": ""
       }
     ]

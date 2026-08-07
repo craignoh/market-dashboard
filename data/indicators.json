@@ -1,9 +1,9 @@
 {
-  "updated_at": "2026-08-06",
-  "updated_kst": "2026-08-07 08:54 KST",
+  "updated_at": "2026-08-07",
+  "updated_kst": "2026-08-07 12:54 KST",
   "snapshot": {
-    "nasdaq": 26363.44,
-    "sp500": 7723.55,
+    "nasdaq": 26348.35,
+    "sp500": 7709.96,
     "djia": 53885.1,
     "vix": 15.81,
     "ten_yr": 4.63,
@@ -17,8 +17,8 @@
       "classification": "greed",
       "source": "cnn",
       "components": {
-        "모멘텀": 89.9,
-        "주식강도": 51.8,
+        "모멘텀": 88.1,
+        "주식강도": 58.6,
         "변동성폭": 86.7,
         "풋콜비율": 69.6,
         "정크본드": 92.1,
@@ -27,8 +27,8 @@
       }
     },
     "usdkrw": 1436.81,
-    "t10y_change_3m": 0.25,
-    "t10y_change_1m": 0.08,
+    "t10y_change_3m": 0.21,
+    "t10y_change_1m": 0.07,
     "fedfunds_change_3m": null,
     "real_rate": 2.33,
     "erp": -0.08,
@@ -37,11 +37,11 @@
     "fed_assets": 6748567.0
   },
   "technicals": {
-    "rsi_sp500": 61.52,
-    "rsi_nasdaq": 55.4,
-    "ma200_sp500": 9.71,
-    "ma50_sp500": 3.18,
-    "ma200_nasdaq": 9.6,
+    "rsi_sp500": 66.57,
+    "rsi_nasdaq": 60.06,
+    "ma200_sp500": 9.44,
+    "ma50_sp500": 2.94,
+    "ma200_nasdaq": 9.46,
     "vix_ma20": 17.2055,
     "vix_vs_ma20": -8.11,
     "vix_slope": 0.201,
@@ -49,8 +49,8 @@
     "hy_vs_ma20": -0.07,
     "hy_slope": 0.677,
     "fg_ma10": 27.0,
-    "fg_vs_ma10": -7.41,
-    "fg_slope": -3.571
+    "fg_vs_ma10": 7.41,
+    "fg_slope": -2.174
   },
   "risk_score": 0,
   "risk_label": "안전 — 리스크 낮음",
@@ -59,16 +59,20 @@
   "trade_signal": "중립",
   "trade_color": "blue",
   "trade_desc": "시장 안정 — 급락 매수 기회 아님",
-  "sell_score": 15,
+  "sell_score": 23,
   "sell_signals": [
+    {
+      "label": "S&P500 RSI 66.57 — 과열 주의",
+      "strength": "weak"
+    },
     {
       "label": "HY스프레드 2.75% — 리스크 프리미엄 소멸 (과열)",
       "strength": "strong"
     }
   ],
-  "sell_signal": "홀딩",
-  "sell_color": "blue",
-  "sell_desc": "과열 신호 없음 — 현 포지션 유지",
+  "sell_signal": "주의 관찰",
+  "sell_color": "amber",
+  "sell_desc": "일부 과열 조짐 — 추가 매수보다 보유 관리 집중",
   "watchlist": [
     {
       "ticker": "SOXL",
@@ -170,10 +174,10 @@
       "ma20_slope": 2.1,
       "bb_pos": 39.8,
       "vs_high52": -8.39,
-      "vs_low52": 28.44,
+      "vs_low52": 28.18,
       "vol_ratio": 110.0,
       "high52": 62.56,
-      "low52": 44.62,
+      "low52": 44.71,
       "ma200": null,
       "buy_score": 0,
       "sell_score": 0,
@@ -345,10 +349,6 @@
   "history": {
     "nasdaq": [
       {
-        "date": "2026-06-16",
-        "value": 26376.34
-      },
-      {
         "date": "2026-06-17",
         "value": 26021.66
       },
@@ -483,13 +483,13 @@
       {
         "date": "2026-08-05",
         "value": 26363.44
+      },
+      {
+        "date": "2026-08-06",
+        "value": 26348.35
       }
     ],
     "sp500": [
-      {
-        "date": "2026-06-16",
-        "value": 7511.35
-      },
       {
         "date": "2026-06-17",
         "value": 7420.1
@@ -625,6 +625,10 @@
       {
         "date": "2026-08-05",
         "value": 7723.55
+      },
+      {
+        "date": "2026-08-06",
+        "value": 7709.96
       }
     ],
     "djia": [
@@ -771,10 +775,6 @@
     ],
     "vix": [
       {
-        "date": "2026-06-22",
-        "value": 17.28
-      },
-      {
         "date": "2026-06-23",
         "value": 19.49
       },
@@ -905,10 +905,6 @@
     ],
     "tnx": [
       {
-        "date": "2026-06-22",
-        "value": 4.51
-      },
-      {
         "date": "2026-06-23",
         "value": 4.5
       },
@@ -1034,10 +1030,6 @@
       }
     ],
     "hy_spread": [
-      {
-        "date": "2026-06-22",
-        "value": 2.65
-      },
       {
         "date": "2026-06-23",
         "value": 2.71
@@ -1169,10 +1161,6 @@
     ],
     "ig_spread": [
       {
-        "date": "2026-06-22",
-        "value": 0.74
-      },
-      {
         "date": "2026-06-23",
         "value": 0.74
       },
@@ -1302,10 +1290,6 @@
       }
     ],
     "yield_curve": [
-      {
-        "date": "2026-06-22",
-        "value": 0.27
-      },
       {
         "date": "2026-06-23",
         "value": 0.34

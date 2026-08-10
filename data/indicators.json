@@ -1,11 +1,11 @@
 {
   "updated_at": "2026-08-10",
-  "updated_kst": "2026-08-10 20:14 KST",
+  "updated_kst": "2026-08-10 23:24 KST",
   "snapshot": {
     "nasdaq": 26690.62,
     "sp500": 7757.64,
     "djia": 54036.93,
-    "vix": 15.15,
+    "vix": 14.9,
     "ten_yr": 4.69,
     "fed_rate": 3.63,
     "hy_spread": 2.71,
@@ -13,16 +13,16 @@
     "ted_spread": 0.09,
     "yield_curve": 0.44,
     "fear_greed": {
-      "value": 64,
+      "value": 66,
       "classification": "greed",
       "source": "cnn",
       "components": {
         "모멘텀": 91.6,
         "주식강도": 63.0,
-        "변동성폭": 90.4,
+        "변동성폭": 91.9,
         "풋콜비율": 69.6,
         "정크본드": 94.1,
-        "변동성단기": 73.0,
+        "변동성단기": 74.6,
         "안전자산": 49.2
       }
     },
@@ -42,9 +42,9 @@
     "ma200_sp500": 10.04,
     "ma50_sp500": 3.51,
     "ma200_nasdaq": 10.79,
-    "vix_ma20": 17.171,
-    "vix_vs_ma20": -11.77,
-    "vix_slope": -0.273,
+    "vix_ma20": 17.1645,
+    "vix_vs_ma20": -13.19,
+    "vix_slope": -0.363,
     "hy_ma20": 2.7525,
     "hy_vs_ma20": -1.54,
     "hy_slope": 0.53,
@@ -59,11 +59,15 @@
   "trade_signal": "중립",
   "trade_color": "blue",
   "trade_desc": "시장 안정 — 급락 매수 기회 아님",
-  "sell_score": 23,
+  "sell_score": 33,
   "sell_signals": [
     {
       "label": "S&P500 RSI 69.78 — 과열 주의",
       "strength": "weak"
+    },
+    {
+      "label": "VIX 14.9 — 낮은 변동성 구간 (조정 전 경계)",
+      "strength": "medium"
     },
     {
       "label": "HY스프레드 2.71% — 리스크 프리미엄 소멸 (과열)",
@@ -900,6 +904,10 @@
       {
         "date": "2026-08-06",
         "value": 15.15
+      },
+      {
+        "date": "2026-08-07",
+        "value": 14.9
       }
     ],
     "tnx": [
@@ -1600,12 +1608,12 @@
       },
       {
         "date": "2026-08-10",
-        "value": 64,
+        "value": 66,
         "classification": ""
       },
       {
         "date": "2026-08-10",
-        "value": 64,
+        "value": 66,
         "classification": ""
       }
     ]

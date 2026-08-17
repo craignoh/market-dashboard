@@ -1,11 +1,11 @@
 {
   "updated_at": "2026-08-17",
-  "updated_kst": "2026-08-17 19:38 KST",
+  "updated_kst": "2026-08-17 22:47 KST",
   "snapshot": {
     "nasdaq": 26729.16,
     "sp500": 7785.76,
     "djia": 53732.41,
-    "vix": 14.63,
+    "vix": 14.25,
     "ten_yr": 4.63,
     "fed_rate": 3.63,
     "hy_spread": 2.71,
@@ -13,16 +13,16 @@
     "ted_spread": 0.09,
     "yield_curve": 0.48,
     "fear_greed": {
-      "value": 65,
+      "value": 64,
       "classification": "greed",
       "source": "cnn",
       "components": {
         "모멘텀": 90.8,
         "주식강도": 70.5,
-        "변동성폭": 93.4,
+        "변동성폭": 95.6,
         "풋콜비율": 69.6,
         "정크본드": 94.1,
-        "변동성단기": 74.3,
+        "변동성단기": 75.3,
         "안전자산": 51.9
       }
     },
@@ -42,9 +42,9 @@
     "ma200_sp500": 10.05,
     "ma50_sp500": 3.64,
     "ma200_nasdaq": 10.55,
-    "vix_ma20": 16.8575,
-    "vix_vs_ma20": -13.21,
-    "vix_slope": -1.826,
+    "vix_ma20": 16.6315,
+    "vix_vs_ma20": -14.32,
+    "vix_slope": -3.105,
     "hy_ma20": 2.7535,
     "hy_vs_ma20": -1.58,
     "hy_slope": 0.036,
@@ -70,7 +70,7 @@
       "strength": "medium"
     },
     {
-      "label": "VIX 14.63 — 낮은 변동성 구간 (조정 전 경계)",
+      "label": "VIX 14.25 — 낮은 변동성 구간 (조정 전 경계)",
       "strength": "medium"
     },
     {
@@ -906,6 +906,10 @@
       {
         "date": "2026-08-13",
         "value": 14.63
+      },
+      {
+        "date": "2026-08-14",
+        "value": 14.25
       }
     ],
     "tnx": [
@@ -1601,17 +1605,17 @@
       },
       {
         "date": "2026-08-14",
-        "value": 65,
+        "value": 64,
         "classification": ""
       },
       {
         "date": "2026-08-17",
-        "value": 65,
+        "value": 63,
         "classification": ""
       },
       {
         "date": "2026-08-17",
-        "value": 65,
+        "value": 64,
         "classification": ""
       }
     ]

@@ -1,11 +1,11 @@
 {
   "updated_at": "2026-08-18",
-  "updated_kst": "2026-08-18 19:35 KST",
+  "updated_kst": "2026-08-18 22:51 KST",
   "snapshot": {
     "nasdaq": 26644.91,
     "sp500": 7745.06,
     "djia": 53459.78,
-    "vix": 14.25,
+    "vix": 15.19,
     "ten_yr": 4.68,
     "fed_rate": 3.63,
     "hy_spread": 2.67,
@@ -13,16 +13,16 @@
     "ted_spread": 0.09,
     "yield_curve": 0.51,
     "fear_greed": {
-      "value": 59,
+      "value": 56,
       "classification": "greed",
       "source": "cnn",
       "components": {
         "모멘텀": 86.6,
         "주식강도": 64.3,
-        "변동성폭": 95.6,
+        "변동성폭": 90.2,
         "풋콜비율": 69.6,
         "정크본드": 96.0,
-        "변동성단기": 75.3,
+        "변동성단기": 68.3,
         "안전자산": 57.4
       }
     },
@@ -42,9 +42,9 @@
     "ma200_sp500": 9.41,
     "ma50_sp500": 3.05,
     "ma200_nasdaq": 10.13,
-    "vix_ma20": 16.6315,
-    "vix_vs_ma20": -14.32,
-    "vix_slope": -3.105,
+    "vix_ma20": 16.4585,
+    "vix_vs_ma20": -7.71,
+    "vix_slope": -3.636,
     "hy_ma20": 2.7505,
     "hy_vs_ma20": -2.93,
     "hy_slope": -0.091,
@@ -59,7 +59,7 @@
   "trade_signal": "중립",
   "trade_color": "blue",
   "trade_desc": "시장 안정 — 급락 매수 기회 아님",
-  "sell_score": 53,
+  "sell_score": 43,
   "sell_signals": [
     {
       "label": "S&P500 RSI 70.77 — 과매수 구간",
@@ -67,10 +67,6 @@
     },
     {
       "label": "NASDAQ RSI 72.58 — 기술주 과매수",
-      "strength": "medium"
-    },
-    {
-      "label": "VIX 14.25 — 낮은 변동성 구간 (조정 전 경계)",
       "strength": "medium"
     },
     {
@@ -905,6 +901,10 @@
       {
         "date": "2026-08-14",
         "value": 14.25
+      },
+      {
+        "date": "2026-08-17",
+        "value": 15.19
       }
     ],
     "tnx": [
@@ -1608,17 +1608,17 @@
       },
       {
         "date": "2026-08-17",
-        "value": 59,
+        "value": 58,
         "classification": ""
       },
       {
         "date": "2026-08-18",
-        "value": 59,
+        "value": 56,
         "classification": ""
       },
       {
         "date": "2026-08-18",
-        "value": 59,
+        "value": 56,
         "classification": ""
       }
     ]

@@ -1,11 +1,11 @@
 {
   "updated_at": "2026-08-19",
-  "updated_kst": "2026-08-19 19:35 KST",
+  "updated_kst": "2026-08-19 22:53 KST",
   "snapshot": {
     "nasdaq": 26289.71,
     "sp500": 7691.76,
     "djia": 53343.4,
-    "vix": 15.19,
+    "vix": 15.84,
     "ten_yr": 4.72,
     "fed_rate": 3.63,
     "hy_spread": 2.7,
@@ -13,16 +13,16 @@
     "ted_spread": 0.09,
     "yield_curve": 0.53,
     "fear_greed": {
-      "value": 54,
-      "classification": "neutral",
+      "value": 58,
+      "classification": "greed",
       "source": "cnn",
       "components": {
         "모멘텀": 81.5,
         "주식강도": 72.5,
-        "변동성폭": 90.2,
+        "변동성폭": 86.5,
         "풋콜비율": 69.6,
         "정크본드": 94.6,
-        "변동성단기": 68.3,
+        "변동성단기": 63.8,
         "안전자산": 61.1
       }
     },
@@ -42,9 +42,9 @@
     "ma200_sp500": 8.59,
     "ma50_sp500": 2.26,
     "ma200_nasdaq": 8.61,
-    "vix_ma20": 16.4585,
-    "vix_vs_ma20": -7.71,
-    "vix_slope": -3.636,
+    "vix_ma20": 16.398,
+    "vix_vs_ma20": -3.4,
+    "vix_slope": -3.646,
     "hy_ma20": 2.751,
     "hy_vs_ma20": -1.85,
     "hy_slope": -0.091,
@@ -173,30 +173,6 @@
         "볼린저 상단 (90.7%) — 조정 후보"
       ],
       "name": "헬스케어/바이오"
-    },
-    {
-      "ticker": "XLE",
-      "price": 63.68,
-      "chg1d": 1.76,
-      "rsi": 73.22,
-      "vs_ma50": 11.39,
-      "vs_ma200": null,
-      "ma20_slope": 1.93,
-      "bb_pos": 109.3,
-      "vs_high52": 0.0,
-      "vs_low52": 37.42,
-      "vol_ratio": 99.0,
-      "high52": 63.68,
-      "low52": 46.34,
-      "ma200": null,
-      "buy_score": 0,
-      "sell_score": 33,
-      "buy_signals": [],
-      "sell_signals": [
-        "RSI 73.22 — 과매수",
-        "볼린저 상단 (109.3%) — 조정 후보"
-      ],
-      "name": "정유/에너지"
     },
     {
       "ticker": "XLF",
@@ -912,6 +888,10 @@
       {
         "date": "2026-08-17",
         "value": 15.19
+      },
+      {
+        "date": "2026-08-18",
+        "value": 15.84
       }
     ],
     "tnx": [
@@ -1631,17 +1611,17 @@
       },
       {
         "date": "2026-08-18",
-        "value": 54,
+        "value": 55,
         "classification": ""
       },
       {
         "date": "2026-08-19",
-        "value": 54,
+        "value": 58,
         "classification": ""
       },
       {
         "date": "2026-08-19",
-        "value": 54,
+        "value": 58,
         "classification": ""
       }
     ]

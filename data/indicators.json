@@ -1,11 +1,11 @@
 {
   "updated_at": "2026-08-20",
-  "updated_kst": "2026-08-20 19:38 KST",
+  "updated_kst": "2026-08-20 22:53 KST",
   "snapshot": {
     "nasdaq": 26331.09,
     "sp500": 7707.98,
     "djia": 53463.05,
-    "vix": 15.84,
+    "vix": 14.89,
     "ten_yr": 4.71,
     "fed_rate": 3.63,
     "hy_spread": 2.75,
@@ -19,10 +19,10 @@
       "components": {
         "모멘텀": 82.3,
         "주식강도": 66.9,
-        "변동성폭": 86.5,
+        "변동성폭": 91.9,
         "풋콜비율": 69.6,
         "정크본드": 92.1,
-        "변동성단기": 63.8,
+        "변동성단기": 69.2,
         "안전자산": 59.3
       }
     },
@@ -33,7 +33,7 @@
     "real_rate": 2.41,
     "erp": -0.16,
     "put_call": null,
-    "jobless_claims": 209000.0,
+    "jobless_claims": 206000.0,
     "fed_assets": 6759955.0
   },
   "technicals": {
@@ -42,9 +42,9 @@
     "ma200_sp500": 8.75,
     "ma50_sp500": 2.39,
     "ma200_nasdaq": 8.72,
-    "vix_ma20": 16.398,
-    "vix_vs_ma20": -3.4,
-    "vix_slope": -3.646,
+    "vix_ma20": 16.3105,
+    "vix_vs_ma20": -8.71,
+    "vix_slope": -3.844,
     "hy_ma20": 2.754,
     "hy_vs_ma20": -0.15,
     "hy_slope": 0.018,
@@ -59,10 +59,14 @@
   "trade_signal": "중립",
   "trade_color": "blue",
   "trade_desc": "시장 안정 — 급락 매수 기회 아님",
-  "sell_score": 33,
+  "sell_score": 43,
   "sell_signals": [
     {
       "label": "S&P500 RSI 72.65 — 과매수 구간",
+      "strength": "medium"
+    },
+    {
+      "label": "VIX 14.89 — 낮은 변동성 구간 (조정 전 경계)",
       "strength": "medium"
     },
     {
@@ -70,9 +74,9 @@
       "strength": "strong"
     }
   ],
-  "sell_signal": "주의 관찰",
+  "sell_signal": "부분 익절 검토",
   "sell_color": "amber",
-  "sell_desc": "일부 과열 조짐 — 추가 매수보다 보유 관리 집중",
+  "sell_desc": "과열 신호 일부 감지 — 고점 리스크 인식, 분할 익절 고려",
   "watchlist": [
     {
       "ticker": "SOXL",
@@ -904,6 +908,10 @@
       {
         "date": "2026-08-18",
         "value": 15.84
+      },
+      {
+        "date": "2026-08-19",
+        "value": 14.89
       }
     ],
     "tnx": [

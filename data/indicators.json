@@ -1,11 +1,11 @@
 {
   "updated_at": "2026-08-21",
-  "updated_kst": "2026-08-21 19:37 KST",
+  "updated_kst": "2026-08-21 22:53 KST",
   "snapshot": {
     "nasdaq": 26067.17,
     "sp500": 7641.16,
     "djia": 52759.21,
-    "vix": 14.89,
+    "vix": 16.01,
     "ten_yr": 4.65,
     "fed_rate": 3.63,
     "hy_spread": 2.73,
@@ -13,16 +13,16 @@
     "ted_spread": 0.09,
     "yield_curve": 0.46,
     "fear_greed": {
-      "value": 52,
-      "classification": "neutral",
+      "value": 56,
+      "classification": "greed",
       "source": "cnn",
       "components": {
         "모멘텀": 76.0,
         "주식강도": 52.9,
-        "변동성폭": 91.9,
+        "변동성폭": 85.6,
         "풋콜비율": 69.6,
         "정크본드": 93.1,
-        "변동성단기": 69.2,
+        "변동성단기": 61.3,
         "안전자산": 48.1
       }
     },
@@ -42,9 +42,9 @@
     "ma200_sp500": 7.75,
     "ma50_sp500": 1.44,
     "ma200_nasdaq": 7.58,
-    "vix_ma20": 16.3105,
-    "vix_vs_ma20": -8.71,
-    "vix_slope": -3.844,
+    "vix_ma20": 16.176,
+    "vix_vs_ma20": -1.03,
+    "vix_slope": -4.043,
     "hy_ma20": 2.7565,
     "hy_vs_ma20": -0.96,
     "hy_slope": 0.109,
@@ -59,20 +59,16 @@
   "trade_signal": "중립",
   "trade_color": "blue",
   "trade_desc": "시장 안정 — 급락 매수 기회 아님",
-  "sell_score": 25,
+  "sell_score": 15,
   "sell_signals": [
-    {
-      "label": "VIX 14.89 — 낮은 변동성 구간 (조정 전 경계)",
-      "strength": "medium"
-    },
     {
       "label": "HY스프레드 2.73% — 리스크 프리미엄 소멸 (과열)",
       "strength": "strong"
     }
   ],
-  "sell_signal": "주의 관찰",
-  "sell_color": "amber",
-  "sell_desc": "일부 과열 조짐 — 추가 매수보다 보유 관리 집중",
+  "sell_signal": "홀딩",
+  "sell_color": "blue",
+  "sell_desc": "과열 신호 없음 — 현 포지션 유지",
   "watchlist": [
     {
       "ticker": "SOXL",
@@ -899,6 +895,10 @@
       {
         "date": "2026-08-19",
         "value": 14.89
+      },
+      {
+        "date": "2026-08-20",
+        "value": 16.01
       }
     ],
     "tnx": [
@@ -1634,17 +1634,17 @@
       },
       {
         "date": "2026-08-20",
-        "value": 52,
+        "value": 53,
         "classification": ""
       },
       {
         "date": "2026-08-21",
-        "value": 52,
+        "value": 56,
         "classification": ""
       },
       {
         "date": "2026-08-21",
-        "value": 52,
+        "value": 56,
         "classification": ""
       }
     ]

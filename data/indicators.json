@@ -1,46 +1,46 @@
 {
-  "updated_at": "2026-08-20",
-  "updated_kst": "2026-08-21 03:28 KST",
+  "updated_at": "2026-08-21",
+  "updated_kst": "2026-08-21 11:26 KST",
   "snapshot": {
     "nasdaq": 26331.09,
-    "sp500": 7707.98,
-    "djia": 53463.05,
+    "sp500": 7641.16,
+    "djia": 52759.21,
     "vix": 14.89,
-    "ten_yr": 4.71,
+    "ten_yr": 4.65,
     "fed_rate": 3.63,
     "hy_spread": 2.73,
     "ig_spread": 0.81,
     "ted_spread": 0.09,
-    "yield_curve": 0.52,
+    "yield_curve": 0.46,
     "fear_greed": {
-      "value": 54,
+      "value": 52,
       "classification": "neutral",
       "source": "cnn",
       "components": {
-        "모멘텀": 82.3,
-        "주식강도": 66.9,
+        "모멘텀": 76.0,
+        "주식강도": 52.9,
         "변동성폭": 91.9,
         "풋콜비율": 69.6,
         "정크본드": 93.1,
         "변동성단기": 69.2,
-        "안전자산": 59.3
+        "안전자산": 48.1
       }
     },
     "usdkrw": 1414.29,
     "t10y_change_3m": 0.15,
-    "t10y_change_1m": 0.08,
+    "t10y_change_1m": -0.02,
     "fedfunds_change_3m": null,
-    "real_rate": 2.41,
-    "erp": -0.16,
+    "real_rate": 2.35,
+    "erp": -0.1,
     "put_call": null,
     "jobless_claims": 206000.0,
-    "fed_assets": 6759955.0
+    "fed_assets": 6745699.0
   },
   "technicals": {
-    "rsi_sp500": 72.65,
+    "rsi_sp500": 62.38,
     "rsi_nasdaq": 68.89,
-    "ma200_sp500": 8.75,
-    "ma50_sp500": 2.39,
+    "ma200_sp500": 7.75,
+    "ma50_sp500": 1.44,
     "ma200_nasdaq": 8.72,
     "vix_ma20": 16.3105,
     "vix_vs_ma20": -8.71,
@@ -48,9 +48,9 @@
     "hy_ma20": 2.7565,
     "hy_vs_ma20": -0.96,
     "hy_slope": 0.109,
-    "fg_ma10": 36.2,
-    "fg_vs_ma10": 71.27,
-    "fg_slope": 23.549
+    "fg_ma10": 40.5,
+    "fg_vs_ma10": 77.78,
+    "fg_slope": 34.106
   },
   "risk_score": 0,
   "risk_label": "안전 — 리스크 낮음",
@@ -59,12 +59,8 @@
   "trade_signal": "중립",
   "trade_color": "blue",
   "trade_desc": "시장 안정 — 급락 매수 기회 아님",
-  "sell_score": 43,
+  "sell_score": 25,
   "sell_signals": [
-    {
-      "label": "S&P500 RSI 72.65 — 과매수 구간",
-      "strength": "medium"
-    },
     {
       "label": "VIX 14.89 — 낮은 변동성 구간 (조정 전 경계)",
       "strength": "medium"
@@ -74,9 +70,9 @@
       "strength": "strong"
     }
   ],
-  "sell_signal": "부분 익절 검토",
+  "sell_signal": "주의 관찰",
   "sell_color": "amber",
-  "sell_desc": "과열 신호 일부 감지 — 고점 리스크 인식, 분할 익절 고려",
+  "sell_desc": "일부 과열 조짐 — 추가 매수보다 보유 관리 집중",
   "watchlist": [
     {
       "ticker": "SOXL",
@@ -182,10 +178,10 @@
       "ma20_slope": 1.92,
       "bb_pos": 98.9,
       "vs_high52": -0.16,
-      "vs_low52": 37.2,
+      "vs_low52": 35.28,
       "vol_ratio": 91.5,
       "high52": 63.68,
-      "low52": 46.34,
+      "low52": 47,
       "ma200": null,
       "buy_score": 0,
       "sell_score": 33,
@@ -268,10 +264,10 @@
       "vs_ma200": null,
       "ma20_slope": 0.52,
       "bb_pos": 68.4,
-      "vs_high52": -4.76,
+      "vs_high52": -4.52,
       "vs_low52": 12.24,
       "vol_ratio": 107.9,
-      "high52": 124.52,
+      "high52": 124.21,
       "low52": 105.66,
       "ma200": null,
       "buy_score": 0,
@@ -498,10 +494,6 @@
     ],
     "sp500": [
       {
-        "date": "2026-07-01",
-        "value": 7483.23
-      },
-      {
         "date": "2026-07-02",
         "value": 7483.24
       },
@@ -636,13 +628,13 @@
       {
         "date": "2026-08-19",
         "value": 7707.98
+      },
+      {
+        "date": "2026-08-20",
+        "value": 7641.16
       }
     ],
     "djia": [
-      {
-        "date": "2026-07-01",
-        "value": 52305.24
-      },
       {
         "date": "2026-07-02",
         "value": 52900.07
@@ -778,13 +770,13 @@
       {
         "date": "2026-08-19",
         "value": 53463.05
+      },
+      {
+        "date": "2026-08-20",
+        "value": 52759.21
       }
     ],
     "vix": [
-      {
-        "date": "2026-07-06",
-        "value": 15.57
-      },
       {
         "date": "2026-07-07",
         "value": 16.13
@@ -916,10 +908,6 @@
     ],
     "tnx": [
       {
-        "date": "2026-07-06",
-        "value": 4.48
-      },
-      {
         "date": "2026-07-07",
         "value": 4.55
       },
@@ -1042,13 +1030,13 @@
       {
         "date": "2026-08-18",
         "value": 4.71
+      },
+      {
+        "date": "2026-08-19",
+        "value": 4.65
       }
     ],
     "hy_spread": [
-      {
-        "date": "2026-07-06",
-        "value": 2.72
-      },
       {
         "date": "2026-07-07",
         "value": 2.67
@@ -1180,10 +1168,6 @@
     ],
     "ig_spread": [
       {
-        "date": "2026-07-06",
-        "value": 0.75
-      },
-      {
         "date": "2026-07-07",
         "value": 0.76
       },
@@ -1314,10 +1298,6 @@
     ],
     "yield_curve": [
       {
-        "date": "2026-07-06",
-        "value": 0.35
-      },
-      {
         "date": "2026-07-07",
         "value": 0.36
       },
@@ -1440,6 +1420,10 @@
       {
         "date": "2026-08-18",
         "value": 0.52
+      },
+      {
+        "date": "2026-08-19",
+        "value": 0.46
       }
     ],
     "fear_greed": [
@@ -1660,12 +1644,12 @@
       },
       {
         "date": "2026-08-20",
-        "value": 54,
+        "value": 52,
         "classification": ""
       },
       {
         "date": "2026-08-20",
-        "value": 54,
+        "value": 52,
         "classification": ""
       }
     ]

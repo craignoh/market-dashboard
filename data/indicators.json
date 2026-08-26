@@ -1,6 +1,6 @@
 {
   "updated_at": "2026-08-26",
-  "updated_kst": "2026-08-26 23:02 KST",
+  "updated_kst": "2026-08-27 01:47 KST",
   "snapshot": {
     "nasdaq": 26151.3,
     "sp500": 7677.28,
@@ -13,7 +13,7 @@
     "ted_spread": 0.09,
     "yield_curve": 0.46,
     "fear_greed": {
-      "value": 57,
+      "value": 55,
       "classification": "greed",
       "source": "cnn",
       "components": {
@@ -1634,12 +1634,12 @@
       },
       {
         "date": "2026-08-26",
-        "value": 57,
+        "value": 55,
         "classification": ""
       },
       {
         "date": "2026-08-26",
-        "value": 57,
+        "value": 55,
         "classification": ""
       }
     ]

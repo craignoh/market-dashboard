@@ -1,46 +1,46 @@
 {
-  "updated_at": "2026-08-25",
-  "updated_kst": "2026-08-26 03:29 KST",
+  "updated_at": "2026-08-26",
+  "updated_kst": "2026-08-26 11:28 KST",
   "snapshot": {
     "nasdaq": 25980.19,
-    "sp500": 7652.86,
-    "djia": 53417.16,
+    "sp500": 7677.28,
+    "djia": 53577.4,
     "vix": 15.85,
-    "ten_yr": 4.74,
+    "ten_yr": 4.7,
     "fed_rate": 3.63,
     "hy_spread": 2.69,
     "ig_spread": 0.81,
     "ted_spread": 0.09,
-    "yield_curve": 0.5,
+    "yield_curve": 0.46,
     "fear_greed": {
       "value": 59,
       "classification": "greed",
       "source": "cnn",
       "components": {
-        "모멘텀": 75.9,
-        "주식강도": 22.5,
+        "모멘텀": 77.4,
+        "주식강도": 28.8,
         "변동성폭": 86.5,
         "풋콜비율": 69.6,
         "정크본드": 95.0,
         "변동성단기": 60.3,
-        "안전자산": 55.6
+        "안전자산": 48.1
       }
     },
     "usdkrw": 1385.01,
-    "t10y_change_3m": 0.26,
-    "t10y_change_1m": 0.09,
+    "t10y_change_3m": 0.25,
+    "t10y_change_1m": 0.05,
     "fedfunds_change_3m": null,
-    "real_rate": 2.44,
-    "erp": -0.19,
+    "real_rate": 2.4,
+    "erp": -0.15,
     "put_call": null,
     "jobless_claims": 206000.0,
     "fed_assets": 6745699.0
   },
   "technicals": {
-    "rsi_sp500": 40.03,
+    "rsi_sp500": 44.63,
     "rsi_nasdaq": 36.93,
-    "ma200_sp500": 7.78,
-    "ma50_sp500": 1.41,
+    "ma200_sp500": 8.06,
+    "ma50_sp500": 1.67,
     "ma200_nasdaq": 7.11,
     "vix_ma20": 15.8625,
     "vix_vs_ma20": -0.08,
@@ -48,9 +48,9 @@
     "hy_ma20": 2.745,
     "hy_vs_ma20": -2.0,
     "hy_slope": -0.218,
-    "fg_ma10": 57.0,
-    "fg_vs_ma10": 29.82,
-    "fg_slope": 57.459
+    "fg_ma10": 60.1,
+    "fg_vs_ma10": 8.15,
+    "fg_slope": 48.395
   },
   "risk_score": 0,
   "risk_label": "안전 — 리스크 낮음",
@@ -491,10 +491,6 @@
     ],
     "sp500": [
       {
-        "date": "2026-07-07",
-        "value": 7503.85
-      },
-      {
         "date": "2026-07-08",
         "value": 7482.71
       },
@@ -629,13 +625,13 @@
       {
         "date": "2026-08-24",
         "value": 7652.86
+      },
+      {
+        "date": "2026-08-25",
+        "value": 7677.28
       }
     ],
     "djia": [
-      {
-        "date": "2026-07-07",
-        "value": 52925.15
-      },
       {
         "date": "2026-07-08",
         "value": 52348.39
@@ -771,6 +767,10 @@
       {
         "date": "2026-08-24",
         "value": 53417.16
+      },
+      {
+        "date": "2026-08-25",
+        "value": 53577.4
       }
     ],
     "vix": [
@@ -1019,6 +1019,10 @@
       {
         "date": "2026-08-21",
         "value": 4.74
+      },
+      {
+        "date": "2026-08-24",
+        "value": 4.7
       }
     ],
     "hy_spread": [
@@ -1393,6 +1397,10 @@
       {
         "date": "2026-08-21",
         "value": 0.5
+      },
+      {
+        "date": "2026-08-24",
+        "value": 0.46
       }
     ],
     "fear_greed": [

@@ -1,9 +1,9 @@
 {
-  "updated_at": "2026-08-27",
-  "updated_kst": "2026-08-28 07:57 KST",
+  "updated_at": "2026-08-28",
+  "updated_kst": "2026-08-28 09:45 KST",
   "snapshot": {
     "nasdaq": 26130.2,
-    "sp500": 7675.7,
+    "sp500": 7730.99,
     "djia": 53569.44,
     "vix": 15.21,
     "ten_yr": 4.66,
@@ -17,8 +17,8 @@
       "classification": "greed",
       "source": "cnn",
       "components": {
-        "모멘텀": 76.8,
-        "주식강도": 30.5,
+        "모멘텀": 80.8,
+        "주식강도": 31.8,
         "변동성폭": 90.1,
         "풋콜비율": 69.6,
         "정크본드": 96.0,
@@ -27,8 +27,8 @@
       }
     },
     "usdkrw": 1385.01,
-    "t10y_change_3m": 0.21,
-    "t10y_change_1m": 0.05,
+    "t10y_change_3m": 0.19,
+    "t10y_change_1m": -0.01,
     "fedfunds_change_3m": null,
     "real_rate": 2.36,
     "erp": -0.11,
@@ -37,10 +37,10 @@
     "fed_assets": 6730912.0
   },
   "technicals": {
-    "rsi_sp500": 45.91,
+    "rsi_sp500": 46.88,
     "rsi_nasdaq": 45.19,
-    "ma200_sp500": 7.97,
-    "ma50_sp500": 1.62,
+    "ma200_sp500": 8.67,
+    "ma50_sp500": 2.29,
     "ma200_nasdaq": 7.6,
     "vix_ma20": 15.452,
     "vix_vs_ma20": -1.57,
@@ -48,9 +48,9 @@
     "hy_ma20": 2.728,
     "hy_vs_ma20": -2.13,
     "hy_slope": -1.034,
-    "fg_ma10": 64.1,
-    "fg_vs_ma10": 10.76,
-    "fg_slope": 42.762
+    "fg_ma10": 67.3,
+    "fg_vs_ma10": 8.47,
+    "fg_slope": 38.477
   },
   "risk_score": 0,
   "risk_label": "안전 — 리스크 낮음",
@@ -59,16 +59,20 @@
   "trade_signal": "중립",
   "trade_color": "blue",
   "trade_desc": "시장 안정 — 급락 매수 기회 아님",
-  "sell_score": 15,
+  "sell_score": 25,
   "sell_signals": [
     {
       "label": "HY스프레드 2.67% — 리스크 프리미엄 소멸 (과열)",
       "strength": "strong"
+    },
+    {
+      "label": "Fear&Greed 10일 이평 67.3 — 탐욕 추세 가속",
+      "strength": "medium"
     }
   ],
-  "sell_signal": "홀딩",
-  "sell_color": "blue",
-  "sell_desc": "과열 신호 없음 — 현 포지션 유지",
+  "sell_signal": "주의 관찰",
+  "sell_color": "amber",
+  "sell_desc": "일부 과열 조짐 — 추가 매수보다 보유 관리 집중",
   "watchlist": [
     {
       "ticker": "SOXL",
@@ -486,10 +490,6 @@
     ],
     "sp500": [
       {
-        "date": "2026-07-09",
-        "value": 7543.64
-      },
-      {
         "date": "2026-07-10",
         "value": 7575.39
       },
@@ -624,6 +624,10 @@
       {
         "date": "2026-08-26",
         "value": 7675.7
+      },
+      {
+        "date": "2026-08-27",
+        "value": 7730.99
       }
     ],
     "djia": [
@@ -770,10 +774,6 @@
     ],
     "vix": [
       {
-        "date": "2026-07-13",
-        "value": 17.16
-      },
-      {
         "date": "2026-07-14",
         "value": 16.5
       },
@@ -903,10 +903,6 @@
       }
     ],
     "tnx": [
-      {
-        "date": "2026-07-13",
-        "value": 4.62
-      },
       {
         "date": "2026-07-14",
         "value": 4.58
@@ -1038,10 +1034,6 @@
     ],
     "hy_spread": [
       {
-        "date": "2026-07-13",
-        "value": 2.69
-      },
-      {
         "date": "2026-07-14",
         "value": 2.72
       },
@@ -1172,10 +1164,6 @@
     ],
     "ig_spread": [
       {
-        "date": "2026-07-13",
-        "value": 0.78
-      },
-      {
         "date": "2026-07-14",
         "value": 0.79
       },
@@ -1305,10 +1293,6 @@
       }
     ],
     "yield_curve": [
-      {
-        "date": "2026-07-13",
-        "value": 0.36
-      },
       {
         "date": "2026-07-14",
         "value": 0.4

@@ -1,6 +1,6 @@
 {
   "updated_at": "2026-08-31",
-  "updated_kst": "2026-09-01 02:31 KST",
+  "updated_kst": "2026-09-01 04:31 KST",
   "snapshot": {
     "nasdaq": 26402.42,
     "sp500": 7711.76,
@@ -45,9 +45,9 @@
     "vix_ma20": 15.245,
     "vix_vs_ma20": -5.35,
     "vix_slope": -4.74,
-    "hy_ma20": null,
-    "hy_vs_ma20": null,
-    "hy_slope": null,
+    "hy_ma20": 2.705,
+    "hy_vs_ma20": -3.88,
+    "hy_slope": -1.672,
     "fg_ma10": 69.2,
     "fg_vs_ma10": -10.4,
     "fg_slope": 15.141

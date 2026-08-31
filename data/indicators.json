@@ -1,27 +1,27 @@
 {
   "updated_at": "2026-08-31",
-  "updated_kst": "2026-08-31 15:50 KST",
+  "updated_kst": "2026-09-01 02:31 KST",
   "snapshot": {
     "nasdaq": 26402.42,
     "sp500": 7711.76,
     "djia": 53559.99,
-    "vix": 14.51,
+    "vix": 14.43,
     "ten_yr": 4.67,
     "fed_rate": 3.63,
-    "hy_spread": 2.63,
+    "hy_spread": 2.6,
     "ig_spread": 0.79,
     "ted_spread": 0.09,
     "yield_curve": 0.47,
     "fear_greed": {
-      "value": 54,
+      "value": 50,
       "classification": "neutral",
       "source": "cnn",
       "components": {
         "모멘텀": 78.6,
         "주식강도": 29.7,
-        "변동성폭": 94.1,
+        "변동성폭": 94.5,
         "풋콜비율": 69.6,
-        "정크본드": 98.0,
+        "정크본드": 99.5,
         "변동성단기": 65.4,
         "안전자산": 50.0
       }
@@ -42,12 +42,12 @@
     "ma200_sp500": 8.33,
     "ma50_sp500": 1.96,
     "ma200_nasdaq": 8.58,
-    "vix_ma20": 15.323,
-    "vix_vs_ma20": -5.31,
-    "vix_slope": -5.273,
-    "hy_ma20": 2.7175,
-    "hy_vs_ma20": -3.22,
-    "hy_slope": -1.379,
+    "vix_ma20": 15.245,
+    "vix_vs_ma20": -5.35,
+    "vix_slope": -4.74,
+    "hy_ma20": null,
+    "hy_vs_ma20": null,
+    "hy_slope": null,
     "fg_ma10": 69.2,
     "fg_vs_ma10": -10.4,
     "fg_slope": 15.141
@@ -62,11 +62,11 @@
   "sell_score": 35,
   "sell_signals": [
     {
-      "label": "VIX 14.51 — 낮은 변동성 구간 (조정 전 경계)",
+      "label": "VIX 14.43 — 낮은 변동성 구간 (조정 전 경계)",
       "strength": "medium"
     },
     {
-      "label": "HY스프레드 2.63% — 리스크 프리미엄 소멸 (과열)",
+      "label": "HY스프레드 2.6% — 리스크 프리미엄 소멸 (과열)",
       "strength": "strong"
     },
     {
@@ -893,6 +893,10 @@
       {
         "date": "2026-08-27",
         "value": 14.51
+      },
+      {
+        "date": "2026-08-28",
+        "value": 14.43
       }
     ],
     "tnx": [
@@ -1137,6 +1141,10 @@
       {
         "date": "2026-08-27",
         "value": 2.63
+      },
+      {
+        "date": "2026-08-28",
+        "value": 2.6
       }
     ],
     "ig_spread": [
@@ -1258,6 +1266,10 @@
       },
       {
         "date": "2026-08-27",
+        "value": 0.79
+      },
+      {
+        "date": "2026-08-28",
         "value": 0.79
       }
     ],
@@ -1384,11 +1396,6 @@
       }
     ],
     "fear_greed": [
-      {
-        "date": "2026-06-26",
-        "value": 25,
-        "classification": ""
-      },
       {
         "date": "2026-06-29",
         "value": 27,
@@ -1601,12 +1608,17 @@
       },
       {
         "date": "2026-08-28",
-        "value": 54,
+        "value": 52,
         "classification": ""
       },
       {
-        "date": "2026-08-28",
-        "value": 54,
+        "date": "2026-08-31",
+        "value": 50,
+        "classification": ""
+      },
+      {
+        "date": "2026-08-31",
+        "value": 50,
         "classification": ""
       }
     ]

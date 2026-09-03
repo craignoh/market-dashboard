@@ -1,28 +1,28 @@
 {
   "updated_at": "2026-09-03",
-  "updated_kst": "2026-09-03 14:35 KST",
+  "updated_kst": "2026-09-03 23:18 KST",
   "snapshot": {
     "nasdaq": 26217.83,
     "sp500": 7666.6,
     "djia": 53061.95,
-    "vix": 16.34,
+    "vix": 15.2,
     "ten_yr": 4.79,
     "fed_rate": 3.63,
-    "hy_spread": 2.65,
+    "hy_spread": 2.66,
     "ig_spread": 0.81,
     "ted_spread": 0.09,
     "yield_curve": 0.4,
     "fear_greed": {
-      "value": 33,
+      "value": 35,
       "classification": "fear",
       "source": "cnn",
       "components": {
         "모멘텀": 73.0,
         "주식강도": 16.5,
-        "변동성폭": 83.7,
+        "변동성폭": 90.2,
         "풋콜비율": 69.6,
-        "정크본드": 97.0,
-        "변동성단기": 53.0,
+        "정크본드": 96.5,
+        "변동성단기": 60.0,
         "안전자산": 37.0
       }
     },
@@ -33,7 +33,7 @@
     "real_rate": 2.49,
     "erp": -0.24,
     "put_call": null,
-    "jobless_claims": 203000.0,
+    "jobless_claims": 206000.0,
     "fed_assets": 6730912.0
   },
   "technicals": {
@@ -42,17 +42,17 @@
     "ma200_sp500": 7.5,
     "ma50_sp500": 1.19,
     "ma200_nasdaq": 7.62,
-    "vix_ma20": 15.19,
-    "vix_vs_ma20": 7.57,
-    "vix_slope": -3.399,
-    "hy_ma20": 2.6935,
-    "hy_vs_ma20": -1.61,
-    "hy_slope": -1.625,
+    "vix_ma20": 15.1595,
+    "vix_vs_ma20": 0.27,
+    "vix_slope": -1.893,
+    "hy_ma20": 2.689,
+    "hy_vs_ma20": -1.08,
+    "hy_slope": -1.43,
     "fg_ma10": 67.9,
     "fg_vs_ma10": -4.27,
     "fg_slope": -2.302
   },
-  "risk_score": 15,
+  "risk_score": 8,
   "risk_label": "안전 — 리스크 낮음",
   "buy_score": 8,
   "buy_signals": [
@@ -67,7 +67,7 @@
   "sell_score": 15,
   "sell_signals": [
     {
-      "label": "HY스프레드 2.65% — 리스크 프리미엄 소멸 (과열)",
+      "label": "HY스프레드 2.66% — 리스크 프리미엄 소멸 (과열)",
       "strength": "strong"
     }
   ],
@@ -906,6 +906,10 @@
       {
         "date": "2026-09-01",
         "value": 16.34
+      },
+      {
+        "date": "2026-09-02",
+        "value": 15.2
       }
     ],
     "tnx": [
@@ -1166,6 +1170,10 @@
       {
         "date": "2026-09-01",
         "value": 2.65
+      },
+      {
+        "date": "2026-09-02",
+        "value": 2.66
       }
     ],
     "ig_spread": [
@@ -1295,6 +1303,10 @@
       },
       {
         "date": "2026-09-01",
+        "value": 0.81
+      },
+      {
+        "date": "2026-09-02",
         "value": 0.81
       }
     ],
@@ -1646,12 +1658,12 @@
       },
       {
         "date": "2026-09-03",
-        "value": 33,
+        "value": 35,
         "classification": ""
       },
       {
         "date": "2026-09-03",
-        "value": 33,
+        "value": 35,
         "classification": ""
       }
     ]

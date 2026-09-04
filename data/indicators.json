@@ -1,11 +1,11 @@
 {
   "updated_at": "2026-09-04",
-  "updated_kst": "2026-09-04 14:40 KST",
+  "updated_kst": "2026-09-04 23:08 KST",
   "snapshot": {
     "nasdaq": 26584.06,
     "sp500": 7747.71,
     "djia": 53686.11,
-    "vix": 15.2,
+    "vix": 14.32,
     "ten_yr": 4.79,
     "fed_rate": 3.63,
     "hy_spread": 2.66,
@@ -13,16 +13,16 @@
     "ted_spread": 0.09,
     "yield_curve": 0.4,
     "fear_greed": {
-      "value": 35,
+      "value": 43,
       "classification": "fear",
       "source": "cnn",
       "components": {
         "모멘텀": 79.2,
         "주식강도": 31.2,
-        "변동성폭": 90.2,
+        "변동성폭": 95.2,
         "풋콜비율": 69.6,
         "정크본드": 96.5,
-        "변동성단기": 60.0,
+        "변동성단기": 65.3,
         "안전자산": 37.0
       }
     },
@@ -42,9 +42,9 @@
     "ma200_sp500": 8.56,
     "ma50_sp500": 2.15,
     "ma200_nasdaq": 9.05,
-    "vix_ma20": 15.1595,
-    "vix_vs_ma20": 0.27,
-    "vix_slope": -1.893,
+    "vix_ma20": 15.118,
+    "vix_vs_ma20": -5.28,
+    "vix_slope": -1.338,
     "hy_ma20": 2.689,
     "hy_vs_ma20": -1.08,
     "hy_slope": -1.43,
@@ -59,16 +59,20 @@
   "trade_signal": "중립",
   "trade_color": "blue",
   "trade_desc": "시장 안정 — 급락 매수 기회 아님",
-  "sell_score": 15,
+  "sell_score": 25,
   "sell_signals": [
+    {
+      "label": "VIX 14.32 — 낮은 변동성 구간 (조정 전 경계)",
+      "strength": "medium"
+    },
     {
       "label": "HY스프레드 2.66% — 리스크 프리미엄 소멸 (과열)",
       "strength": "strong"
     }
   ],
-  "sell_signal": "홀딩",
-  "sell_color": "blue",
-  "sell_desc": "과열 신호 없음 — 현 포지션 유지",
+  "sell_signal": "주의 관찰",
+  "sell_color": "amber",
+  "sell_desc": "일부 과열 조짐 — 추가 매수보다 보유 관리 집중",
   "watchlist": [
     {
       "ticker": "SOXL",
@@ -897,6 +901,10 @@
       {
         "date": "2026-09-02",
         "value": 15.2
+      },
+      {
+        "date": "2026-09-03",
+        "value": 14.32
       }
     ],
     "tnx": [
@@ -1287,6 +1295,10 @@
       {
         "date": "2026-09-02",
         "value": 0.81
+      },
+      {
+        "date": "2026-09-03",
+        "value": 0.81
       }
     ],
     "yield_curve": [
@@ -1632,17 +1644,17 @@
       },
       {
         "date": "2026-09-03",
-        "value": 35,
+        "value": 44,
         "classification": ""
       },
       {
         "date": "2026-09-04",
-        "value": 35,
+        "value": 44,
         "classification": ""
       },
       {
         "date": "2026-09-04",
-        "value": 35,
+        "value": 43,
         "classification": ""
       }
     ]

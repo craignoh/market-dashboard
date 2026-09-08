@@ -1,11 +1,11 @@
 {
   "updated_at": "2026-09-08",
-  "updated_kst": "2026-09-08 14:45 KST",
+  "updated_kst": "2026-09-08 23:19 KST",
   "snapshot": {
     "nasdaq": 26506.99,
     "sp500": 7718.6,
     "djia": 53414.25,
-    "vix": 14.32,
+    "vix": 15.3,
     "ten_yr": 4.77,
     "fed_rate": 3.63,
     "hy_spread": 2.65,
@@ -13,16 +13,16 @@
     "ted_spread": 0.09,
     "yield_curve": 0.43,
     "fear_greed": {
-      "value": 42,
+      "value": 41,
       "classification": "fear",
       "source": "cnn",
       "components": {
         "모멘텀": 76.0,
         "주식강도": 32.6,
-        "변동성폭": 95.2,
+        "변동성폭": 89.6,
         "풋콜비율": 69.6,
         "정크본드": 97.0,
-        "변동성단기": 65.3,
+        "변동성단기": 58.9,
         "안전자산": 42.6
       }
     },
@@ -42,9 +42,9 @@
     "ma200_sp500": 8.08,
     "ma50_sp500": 1.67,
     "ma200_nasdaq": 8.64,
-    "vix_ma20": 15.118,
-    "vix_vs_ma20": -5.28,
-    "vix_slope": -1.338,
+    "vix_ma20": 15.0915,
+    "vix_vs_ma20": 1.38,
+    "vix_slope": -0.701,
     "hy_ma20": 2.686,
     "hy_vs_ma20": -1.34,
     "hy_slope": -1.159,
@@ -59,20 +59,16 @@
   "trade_signal": "중립",
   "trade_color": "blue",
   "trade_desc": "시장 안정 — 급락 매수 기회 아님",
-  "sell_score": 25,
+  "sell_score": 15,
   "sell_signals": [
-    {
-      "label": "VIX 14.32 — 낮은 변동성 구간 (조정 전 경계)",
-      "strength": "medium"
-    },
     {
       "label": "HY스프레드 2.65% — 리스크 프리미엄 소멸 (과열)",
       "strength": "strong"
     }
   ],
-  "sell_signal": "주의 관찰",
-  "sell_color": "amber",
-  "sell_desc": "일부 과열 조짐 — 추가 매수보다 보유 관리 집중",
+  "sell_signal": "홀딩",
+  "sell_color": "blue",
+  "sell_desc": "과열 신호 없음 — 현 포지션 유지",
   "watchlist": [
     {
       "ticker": "SOXL",
@@ -883,6 +879,14 @@
       {
         "date": "2026-09-03",
         "value": 14.32
+      },
+      {
+        "date": "2026-09-04",
+        "value": 14.53
+      },
+      {
+        "date": "2026-09-07",
+        "value": 15.3
       }
     ],
     "tnx": [
@@ -1359,11 +1363,6 @@
     ],
     "fear_greed": [
       {
-        "date": "2026-07-06",
-        "value": 42,
-        "classification": ""
-      },
-      {
         "date": "2026-07-07",
         "value": 40,
         "classification": ""
@@ -1579,8 +1578,13 @@
         "classification": ""
       },
       {
-        "date": "2026-09-04",
-        "value": 42,
+        "date": "2026-09-08",
+        "value": 41,
+        "classification": ""
+      },
+      {
+        "date": "2026-09-08",
+        "value": 41,
         "classification": ""
       }
     ]

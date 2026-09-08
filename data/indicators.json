@@ -1,6 +1,6 @@
 {
   "updated_at": "2026-09-08",
-  "updated_kst": "2026-09-08 23:19 KST",
+  "updated_kst": "2026-09-09 02:14 KST",
   "snapshot": {
     "nasdaq": 26506.99,
     "sp500": 7718.6,
@@ -8,12 +8,12 @@
     "vix": 15.3,
     "ten_yr": 4.77,
     "fed_rate": 3.63,
-    "hy_spread": 2.65,
+    "hy_spread": 2.68,
     "ig_spread": 0.81,
     "ted_spread": 0.09,
     "yield_curve": 0.43,
     "fear_greed": {
-      "value": 41,
+      "value": 42,
       "classification": "fear",
       "source": "cnn",
       "components": {
@@ -21,7 +21,7 @@
         "주식강도": 32.6,
         "변동성폭": 89.6,
         "풋콜비율": 69.6,
-        "정크본드": 97.0,
+        "정크본드": 95.5,
         "변동성단기": 58.9,
         "안전자산": 42.6
       }
@@ -45,9 +45,9 @@
     "vix_ma20": 15.0915,
     "vix_vs_ma20": 1.38,
     "vix_slope": -0.701,
-    "hy_ma20": 2.686,
-    "hy_vs_ma20": -1.34,
-    "hy_slope": -1.159,
+    "hy_ma20": 2.684,
+    "hy_vs_ma20": -0.15,
+    "hy_slope": -0.5,
     "fg_ma10": 68.8,
     "fg_vs_ma10": 0.29,
     "fg_slope": 1.325
@@ -62,7 +62,7 @@
   "sell_score": 15,
   "sell_signals": [
     {
-      "label": "HY스프레드 2.65% — 리스크 프리미엄 소멸 (과열)",
+      "label": "HY스프레드 2.68% — 리스크 프리미엄 소멸 (과열)",
       "strength": "strong"
     }
   ],
@@ -1123,6 +1123,14 @@
       {
         "date": "2026-09-03",
         "value": 2.65
+      },
+      {
+        "date": "2026-09-04",
+        "value": 2.68
+      },
+      {
+        "date": "2026-09-07",
+        "value": 2.68
       }
     ],
     "ig_spread": [
@@ -1240,6 +1248,14 @@
       },
       {
         "date": "2026-09-03",
+        "value": 0.81
+      },
+      {
+        "date": "2026-09-04",
+        "value": 0.81
+      },
+      {
+        "date": "2026-09-07",
         "value": 0.81
       }
     ],
@@ -1579,12 +1595,12 @@
       },
       {
         "date": "2026-09-08",
-        "value": 41,
+        "value": 42,
         "classification": ""
       },
       {
         "date": "2026-09-08",
-        "value": 41,
+        "value": 42,
         "classification": ""
       }
     ]

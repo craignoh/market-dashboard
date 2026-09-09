@@ -1,6 +1,6 @@
 {
   "updated_at": "2026-09-09",
-  "updated_kst": "2026-09-10 04:02 KST",
+  "updated_kst": "2026-09-10 05:16 KST",
   "snapshot": {
     "nasdaq": 26421.41,
     "sp500": 7673.52,
@@ -13,7 +13,7 @@
     "ted_spread": 0.09,
     "yield_curve": 0.41,
     "fear_greed": {
-      "value": 40,
+      "value": 39,
       "classification": "fear",
       "source": "cnn",
       "components": {
@@ -27,8 +27,8 @@
       }
     },
     "usdkrw": 1346.51,
-    "t10y_change_3m": 0.33,
-    "t10y_change_1m": 0.06,
+    "t10y_change_3m": 0.35,
+    "t10y_change_1m": 0.08,
     "fedfunds_change_3m": null,
     "real_rate": 2.48,
     "erp": -0.23,
@@ -1012,6 +1012,10 @@
       {
         "date": "2026-09-04",
         "value": 4.78
+      },
+      {
+        "date": "2026-09-08",
+        "value": 4.8
       }
     ],
     "hy_spread": [
@@ -1394,6 +1398,10 @@
       {
         "date": "2026-09-04",
         "value": 0.41
+      },
+      {
+        "date": "2026-09-08",
+        "value": 0.41
       }
     ],
     "fear_greed": [
@@ -1614,12 +1622,12 @@
       },
       {
         "date": "2026-09-09",
-        "value": 40,
+        "value": 39,
         "classification": ""
       },
       {
         "date": "2026-09-09",
-        "value": 40,
+        "value": 39,
         "classification": ""
       }
     ]

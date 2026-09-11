@@ -1,28 +1,28 @@
 {
   "updated_at": "2026-09-11",
-  "updated_kst": "2026-09-11 14:44 KST",
+  "updated_kst": "2026-09-11 23:12 KST",
   "snapshot": {
     "nasdaq": 26081.72,
     "sp500": 7591.7,
     "djia": 52064.1,
-    "vix": 16.46,
+    "vix": 17.84,
     "ten_yr": 4.83,
     "fed_rate": 3.63,
-    "hy_spread": 2.71,
-    "ig_spread": 0.81,
+    "hy_spread": 2.7,
+    "ig_spread": 0.8,
     "ted_spread": 0.09,
     "yield_curve": 0.4,
     "fear_greed": {
-      "value": 33,
+      "value": 36,
       "classification": "fear",
       "source": "cnn",
       "components": {
         "모멘텀": 63.5,
         "주식강도": 29.5,
-        "변동성폭": 83.0,
+        "변동성폭": 75.1,
         "풋콜비율": 69.6,
-        "정크본드": 94.1,
-        "변동성단기": 52.3,
+        "정크본드": 94.6,
+        "변동성단기": 44.6,
         "안전자산": 37.0
       }
     },
@@ -42,17 +42,17 @@
     "ma200_sp500": 6.07,
     "ma50_sp500": -0.16,
     "ma200_nasdaq": 6.65,
-    "vix_ma20": 15.209,
-    "vix_vs_ma20": 8.23,
-    "vix_slope": 0.327,
-    "hy_ma20": 2.6815,
-    "hy_vs_ma20": 1.06,
-    "hy_slope": -0.279,
+    "vix_ma20": 15.3695,
+    "vix_vs_ma20": 16.07,
+    "vix_slope": 1.664,
+    "hy_ma20": 2.681,
+    "hy_vs_ma20": 0.71,
+    "hy_slope": -0.186,
     "fg_ma10": 67.9,
     "fg_vs_ma10": -17.53,
     "fg_slope": -1.451
   },
-  "risk_score": 15,
+  "risk_score": 8,
   "risk_label": "안전 — 리스크 낮음",
   "buy_score": 0,
   "buy_signals": [],
@@ -62,7 +62,7 @@
   "sell_score": 15,
   "sell_signals": [
     {
-      "label": "HY스프레드 2.71% — 리스크 프리미엄 소멸 (과열)",
+      "label": "HY스프레드 2.7% — 리스크 프리미엄 소멸 (과열)",
       "strength": "strong"
     }
   ],
@@ -902,6 +902,10 @@
       {
         "date": "2026-09-09",
         "value": 16.46
+      },
+      {
+        "date": "2026-09-10",
+        "value": 17.84
       }
     ],
     "tnx": [
@@ -1158,6 +1162,10 @@
       {
         "date": "2026-09-09",
         "value": 2.71
+      },
+      {
+        "date": "2026-09-10",
+        "value": 2.7
       }
     ],
     "ig_spread": [
@@ -1288,6 +1296,10 @@
       {
         "date": "2026-09-09",
         "value": 0.81
+      },
+      {
+        "date": "2026-09-10",
+        "value": 0.8
       }
     ],
     "yield_curve": [
@@ -1629,17 +1641,17 @@
       },
       {
         "date": "2026-09-10",
-        "value": 33,
+        "value": 32,
         "classification": ""
       },
       {
         "date": "2026-09-11",
-        "value": 33,
+        "value": 34,
         "classification": ""
       },
       {
         "date": "2026-09-11",
-        "value": 33,
+        "value": 36,
         "classification": ""
       }
     ]

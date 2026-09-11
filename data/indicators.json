@@ -1,6 +1,6 @@
 {
   "updated_at": "2026-09-11",
-  "updated_kst": "2026-09-12 03:57 KST",
+  "updated_kst": "2026-09-12 05:18 KST",
   "snapshot": {
     "nasdaq": 26081.72,
     "sp500": 7591.7,
@@ -27,8 +27,8 @@
       }
     },
     "usdkrw": 1346.51,
-    "t10y_change_3m": 0.36,
-    "t10y_change_1m": 0.15,
+    "t10y_change_3m": 0.48,
+    "t10y_change_1m": 0.27,
     "fedfunds_change_3m": null,
     "real_rate": 2.53,
     "erp": -0.28,
@@ -1032,6 +1032,10 @@
       {
         "date": "2026-09-09",
         "value": 4.83
+      },
+      {
+        "date": "2026-09-10",
+        "value": 4.95
       }
     ],
     "hy_spread": [
@@ -1426,6 +1430,10 @@
       {
         "date": "2026-09-09",
         "value": 0.4
+      },
+      {
+        "date": "2026-09-10",
+        "value": 0.39
       }
     ],
     "fear_greed": [

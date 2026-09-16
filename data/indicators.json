@@ -1,28 +1,28 @@
 {
   "updated_at": "2026-09-16",
-  "updated_kst": "2026-09-16 14:47 KST",
+  "updated_kst": "2026-09-16 23:46 KST",
   "snapshot": {
     "nasdaq": 25981.57,
     "sp500": 7585.73,
     "djia": 52093.11,
-    "vix": 17.1,
+    "vix": 17.2,
     "ten_yr": 4.97,
     "fed_rate": 3.63,
-    "hy_spread": 2.71,
+    "hy_spread": 2.76,
     "ig_spread": 0.8,
     "ted_spread": 0.09,
     "yield_curve": 0.32,
     "fear_greed": {
-      "value": 28,
+      "value": 29,
       "classification": "fear",
       "source": "cnn",
       "components": {
         "모멘텀": 50.5,
         "주식강도": 25.1,
-        "변동성폭": 79.4,
+        "변동성폭": 78.8,
         "풋콜비율": 69.6,
-        "정크본드": 94.5,
-        "변동성단기": 50.4,
+        "정크본드": 92.0,
+        "변동성단기": 50.2,
         "안전자산": 22.2
       }
     },
@@ -42,12 +42,12 @@
     "ma200_sp500": 5.78,
     "ma50_sp500": -0.33,
     "ma200_nasdaq": 6.01,
-    "vix_ma20": 15.5445,
-    "vix_vs_ma20": 10.01,
-    "vix_slope": 3.002,
-    "hy_ma20": 2.6805,
-    "hy_vs_ma20": 1.1,
-    "hy_slope": -0.13,
+    "vix_ma20": 15.6125,
+    "vix_vs_ma20": 10.17,
+    "vix_slope": 3.302,
+    "hy_ma20": 2.681,
+    "hy_vs_ma20": 2.95,
+    "hy_slope": -0.019,
     "fg_ma10": 63.2,
     "fg_vs_ma10": -19.3,
     "fg_slope": -6.922
@@ -62,7 +62,7 @@
   "sell_score": 15,
   "sell_signals": [
     {
-      "label": "HY스프레드 2.71% — 리스크 프리미엄 소멸 (과열)",
+      "label": "HY스프레드 2.76% — 리스크 프리미엄 소멸 (과열)",
       "strength": "strong"
     }
   ],
@@ -903,6 +903,10 @@
       {
         "date": "2026-09-14",
         "value": 17.1
+      },
+      {
+        "date": "2026-09-15",
+        "value": 17.2
       }
     ],
     "tnx": [
@@ -1151,6 +1155,10 @@
       {
         "date": "2026-09-14",
         "value": 2.71
+      },
+      {
+        "date": "2026-09-15",
+        "value": 2.76
       }
     ],
     "ig_spread": [
@@ -1276,6 +1284,10 @@
       },
       {
         "date": "2026-09-14",
+        "value": 0.8
+      },
+      {
+        "date": "2026-09-15",
         "value": 0.8
       }
     ],
@@ -1619,12 +1631,12 @@
       },
       {
         "date": "2026-09-16",
-        "value": 28,
+        "value": 29,
         "classification": ""
       },
       {
         "date": "2026-09-16",
-        "value": 28,
+        "value": 29,
         "classification": ""
       }
     ]

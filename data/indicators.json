@@ -1,6 +1,6 @@
 {
   "updated_at": "2026-09-28",
-  "updated_kst": "2026-09-28 15:29 KST",
+  "updated_kst": "2026-09-29 03:06 KST",
   "snapshot": {
     "nasdaq": 27068.72,
     "sp500": 7743.41,
@@ -8,12 +8,12 @@
     "vix": 14.21,
     "ten_yr": 5.18,
     "fed_rate": 3.63,
-    "hy_spread": 2.8,
-    "ig_spread": 0.79,
+    "hy_spread": 2.93,
+    "ig_spread": 0.81,
     "ted_spread": 0.09,
     "yield_curve": 0.31,
     "fear_greed": {
-      "value": 37,
+      "value": 35,
       "classification": "fear",
       "source": "cnn",
       "components": {
@@ -21,7 +21,7 @@
         "주식강도": 38.8,
         "변동성폭": 95.8,
         "풋콜비율": 69.6,
-        "정크본드": 90.0,
+        "정크본드": 83.6,
         "변동성단기": 69.0,
         "안전자산": 20.4
       }
@@ -45,9 +45,9 @@
     "vix_ma20": 15.598,
     "vix_vs_ma20": -8.9,
     "vix_slope": -0.093,
-    "hy_ma20": 2.685,
-    "hy_vs_ma20": 4.28,
-    "hy_slope": 0.299,
+    "hy_ma20": 2.7015,
+    "hy_vs_ma20": 8.46,
+    "hy_slope": 0.953,
     "fg_ma10": 72.1,
     "fg_vs_ma10": 2.64,
     "fg_slope": 11.957
@@ -66,7 +66,7 @@
       "strength": "medium"
     },
     {
-      "label": "HY스프레드 2.8% — 리스크 프리미엄 소멸 (과열)",
+      "label": "HY스프레드 2.93% — 리스크 프리미엄 소멸 (과열)",
       "strength": "strong"
     },
     {
@@ -1141,6 +1141,10 @@
       {
         "date": "2026-09-24",
         "value": 2.8
+      },
+      {
+        "date": "2026-09-25",
+        "value": 2.93
       }
     ],
     "ig_spread": [
@@ -1263,6 +1267,10 @@
       {
         "date": "2026-09-24",
         "value": 0.79
+      },
+      {
+        "date": "2026-09-25",
+        "value": 0.81
       }
     ],
     "yield_curve": [
@@ -1384,11 +1392,6 @@
       }
     ],
     "fear_greed": [
-      {
-        "date": "2026-07-27",
-        "value": 38,
-        "classification": ""
-      },
       {
         "date": "2026-07-28",
         "value": 37,
@@ -1605,8 +1608,13 @@
         "classification": ""
       },
       {
-        "date": "2026-09-25",
-        "value": 37,
+        "date": "2026-09-28",
+        "value": 34,
+        "classification": ""
+      },
+      {
+        "date": "2026-09-28",
+        "value": 35,
         "classification": ""
       }
     ]

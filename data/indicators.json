@@ -1,6 +1,6 @@
 {
-  "updated_at": "2026-09-27",
-  "updated_kst": "2026-09-28 05:41 KST",
+  "updated_at": "2026-09-28",
+  "updated_kst": "2026-09-28 15:29 KST",
   "snapshot": {
     "nasdaq": 27068.72,
     "sp500": 7743.41,
@@ -27,8 +27,8 @@
       }
     },
     "usdkrw": 1387.97,
-    "t10y_change_3m": 0.8,
-    "t10y_change_1m": 0.45,
+    "t10y_change_3m": 0.74,
+    "t10y_change_1m": 0.43,
     "fedfunds_change_3m": null,
     "real_rate": 2.88,
     "erp": -0.63,
@@ -48,9 +48,9 @@
     "hy_ma20": 2.685,
     "hy_vs_ma20": 4.28,
     "hy_slope": 0.299,
-    "fg_ma10": 70.3,
-    "fg_vs_ma10": -0.43,
-    "fg_slope": 10.883
+    "fg_ma10": 72.1,
+    "fg_vs_ma10": 2.64,
+    "fg_slope": 11.957
   },
   "risk_score": 8,
   "risk_label": "안전 — 리스크 낮음",
@@ -70,7 +70,7 @@
       "strength": "strong"
     },
     {
-      "label": "Fear&Greed 10일 이평 70.3 — 탐욕 추세 가속",
+      "label": "Fear&Greed 10일 이평 72.1 — 탐욕 추세 가속",
       "strength": "medium"
     }
   ],
@@ -791,10 +791,6 @@
     ],
     "vix": [
       {
-        "date": "2026-08-13",
-        "value": 14.63
-      },
-      {
         "date": "2026-08-14",
         "value": 14.25
       },
@@ -908,10 +904,6 @@
       }
     ],
     "tnx": [
-      {
-        "date": "2026-08-13",
-        "value": 4.63
-      },
       {
         "date": "2026-08-14",
         "value": 4.68
@@ -1030,10 +1022,6 @@
       }
     ],
     "hy_spread": [
-      {
-        "date": "2026-08-13",
-        "value": 2.71
-      },
       {
         "date": "2026-08-14",
         "value": 2.67
@@ -1157,10 +1145,6 @@
     ],
     "ig_spread": [
       {
-        "date": "2026-08-13",
-        "value": 0.79
-      },
-      {
         "date": "2026-08-14",
         "value": 0.8
       },
@@ -1282,10 +1266,6 @@
       }
     ],
     "yield_curve": [
-      {
-        "date": "2026-08-13",
-        "value": 0.48
-      },
       {
         "date": "2026-08-14",
         "value": 0.51

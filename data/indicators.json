@@ -1,11 +1,11 @@
 {
   "updated_at": "2026-09-29",
-  "updated_kst": "2026-09-30 01:27 KST",
+  "updated_kst": "2026-09-30 03:35 KST",
   "snapshot": {
     "nasdaq": 26820.38,
     "sp500": 7683.69,
     "djia": 51481.51,
-    "vix": 14.21,
+    "vix": 16.07,
     "ten_yr": 5.17,
     "fed_rate": 3.63,
     "hy_spread": 3.02,
@@ -19,10 +19,10 @@
       "components": {
         "모멘텀": 10.5,
         "주식강도": 37.2,
-        "변동성폭": 95.8,
+        "변동성폭": 85.2,
         "풋콜비율": 69.6,
         "정크본드": 79.1,
-        "변동성단기": 69.0,
+        "변동성단기": 58.1,
         "안전자산": 29.6
       }
     },
@@ -42,9 +42,9 @@
     "ma200_sp500": 6.58,
     "ma50_sp500": 0.56,
     "ma200_nasdaq": 8.77,
-    "vix_ma20": 15.598,
-    "vix_vs_ma20": -8.9,
-    "vix_slope": -0.093,
+    "vix_ma20": 15.734,
+    "vix_vs_ma20": 2.14,
+    "vix_slope": 0.473,
     "hy_ma20": 2.721,
     "hy_vs_ma20": 10.99,
     "hy_slope": 1.739,
@@ -59,12 +59,8 @@
   "trade_signal": "중립",
   "trade_color": "blue",
   "trade_desc": "시장 안정 — 급락 매수 기회 아님",
-  "sell_score": 28,
+  "sell_score": 18,
   "sell_signals": [
-    {
-      "label": "VIX 14.21 — 낮은 변동성 구간 (조정 전 경계)",
-      "strength": "medium"
-    },
     {
       "label": "HY스프레드 3.02% — 과도한 낙관 구간",
       "strength": "medium"
@@ -74,9 +70,9 @@
       "strength": "medium"
     }
   ],
-  "sell_signal": "주의 관찰",
-  "sell_color": "amber",
-  "sell_desc": "일부 과열 조짐 — 추가 매수보다 보유 관리 집중",
+  "sell_signal": "홀딩",
+  "sell_color": "blue",
+  "sell_desc": "과열 신호 없음 — 현 포지션 유지",
   "watchlist": [
     {
       "ticker": "SOXL",
@@ -894,6 +890,22 @@
       {
         "date": "2026-09-22",
         "value": 14.21
+      },
+      {
+        "date": "2026-09-23",
+        "value": 15.18
+      },
+      {
+        "date": "2026-09-24",
+        "value": 15.67
+      },
+      {
+        "date": "2026-09-25",
+        "value": 14.87
+      },
+      {
+        "date": "2026-09-28",
+        "value": 16.07
       }
     ],
     "tnx": [

@@ -1,6 +1,6 @@
 {
   "updated_at": "2026-09-29",
-  "updated_kst": "2026-09-29 15:42 KST",
+  "updated_kst": "2026-09-30 01:27 KST",
   "snapshot": {
     "nasdaq": 26820.38,
     "sp500": 7683.69,
@@ -8,12 +8,12 @@
     "vix": 14.21,
     "ten_yr": 5.17,
     "fed_rate": 3.63,
-    "hy_spread": 2.93,
-    "ig_spread": 0.81,
+    "hy_spread": 3.02,
+    "ig_spread": 0.83,
     "ted_spread": 0.09,
     "yield_curve": 0.36,
     "fear_greed": {
-      "value": 34,
+      "value": 32,
       "classification": "fear",
       "source": "cnn",
       "components": {
@@ -21,7 +21,7 @@
         "주식강도": 37.2,
         "변동성폭": 95.8,
         "풋콜비율": 69.6,
-        "정크본드": 83.6,
+        "정크본드": 79.1,
         "변동성단기": 69.0,
         "안전자산": 29.6
       }
@@ -45,9 +45,9 @@
     "vix_ma20": 15.598,
     "vix_vs_ma20": -8.9,
     "vix_slope": -0.093,
-    "hy_ma20": 2.7015,
-    "hy_vs_ma20": 8.46,
-    "hy_slope": 0.953,
+    "hy_ma20": 2.721,
+    "hy_vs_ma20": 10.99,
+    "hy_slope": 1.739,
     "fg_ma10": 72.3,
     "fg_vs_ma10": 0.97,
     "fg_slope": 9.878
@@ -59,15 +59,15 @@
   "trade_signal": "중립",
   "trade_color": "blue",
   "trade_desc": "시장 안정 — 급락 매수 기회 아님",
-  "sell_score": 35,
+  "sell_score": 28,
   "sell_signals": [
     {
       "label": "VIX 14.21 — 낮은 변동성 구간 (조정 전 경계)",
       "strength": "medium"
     },
     {
-      "label": "HY스프레드 2.93% — 리스크 프리미엄 소멸 (과열)",
-      "strength": "strong"
+      "label": "HY스프레드 3.02% — 과도한 낙관 구간",
+      "strength": "medium"
     },
     {
       "label": "Fear&Greed 10일 이평 72.3 — 탐욕 추세 가속",
@@ -1134,6 +1134,10 @@
       {
         "date": "2026-09-25",
         "value": 2.93
+      },
+      {
+        "date": "2026-09-28",
+        "value": 3.02
       }
     ],
     "ig_spread": [
@@ -1256,6 +1260,10 @@
       {
         "date": "2026-09-25",
         "value": 0.81
+      },
+      {
+        "date": "2026-09-28",
+        "value": 0.83
       }
     ],
     "yield_curve": [
@@ -1594,12 +1602,12 @@
       },
       {
         "date": "2026-09-29",
-        "value": 34,
+        "value": 32,
         "classification": ""
       },
       {
         "date": "2026-09-29",
-        "value": 34,
+        "value": 32,
         "classification": ""
       }
     ]

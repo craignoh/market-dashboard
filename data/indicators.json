@@ -1,10 +1,10 @@
 {
-  "updated_at": "2026-09-29",
-  "updated_kst": "2026-09-30 06:44 KST",
+  "updated_at": "2026-09-30",
+  "updated_kst": "2026-09-30 15:26 KST",
   "snapshot": {
-    "nasdaq": 26820.38,
-    "sp500": 7683.69,
-    "djia": 51481.51,
+    "nasdaq": 26797.54,
+    "sp500": 7670.84,
+    "djia": 51349.92,
     "vix": 16.07,
     "ten_yr": 5.24,
     "fed_rate": 3.63,
@@ -17,8 +17,8 @@
       "classification": "fear",
       "source": "cnn",
       "components": {
-        "모멘텀": 10.5,
-        "주식강도": 37.2,
+        "모멘텀": 6.2,
+        "주식강도": 40.0,
         "변동성폭": 85.2,
         "풋콜비율": 69.6,
         "정크본드": 79.1,
@@ -27,7 +27,7 @@
       }
     },
     "usdkrw": 1356.51,
-    "t10y_change_3m": 0.76,
+    "t10y_change_3m": 0.75,
     "t10y_change_1m": 0.49,
     "fedfunds_change_3m": null,
     "real_rate": 2.94,
@@ -37,11 +37,11 @@
     "fed_assets": 6747704.0
   },
   "technicals": {
-    "rsi_sp500": 50.81,
-    "rsi_nasdaq": 56.88,
-    "ma200_sp500": 6.58,
-    "ma50_sp500": 0.56,
-    "ma200_nasdaq": 8.77,
+    "rsi_sp500": 52.87,
+    "rsi_nasdaq": 59.87,
+    "ma200_sp500": 6.34,
+    "ma50_sp500": 0.34,
+    "ma200_nasdaq": 8.61,
     "vix_ma20": 15.734,
     "vix_vs_ma20": 2.14,
     "vix_slope": 0.473,
@@ -49,8 +49,8 @@
     "hy_vs_ma20": 10.99,
     "hy_slope": 1.739,
     "fg_ma10": 72.3,
-    "fg_vs_ma10": 0.97,
-    "fg_slope": 9.878
+    "fg_vs_ma10": -1.8,
+    "fg_slope": 9.545
   },
   "risk_score": 15,
   "risk_label": "안전 — 리스크 낮음",
@@ -76,41 +76,41 @@
   "watchlist": [
     {
       "ticker": "SOXL",
-      "price": 142.29,
-      "chg1d": -6.05,
-      "rsi": 58.62,
-      "vs_ma50": 12.03,
+      "price": 147,
+      "chg1d": 3.31,
+      "rsi": 59.4,
+      "vs_ma50": 15.56,
       "vs_ma200": null,
-      "ma20_slope": 6.97,
-      "bb_pos": 78.1,
-      "vs_high52": -52.69,
-      "vs_low52": 250.3,
-      "vol_ratio": 120.1,
+      "ma20_slope": 6.58,
+      "bb_pos": 81.4,
+      "vs_high52": -51.13,
+      "vs_low52": 261.89,
+      "vol_ratio": 90.5,
       "high52": 300.77,
       "low52": 40.62,
       "ma200": null,
       "buy_score": 10,
       "sell_score": 10,
       "buy_signals": [
-        "52주 고점 대비 -52.69%"
+        "52주 고점 대비 -51.13%"
       ],
       "sell_signals": [
-        "52주 저점 대비 +250.3%"
+        "52주 저점 대비 +261.89%"
       ],
       "name": "반도체 3x 레버리지"
     },
     {
       "ticker": "TQQQ",
-      "price": 77.04,
-      "chg1d": -3.22,
-      "rsi": 59.19,
-      "vs_ma50": 7.99,
+      "price": 77.46,
+      "chg1d": 0.55,
+      "rsi": 61.21,
+      "vs_ma50": 8.28,
       "vs_ma200": null,
-      "ma20_slope": 2.8,
-      "bb_pos": 74.1,
-      "vs_high52": -11.67,
-      "vs_low52": 103.33,
-      "vol_ratio": 117.9,
+      "ma20_slope": 2.33,
+      "bb_pos": 74.4,
+      "vs_high52": -11.19,
+      "vs_low52": 104.43,
+      "vol_ratio": 95.7,
       "high52": 87.22,
       "low52": 37.89,
       "ma200": null,
@@ -118,22 +118,22 @@
       "sell_score": 10,
       "buy_signals": [],
       "sell_signals": [
-        "52주 저점 대비 +103.33%"
+        "52주 저점 대비 +104.43%"
       ],
       "name": "나스닥 3x 레버리지"
     },
     {
       "ticker": "XLK",
-      "price": 194.53,
-      "chg1d": -0.89,
-      "rsi": 62.6,
-      "vs_ma50": 5.24,
+      "price": 194.5,
+      "chg1d": -0.02,
+      "rsi": 62.53,
+      "vs_ma50": 5.01,
       "vs_ma200": null,
-      "ma20_slope": 1.56,
-      "bb_pos": 81.1,
-      "vs_high52": -1.86,
-      "vs_low52": 52.57,
-      "vol_ratio": 102.8,
+      "ma20_slope": 1.34,
+      "bb_pos": 78.0,
+      "vs_high52": -1.87,
+      "vs_low52": 52.55,
+      "vol_ratio": 90.9,
       "high52": 198.21,
       "low52": 127.5,
       "ma200": null,
@@ -145,16 +145,16 @@
     },
     {
       "ticker": "XLV",
-      "price": 171.26,
-      "chg1d": 0.33,
-      "rsi": 69.0,
-      "vs_ma50": 2.0,
+      "price": 170.73,
+      "chg1d": -0.31,
+      "rsi": 69.12,
+      "vs_ma50": 1.54,
       "vs_ma200": null,
-      "ma20_slope": -0.46,
-      "bb_pos": 73.1,
-      "vs_high52": -2.52,
-      "vs_low52": 19.9,
-      "vol_ratio": 80.0,
+      "ma20_slope": -0.32,
+      "bb_pos": 66.9,
+      "vs_high52": -2.82,
+      "vs_low52": 19.53,
+      "vol_ratio": 117.5,
       "high52": 175.68,
       "low52": 142.84,
       "ma200": null,
@@ -162,189 +162,186 @@
       "sell_score": 8,
       "buy_signals": [],
       "sell_signals": [
-        "RSI 69.0 — 과열 주의"
+        "RSI 69.12 — 과열 주의"
       ],
       "name": "헬스케어/바이오"
     },
     {
       "ticker": "XLE",
-      "price": 62.1,
-      "chg1d": 0.1,
-      "rsi": 36.14,
-      "vs_ma50": 0.42,
+      "price": 61.54,
+      "chg1d": -0.9,
+      "rsi": 30.47,
+      "vs_ma50": -0.61,
       "vs_ma200": null,
-      "ma20_slope": -0.14,
-      "bb_pos": 12.2,
-      "vs_high52": -5.81,
-      "vs_low52": 17.59,
-      "vol_ratio": 106.0,
+      "ma20_slope": -0.22,
+      "bb_pos": 7.0,
+      "vs_high52": -6.66,
+      "vs_low52": 16.53,
+      "vol_ratio": 91.3,
       "high52": 65.93,
       "low52": 52.81,
       "ma200": null,
       "buy_score": 23,
       "sell_score": 0,
       "buy_signals": [
-        "RSI 36.14 — 약한 과매도",
-        "볼린저 하단 (12.2%) — 반등 후보"
+        "RSI 30.47 — 약한 과매도",
+        "볼린저 하단 (7.0%) — 반등 후보"
       ],
       "sell_signals": [],
       "name": "정유/에너지"
     },
     {
       "ticker": "XLF",
-      "price": 54.19,
-      "chg1d": -1.19,
-      "rsi": 15.97,
-      "vs_ma50": -4.93,
+      "price": 54.01,
+      "chg1d": -0.33,
+      "rsi": 16.19,
+      "vs_ma50": -5.18,
       "vs_ma200": null,
-      "ma20_slope": -1.57,
-      "bb_pos": 6.4,
-      "vs_high52": -7.46,
-      "vs_low52": 13.34,
-      "vol_ratio": 116.0,
+      "ma20_slope": -1.59,
+      "bb_pos": 8.6,
+      "vs_high52": -7.77,
+      "vs_low52": 12.97,
+      "vol_ratio": 151.4,
       "high52": 58.56,
       "low52": 47.81,
       "ma200": null,
       "buy_score": 40,
       "sell_score": 0,
       "buy_signals": [
-        "RSI 15.97 — 극단 과매도",
-        "볼린저 하단 (6.4%) — 반등 후보"
+        "RSI 16.19 — 극단 과매도",
+        "볼린저 하단 (8.6%) — 반등 후보"
       ],
       "sell_signals": [],
       "name": "금융 섹터"
     },
     {
       "ticker": "XLI",
-      "price": 168.78,
-      "chg1d": -0.97,
-      "rsi": 31.92,
-      "vs_ma50": -5.02,
+      "price": 169.13,
+      "chg1d": 0.21,
+      "rsi": 40.02,
+      "vs_ma50": -4.73,
       "vs_ma200": null,
-      "ma20_slope": -1.31,
-      "bb_pos": 22.3,
-      "vs_high52": -9.51,
-      "vs_low52": 7.77,
-      "vol_ratio": 100.9,
+      "ma20_slope": -1.23,
+      "bb_pos": 28.2,
+      "vs_high52": -9.32,
+      "vs_low52": 7.99,
+      "vol_ratio": 85.4,
       "high52": 186.51,
       "low52": 156.61,
       "ma200": null,
-      "buy_score": 8,
+      "buy_score": 0,
       "sell_score": 0,
-      "buy_signals": [
-        "RSI 31.92 — 약한 과매도"
-      ],
+      "buy_signals": [],
       "sell_signals": [],
       "name": "산업/항공"
     },
     {
       "ticker": "XLU",
-      "price": 39.25,
-      "chg1d": -0.66,
-      "rsi": 9.92,
-      "vs_ma50": -9.04,
+      "price": 39.71,
+      "chg1d": 1.17,
+      "rsi": 18.88,
+      "vs_ma50": -7.74,
       "vs_ma200": null,
-      "ma20_slope": -2.07,
-      "bb_pos": 5.8,
-      "vs_high52": -17.77,
-      "vs_low52": 0.0,
-      "vol_ratio": 142.2,
+      "ma20_slope": -2.06,
+      "bb_pos": 18.3,
+      "vs_high52": -16.8,
+      "vs_low52": 1.17,
+      "vol_ratio": 205.8,
       "high52": 47.73,
       "low52": 39.25,
       "ma200": null,
-      "buy_score": 40,
+      "buy_score": 25,
       "sell_score": 0,
       "buy_signals": [
-        "RSI 9.92 — 극단 과매도",
-        "볼린저 하단 (5.8%) — 반등 후보"
+        "RSI 18.88 — 극단 과매도"
       ],
       "sell_signals": [],
       "name": "유틸리티 (방어주)"
     },
     {
       "ticker": "XLY",
-      "price": 109,
-      "chg1d": -1.41,
-      "rsi": 30.02,
-      "vs_ma50": -4.96,
+      "price": 109.15,
+      "chg1d": 0.14,
+      "rsi": 35.1,
+      "vs_ma50": -4.75,
       "vs_ma200": null,
-      "ma20_slope": -1.47,
-      "bb_pos": 7.9,
-      "vs_high52": -10.7,
-      "vs_low52": 3.16,
-      "vol_ratio": 104.3,
+      "ma20_slope": -1.54,
+      "bb_pos": 12.3,
+      "vs_high52": -10.58,
+      "vs_low52": 3.3,
+      "vol_ratio": 122.5,
       "high52": 122.06,
       "low52": 105.66,
       "ma200": null,
       "buy_score": 23,
       "sell_score": 0,
       "buy_signals": [
-        "RSI 30.02 — 약한 과매도",
-        "볼린저 하단 (7.9%) — 반등 후보"
+        "RSI 35.1 — 약한 과매도",
+        "볼린저 하단 (12.3%) — 반등 후보"
       ],
       "sell_signals": [],
       "name": "소비재"
     },
     {
       "ticker": "GLD",
-      "price": 377.91,
-      "chg1d": -3.94,
-      "rsi": 32.47,
-      "vs_ma50": -4.48,
+      "price": 382.89,
+      "chg1d": 1.32,
+      "rsi": 33.9,
+      "vs_ma50": -3.29,
       "vs_ma200": null,
-      "ma20_slope": -1.87,
-      "bb_pos": -21.0,
-      "vs_high52": -22.88,
-      "vs_low52": 3.55,
-      "vol_ratio": 145.4,
+      "ma20_slope": -1.86,
+      "bb_pos": 3.1,
+      "vs_high52": -21.86,
+      "vs_low52": 4.91,
+      "vol_ratio": 83.8,
       "high52": 490,
       "low52": 364.96,
       "ma200": null,
       "buy_score": 23,
       "sell_score": 0,
       "buy_signals": [
-        "RSI 32.47 — 약한 과매도",
-        "볼린저 하단 (-21.0%) — 반등 후보"
+        "RSI 33.9 — 약한 과매도",
+        "볼린저 하단 (3.1%) — 반등 후보"
       ],
       "sell_signals": [],
       "name": "금 (Gold)"
     },
     {
       "ticker": "TLT",
-      "price": 78.62,
-      "chg1d": -0.88,
-      "rsi": 24.86,
-      "vs_ma50": -4.27,
+      "price": 78.23,
+      "chg1d": -0.5,
+      "rsi": 25.14,
+      "vs_ma50": -4.62,
       "vs_ma200": null,
-      "ma20_slope": -0.95,
-      "bb_pos": -11.3,
-      "vs_high52": -13.43,
+      "ma20_slope": -1.17,
+      "bb_pos": -8.2,
+      "vs_high52": -13.86,
       "vs_low52": 0.0,
-      "vol_ratio": 172.1,
+      "vol_ratio": 198.7,
       "high52": 90.82,
-      "low52": 78.62,
+      "low52": 78.23,
       "ma200": null,
-      "buy_score": 40,
+      "buy_score": 33,
       "sell_score": 0,
       "buy_signals": [
-        "RSI 24.86 — 극단 과매도",
-        "볼린저 하단 (-11.3%) — 반등 후보"
+        "RSI 25.14 — 과매도",
+        "볼린저 하단 (-8.2%) — 반등 후보"
       ],
       "sell_signals": [],
       "name": "장기국채 20년+"
     },
     {
       "ticker": "ARKK",
-      "price": 89.25,
-      "chg1d": -1.67,
-      "rsi": 57.59,
-      "vs_ma50": 8.93,
+      "price": 89.45,
+      "chg1d": 0.22,
+      "rsi": 62.51,
+      "vs_ma50": 8.79,
       "vs_ma200": null,
-      "ma20_slope": 1.46,
-      "bb_pos": 71.6,
-      "vs_high52": -2.67,
-      "vs_low52": 40.51,
-      "vol_ratio": 82.8,
+      "ma20_slope": 1.25,
+      "bb_pos": 71.3,
+      "vs_high52": -2.45,
+      "vs_low52": 40.82,
+      "vol_ratio": 79.3,
       "high52": 91.7,
       "low52": 63.52,
       "ma200": null,
@@ -357,10 +354,6 @@
   ],
   "history": {
     "nasdaq": [
-      {
-        "date": "2026-08-10",
-        "value": 26605.36
-      },
       {
         "date": "2026-08-11",
         "value": 26445.45
@@ -496,13 +489,13 @@
       {
         "date": "2026-09-28",
         "value": 26820.38
+      },
+      {
+        "date": "2026-09-29",
+        "value": 26797.54
       }
     ],
     "sp500": [
-      {
-        "date": "2026-08-10",
-        "value": 7753.11
-      },
       {
         "date": "2026-08-11",
         "value": 7728.2
@@ -638,13 +631,13 @@
       {
         "date": "2026-09-28",
         "value": 7683.69
+      },
+      {
+        "date": "2026-09-29",
+        "value": 7670.84
       }
     ],
     "djia": [
-      {
-        "date": "2026-08-10",
-        "value": 53975.98
-      },
       {
         "date": "2026-08-11",
         "value": 53791.85
@@ -780,6 +773,10 @@
       {
         "date": "2026-09-28",
         "value": 51481.51
+      },
+      {
+        "date": "2026-09-29",
+        "value": 51349.92
       }
     ],
     "vix": [
@@ -1406,11 +1403,6 @@
     ],
     "fear_greed": [
       {
-        "date": "2026-07-29",
-        "value": 26,
-        "classification": ""
-      },
-      {
         "date": "2026-07-30",
         "value": 38,
         "classification": ""
@@ -1626,7 +1618,12 @@
         "classification": ""
       },
       {
-        "date": "2026-09-29",
+        "date": "2026-09-30",
+        "value": 32,
+        "classification": ""
+      },
+      {
+        "date": "2026-09-30",
         "value": 32,
         "classification": ""
       }

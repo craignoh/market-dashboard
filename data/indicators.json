@@ -1,11 +1,11 @@
 {
   "updated_at": "2026-10-07",
-  "updated_kst": "2026-10-07 16:01 KST",
+  "updated_kst": "2026-10-08 02:23 KST",
   "snapshot": {
     "nasdaq": 27599.89,
     "sp500": 7818.93,
     "djia": 51521.28,
-    "vix": 15.52,
+    "vix": 15.01,
     "ten_yr": 5.31,
     "fed_rate": 3.75,
     "hy_spread": 3.12,
@@ -13,16 +13,16 @@
     "ted_spread": 0.09,
     "yield_curve": 0.47,
     "fear_greed": {
-      "value": 47,
-      "classification": "neutral",
+      "value": 44,
+      "classification": "fear",
       "source": "cnn",
       "components": {
         "모멘텀": 26.1,
         "주식강도": 67.9,
-        "변동성폭": 88.3,
+        "변동성폭": 91.2,
         "풋콜비율": 69.6,
         "정크본드": 74.1,
-        "변동성단기": 62.8,
+        "변동성단기": 65.8,
         "안전자산": 50.0
       }
     },
@@ -42,9 +42,9 @@
     "ma200_sp500": 8.05,
     "ma50_sp500": 1.9,
     "ma200_nasdaq": 11.4,
-    "vix_ma20": 15.9295,
-    "vix_vs_ma20": -2.57,
-    "vix_slope": 1.243,
+    "vix_ma20": 15.894,
+    "vix_vs_ma20": -5.56,
+    "vix_slope": 1.113,
     "hy_ma20": 2.838,
     "hy_vs_ma20": 9.94,
     "hy_slope": 4.3,
@@ -52,7 +52,7 @@
     "fg_vs_ma10": 0.0,
     "fg_slope": -1.526
   },
-  "risk_score": 0,
+  "risk_score": 8,
   "risk_label": "안전 — 리스크 낮음",
   "buy_score": 0,
   "buy_signals": [],
@@ -903,6 +903,10 @@
       {
         "date": "2026-10-05",
         "value": 15.52
+      },
+      {
+        "date": "2026-10-06",
+        "value": 15.01
       }
     ],
     "tnx": [
@@ -1619,12 +1623,12 @@
       },
       {
         "date": "2026-10-07",
-        "value": 47,
+        "value": 44,
         "classification": ""
       },
       {
         "date": "2026-10-07",
-        "value": 47,
+        "value": 44,
         "classification": ""
       }
     ]

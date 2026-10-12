@@ -1,11 +1,11 @@
 {
   "updated_at": "2026-10-12",
-  "updated_kst": "2026-10-12 16:06 KST",
+  "updated_kst": "2026-10-13 04:44 KST",
   "snapshot": {
     "nasdaq": 27366.17,
     "sp500": 7811.54,
     "djia": 51654.95,
-    "vix": 15.41,
+    "vix": 14.84,
     "ten_yr": 5.22,
     "fed_rate": 3.75,
     "hy_spread": 3.15,
@@ -14,15 +14,15 @@
     "yield_curve": 0.47,
     "fear_greed": {
       "value": 45,
-      "classification": "fear",
+      "classification": "neutral",
       "source": "cnn",
       "components": {
         "모멘텀": 20.1,
         "주식강도": 43.0,
-        "변동성폭": 89.0,
+        "변동성폭": 92.2,
         "풋콜비율": 69.6,
         "정크본드": 72.6,
-        "변동성단기": 62.1,
+        "변동성단기": 65.4,
         "안전자산": 50.0
       }
     },
@@ -42,9 +42,9 @@
     "ma200_sp500": 7.74,
     "ma50_sp500": 1.49,
     "ma200_nasdaq": 10.18,
-    "vix_ma20": 15.7035,
-    "vix_vs_ma20": -1.87,
-    "vix_slope": -1.108,
+    "vix_ma20": 15.6535,
+    "vix_vs_ma20": -5.2,
+    "vix_slope": -1.665,
     "hy_ma20": 2.8975,
     "hy_vs_ma20": 8.71,
     "hy_slope": 3.667,
@@ -59,8 +59,12 @@
   "trade_signal": "중립",
   "trade_color": "blue",
   "trade_desc": "시장 안정 — 급락 매수 기회 아님",
-  "sell_score": 8,
+  "sell_score": 18,
   "sell_signals": [
+    {
+      "label": "VIX 14.84 — 낮은 변동성 구간 (조정 전 경계)",
+      "strength": "medium"
+    },
     {
       "label": "HY스프레드 3.15% — 과도한 낙관 구간",
       "strength": "medium"
@@ -888,6 +892,10 @@
       {
         "date": "2026-10-08",
         "value": 15.41
+      },
+      {
+        "date": "2026-10-09",
+        "value": 14.84
       }
     ],
     "tnx": [
@@ -1372,11 +1380,6 @@
     ],
     "fear_greed": [
       {
-        "date": "2026-08-10",
-        "value": 64,
-        "classification": ""
-      },
-      {
         "date": "2026-08-11",
         "value": 60,
         "classification": ""
@@ -1588,11 +1591,16 @@
       },
       {
         "date": "2026-10-09",
+        "value": 46,
+        "classification": ""
+      },
+      {
+        "date": "2026-10-12",
         "value": 45,
         "classification": ""
       },
       {
-        "date": "2026-10-09",
+        "date": "2026-10-12",
         "value": 45,
         "classification": ""
       }

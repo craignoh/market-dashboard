@@ -1,6 +1,6 @@
 {
   "updated_at": "2026-10-12",
-  "updated_kst": "2026-10-13 04:44 KST",
+  "updated_kst": "2026-10-13 06:43 KST",
   "snapshot": {
     "nasdaq": 27366.17,
     "sp500": 7811.54,
@@ -13,7 +13,7 @@
     "ted_spread": 0.09,
     "yield_curve": 0.47,
     "fear_greed": {
-      "value": 45,
+      "value": 46,
       "classification": "neutral",
       "source": "cnn",
       "components": {
@@ -1596,12 +1596,12 @@
       },
       {
         "date": "2026-10-12",
-        "value": 45,
+        "value": 46,
         "classification": ""
       },
       {
         "date": "2026-10-12",
-        "value": 45,
+        "value": 46,
         "classification": ""
       }
     ]

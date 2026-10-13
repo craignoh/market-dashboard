@@ -1,28 +1,28 @@
 {
   "updated_at": "2026-10-13",
-  "updated_kst": "2026-10-13 16:31 KST",
+  "updated_kst": "2026-10-14 02:29 KST",
   "snapshot": {
     "nasdaq": 27245.9,
     "sp500": 7807.24,
     "djia": 51850.55,
-    "vix": 14.84,
+    "vix": 15.21,
     "ten_yr": 5.22,
     "fed_rate": 3.75,
-    "hy_spread": 3.15,
-    "ig_spread": 0.82,
+    "hy_spread": 3.11,
+    "ig_spread": 0.83,
     "ted_spread": 0.09,
     "yield_curve": 0.47,
     "fear_greed": {
-      "value": 46,
-      "classification": "neutral",
+      "value": 44,
+      "classification": "fear",
       "source": "cnn",
       "components": {
         "모멘텀": 17.9,
         "주식강도": 42.3,
-        "변동성폭": 92.2,
+        "변동성폭": 90.1,
         "풋콜비율": 69.6,
-        "정크본드": 72.6,
-        "변동성단기": 65.4,
+        "정크본드": 74.6,
+        "변동성단기": 62.4,
         "안전자산": 50.0
       }
     },
@@ -42,31 +42,27 @@
     "ma200_sp500": 7.61,
     "ma50_sp500": 1.35,
     "ma200_nasdaq": 9.61,
-    "vix_ma20": 15.6535,
-    "vix_vs_ma20": -5.2,
-    "vix_slope": -1.665,
-    "hy_ma20": 2.8975,
-    "hy_vs_ma20": 8.71,
-    "hy_slope": 3.667,
+    "vix_ma20": 15.559,
+    "vix_vs_ma20": -2.24,
+    "vix_slope": -2.326,
+    "hy_ma20": 2.9405,
+    "hy_vs_ma20": 5.76,
+    "hy_slope": 3.612,
     "fg_ma10": 65.3,
     "fg_vs_ma10": -12.71,
     "fg_slope": -6.714
   },
-  "risk_score": 0,
+  "risk_score": 8,
   "risk_label": "안전 — 리스크 낮음",
   "buy_score": 0,
   "buy_signals": [],
   "trade_signal": "중립",
   "trade_color": "blue",
   "trade_desc": "시장 안정 — 급락 매수 기회 아님",
-  "sell_score": 18,
+  "sell_score": 8,
   "sell_signals": [
     {
-      "label": "VIX 14.84 — 낮은 변동성 구간 (조정 전 경계)",
-      "strength": "medium"
-    },
-    {
-      "label": "HY스프레드 3.15% — 과도한 낙관 구간",
+      "label": "HY스프레드 3.11% — 과도한 낙관 구간",
       "strength": "medium"
     }
   ],
@@ -890,6 +886,10 @@
       {
         "date": "2026-10-09",
         "value": 14.84
+      },
+      {
+        "date": "2026-10-12",
+        "value": 15.21
       }
     ],
     "tnx": [
@@ -1122,6 +1122,14 @@
       {
         "date": "2026-10-08",
         "value": 3.15
+      },
+      {
+        "date": "2026-10-09",
+        "value": 3.11
+      },
+      {
+        "date": "2026-10-12",
+        "value": 3.11
       }
     ],
     "ig_spread": [
@@ -1240,6 +1248,14 @@
       {
         "date": "2026-10-08",
         "value": 0.82
+      },
+      {
+        "date": "2026-10-09",
+        "value": 0.83
+      },
+      {
+        "date": "2026-10-12",
+        "value": 0.83
       }
     ],
     "yield_curve": [
@@ -1574,12 +1590,12 @@
       },
       {
         "date": "2026-10-13",
-        "value": 46,
+        "value": 44,
         "classification": ""
       },
       {
         "date": "2026-10-13",
-        "value": 46,
+        "value": 44,
         "classification": ""
       }
     ]

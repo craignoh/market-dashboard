@@ -1,6 +1,6 @@
 {
   "updated_at": "2026-10-14",
-  "updated_kst": "2026-10-14 23:59 KST",
+  "updated_kst": "2026-10-15 02:57 KST",
   "snapshot": {
     "nasdaq": 27204.38,
     "sp500": 7805.45,
@@ -8,12 +8,12 @@
     "vix": 15.27,
     "ten_yr": 5.24,
     "fed_rate": 3.75,
-    "hy_spread": 3.11,
+    "hy_spread": 3.16,
     "ig_spread": 0.83,
     "ted_spread": 0.09,
     "yield_curve": 0.44,
     "fear_greed": {
-      "value": 37,
+      "value": 32,
       "classification": "fear",
       "source": "cnn",
       "components": {
@@ -21,7 +21,7 @@
         "주식강도": 52.7,
         "변동성폭": 89.8,
         "풋콜비율": 69.6,
-        "정크본드": 74.6,
+        "정크본드": 72.1,
         "변동성단기": 61.5,
         "안전자산": 44.4
       }
@@ -45,14 +45,14 @@
     "vix_ma20": 15.4625,
     "vix_vs_ma20": -1.24,
     "vix_slope": -2.715,
-    "hy_ma20": 2.9405,
-    "hy_vs_ma20": 5.76,
-    "hy_slope": 3.612,
+    "hy_ma20": 2.9605,
+    "hy_vs_ma20": 6.74,
+    "hy_slope": 3.659,
     "fg_ma10": 65.0,
     "fg_vs_ma10": -4.62,
     "fg_slope": -5.248
   },
-  "risk_score": 8,
+  "risk_score": 15,
   "risk_label": "안전 — 리스크 낮음",
   "buy_score": 0,
   "buy_signals": [],
@@ -62,7 +62,7 @@
   "sell_score": 8,
   "sell_signals": [
     {
-      "label": "HY스프레드 3.11% — 과도한 낙관 구간",
+      "label": "HY스프레드 3.16% — 과도한 낙관 구간",
       "strength": "medium"
     }
   ],
@@ -1139,6 +1139,10 @@
       {
         "date": "2026-10-12",
         "value": 3.11
+      },
+      {
+        "date": "2026-10-13",
+        "value": 3.16
       }
     ],
     "ig_spread": [
@@ -1264,6 +1268,10 @@
       },
       {
         "date": "2026-10-12",
+        "value": 0.83
+      },
+      {
+        "date": "2026-10-13",
         "value": 0.83
       }
     ],
@@ -1603,12 +1611,12 @@
       },
       {
         "date": "2026-10-14",
-        "value": 37,
+        "value": 32,
         "classification": ""
       },
       {
         "date": "2026-10-14",
-        "value": 37,
+        "value": 32,
         "classification": ""
       }
     ]

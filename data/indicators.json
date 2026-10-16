@@ -1,11 +1,11 @@
 {
   "updated_at": "2026-10-16",
-  "updated_kst": "2026-10-16 23:43 KST",
+  "updated_kst": "2026-10-17 02:21 KST",
   "snapshot": {
     "nasdaq": 26713.03,
     "sp500": 7744.06,
     "djia": 52177.69,
-    "vix": 16.46,
+    "vix": null,
     "ten_yr": 5.19,
     "fed_rate": 3.75,
     "hy_spread": 3.23,
@@ -13,8 +13,8 @@
     "ted_spread": 0.09,
     "yield_curve": 0.37,
     "fear_greed": {
-      "value": 29,
-      "classification": "fear",
+      "value": 20,
+      "classification": "extreme fear",
       "source": "cnn",
       "components": {
         "모멘텀": 2.8,
@@ -42,9 +42,9 @@
     "ma200_sp500": 6.56,
     "ma50_sp500": 0.48,
     "ma200_nasdaq": 7.26,
-    "vix_ma20": 15.4715,
-    "vix_vs_ma20": 6.39,
-    "vix_slope": -1.477,
+    "vix_ma20": null,
+    "vix_vs_ma20": null,
+    "vix_slope": null,
     "hy_ma20": 3.0145,
     "hy_vs_ma20": 7.15,
     "hy_slope": 4.038,
@@ -54,8 +54,13 @@
   },
   "risk_score": 15,
   "risk_label": "안전 — 리스크 낮음",
-  "buy_score": 0,
-  "buy_signals": [],
+  "buy_score": 12,
+  "buy_signals": [
+    {
+      "label": "Fear&Greed 20 — Extreme Fear 구간",
+      "strength": "medium"
+    }
+  ],
   "trade_signal": "중립",
   "trade_color": "blue",
   "trade_desc": "시장 안정 — 급락 매수 기회 아님",
@@ -776,140 +781,7 @@
         "value": 52177.69
       }
     ],
-    "vix": [
-      {
-        "date": "2026-09-01",
-        "value": 16.34
-      },
-      {
-        "date": "2026-09-02",
-        "value": 15.2
-      },
-      {
-        "date": "2026-09-03",
-        "value": 14.32
-      },
-      {
-        "date": "2026-09-04",
-        "value": 14.53
-      },
-      {
-        "date": "2026-09-07",
-        "value": 15.3
-      },
-      {
-        "date": "2026-09-08",
-        "value": 15.72
-      },
-      {
-        "date": "2026-09-09",
-        "value": 16.46
-      },
-      {
-        "date": "2026-09-10",
-        "value": 17.84
-      },
-      {
-        "date": "2026-09-11",
-        "value": 15.84
-      },
-      {
-        "date": "2026-09-14",
-        "value": 17.1
-      },
-      {
-        "date": "2026-09-15",
-        "value": 17.2
-      },
-      {
-        "date": "2026-09-16",
-        "value": 17.71
-      },
-      {
-        "date": "2026-09-17",
-        "value": 15.44
-      },
-      {
-        "date": "2026-09-18",
-        "value": 14.81
-      },
-      {
-        "date": "2026-09-21",
-        "value": 14.87
-      },
-      {
-        "date": "2026-09-22",
-        "value": 14.21
-      },
-      {
-        "date": "2026-09-23",
-        "value": 15.18
-      },
-      {
-        "date": "2026-09-24",
-        "value": 15.67
-      },
-      {
-        "date": "2026-09-25",
-        "value": 14.87
-      },
-      {
-        "date": "2026-09-28",
-        "value": 16.07
-      },
-      {
-        "date": "2026-09-29",
-        "value": 16.04
-      },
-      {
-        "date": "2026-09-30",
-        "value": 16.34
-      },
-      {
-        "date": "2026-10-01",
-        "value": 16.39
-      },
-      {
-        "date": "2026-10-02",
-        "value": 15.31
-      },
-      {
-        "date": "2026-10-05",
-        "value": 15.52
-      },
-      {
-        "date": "2026-10-06",
-        "value": 15.01
-      },
-      {
-        "date": "2026-10-07",
-        "value": 15.08
-      },
-      {
-        "date": "2026-10-08",
-        "value": 15.41
-      },
-      {
-        "date": "2026-10-09",
-        "value": 14.84
-      },
-      {
-        "date": "2026-10-12",
-        "value": 15.21
-      },
-      {
-        "date": "2026-10-13",
-        "value": 15.27
-      },
-      {
-        "date": "2026-10-14",
-        "value": 16.87
-      },
-      {
-        "date": "2026-10-15",
-        "value": 16.46
-      }
-    ],
+    "vix": [],
     "tnx": [
       {
         "date": "2026-09-01",
@@ -1640,12 +1512,12 @@
       },
       {
         "date": "2026-10-16",
-        "value": 29,
+        "value": 20,
         "classification": ""
       },
       {
         "date": "2026-10-16",
-        "value": 29,
+        "value": 20,
         "classification": ""
       }
     ]

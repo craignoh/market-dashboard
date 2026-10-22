@@ -1,28 +1,28 @@
 {
   "updated_at": "2026-10-22",
-  "updated_kst": "2026-10-22 14:53 KST",
+  "updated_kst": "2026-10-23 00:01 KST",
   "snapshot": {
     "nasdaq": 26702.86,
     "sp500": 7757.17,
     "djia": 52856.09,
-    "vix": 17.31,
+    "vix": 16.68,
     "ten_yr": 5.12,
     "fed_rate": 3.75,
-    "hy_spread": 3.33,
-    "ig_spread": 0.87,
+    "hy_spread": 3.27,
+    "ig_spread": 0.88,
     "ted_spread": 0.09,
     "yield_curve": 0.33,
     "fear_greed": {
-      "value": 31,
-      "classification": "fear",
+      "value": 20,
+      "classification": "extreme fear",
       "source": "cnn",
       "components": {
         "모멘텀": 13.2,
         "주식강도": 47.3,
-        "변동성폭": 78.2,
+        "변동성폭": 81.7,
         "풋콜비율": 69.6,
-        "정크본드": 63.7,
-        "변동성단기": 52.4,
+        "정크본드": 66.7,
+        "변동성단기": 56.8,
         "안전자산": 24.1
       }
     },
@@ -33,7 +33,7 @@
     "real_rate": 2.82,
     "erp": -0.57,
     "put_call": null,
-    "jobless_claims": 199000.0,
+    "jobless_claims": 194000.0,
     "fed_assets": 6755639.0
   },
   "technicals": {
@@ -42,37 +42,38 @@
     "ma200_sp500": 6.49,
     "ma50_sp500": 0.68,
     "ma200_nasdaq": 6.95,
-    "vix_ma20": 16.064,
-    "vix_vs_ma20": 7.76,
-    "vix_slope": 3.89,
-    "hy_ma20": 3.11,
-    "hy_vs_ma20": 7.07,
-    "hy_slope": 5.05,
+    "vix_ma20": 16.139,
+    "vix_vs_ma20": 3.35,
+    "vix_slope": 4.659,
+    "hy_ma20": 3.137,
+    "hy_vs_ma20": 4.24,
+    "hy_slope": 4.987,
     "fg_ma10": 58.8,
     "fg_vs_ma10": 15.65,
     "fg_slope": -3.13
   },
   "risk_score": 15,
   "risk_label": "안전 — 리스크 낮음",
-  "buy_score": 0,
-  "buy_signals": [],
-  "trade_signal": "중립",
-  "trade_color": "blue",
-  "trade_desc": "시장 안정 — 급락 매수 기회 아님",
-  "sell_score": 20,
-  "sell_signals": [
+  "buy_score": 12,
+  "buy_signals": [
     {
-      "label": "HY스프레드 3.33% — 과도한 낙관 구간",
-      "strength": "medium"
-    },
-    {
-      "label": "HY스프레드 20일선 기울기 +5.05% — 극저점에서 반등 (위험)",
+      "label": "Fear&Greed 20 — Extreme Fear 구간",
       "strength": "medium"
     }
   ],
-  "sell_signal": "주의 관찰",
-  "sell_color": "amber",
-  "sell_desc": "일부 과열 조짐 — 추가 매수보다 보유 관리 집중",
+  "trade_signal": "중립",
+  "trade_color": "blue",
+  "trade_desc": "시장 안정 — 급락 매수 기회 아님",
+  "sell_score": 8,
+  "sell_signals": [
+    {
+      "label": "HY스프레드 3.27% — 과도한 낙관 구간",
+      "strength": "medium"
+    }
+  ],
+  "sell_signal": "홀딩",
+  "sell_color": "blue",
+  "sell_desc": "과열 신호 없음 — 현 포지션 유지",
   "watchlist": [
     {
       "ticker": "SOXL",
@@ -910,6 +911,10 @@
       {
         "date": "2026-10-20",
         "value": 17.31
+      },
+      {
+        "date": "2026-10-21",
+        "value": 16.68
       }
     ],
     "tnx": [
@@ -1162,6 +1167,10 @@
       {
         "date": "2026-10-20",
         "value": 3.33
+      },
+      {
+        "date": "2026-10-21",
+        "value": 3.27
       }
     ],
     "ig_spread": [
@@ -1292,6 +1301,10 @@
       {
         "date": "2026-10-20",
         "value": 0.87
+      },
+      {
+        "date": "2026-10-21",
+        "value": 0.88
       }
     ],
     "yield_curve": [
@@ -1629,17 +1642,17 @@
       },
       {
         "date": "2026-10-21",
-        "value": 31,
+        "value": 27,
         "classification": ""
       },
       {
         "date": "2026-10-22",
-        "value": 31,
+        "value": 20,
         "classification": ""
       },
       {
         "date": "2026-10-22",
-        "value": 31,
+        "value": 20,
         "classification": ""
       }
     ]

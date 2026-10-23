@@ -1,6 +1,6 @@
 {
   "updated_at": "2026-10-23",
-  "updated_kst": "2026-10-23 23:49 KST",
+  "updated_kst": "2026-10-24 02:52 KST",
   "snapshot": {
     "nasdaq": 26008.86,
     "sp500": 7757.17,
@@ -13,7 +13,7 @@
     "ted_spread": 0.09,
     "yield_curve": 0.32,
     "fear_greed": {
-      "value": 19,
+      "value": 20,
       "classification": "extreme fear",
       "source": "cnn",
       "components": {
@@ -52,18 +52,18 @@
     "fg_vs_ma10": -13.94,
     "fg_slope": -2.517
   },
-  "risk_score": 32,
-  "risk_label": "주의 — 일부 지표 이상",
+  "risk_score": 22,
+  "risk_label": "안전 — 리스크 낮음",
   "buy_score": 12,
   "buy_signals": [
     {
-      "label": "Fear&Greed 19 — Extreme Fear 구간",
+      "label": "Fear&Greed 20 — Extreme Fear 구간",
       "strength": "medium"
     }
   ],
-  "trade_signal": "주의 관찰",
-  "trade_color": "amber",
-  "trade_desc": "불확실 구간 — 지표 추이 모니터링",
+  "trade_signal": "중립",
+  "trade_color": "blue",
+  "trade_desc": "시장 안정 — 급락 매수 기회 아님",
   "sell_score": 20,
   "sell_signals": [
     {
@@ -1668,12 +1668,12 @@
       },
       {
         "date": "2026-10-23",
-        "value": 19,
+        "value": 20,
         "classification": ""
       },
       {
         "date": "2026-10-23",
-        "value": 19,
+        "value": 20,
         "classification": ""
       }
     ]

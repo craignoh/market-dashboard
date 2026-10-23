@@ -1,6 +1,6 @@
 {
   "updated_at": "2026-10-23",
-  "updated_kst": "2026-10-24 02:52 KST",
+  "updated_kst": "2026-10-24 04:44 KST",
   "snapshot": {
     "nasdaq": 26008.86,
     "sp500": 7757.17,
@@ -13,7 +13,7 @@
     "ted_spread": 0.09,
     "yield_curve": 0.32,
     "fear_greed": {
-      "value": 20,
+      "value": 21,
       "classification": "extreme fear",
       "source": "cnn",
       "components": {
@@ -57,7 +57,7 @@
   "buy_score": 12,
   "buy_signals": [
     {
-      "label": "Fear&Greed 20 — Extreme Fear 구간",
+      "label": "Fear&Greed 21 — Extreme Fear 구간",
       "strength": "medium"
     }
   ],
@@ -1668,12 +1668,12 @@
       },
       {
         "date": "2026-10-23",
-        "value": 20,
+        "value": 21,
         "classification": ""
       },
       {
         "date": "2026-10-23",
-        "value": 20,
+        "value": 21,
         "classification": ""
       }
     ]

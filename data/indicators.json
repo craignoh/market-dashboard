@@ -1,12 +1,12 @@
 {
   "updated_at": "2026-10-26",
-  "updated_kst": "2026-10-27 04:10 KST",
+  "updated_kst": "2026-10-27 05:52 KST",
   "snapshot": {
     "nasdaq": 25955.34,
     "sp500": 7623.68,
     "djia": 52215.16,
     "vix": 19.45,
-    "ten_yr": 4.96,
+    "ten_yr": 5.0,
     "fed_rate": 3.75,
     "hy_spread": 3.38,
     "ig_spread": 0.91,
@@ -26,12 +26,12 @@
         "안전자산": 20.4
       }
     },
-    "usdkrw": 1334.03,
-    "t10y_change_3m": 0.35,
-    "t10y_change_1m": -0.28,
+    "usdkrw": 1325.06,
+    "t10y_change_3m": 0.39,
+    "t10y_change_1m": -0.24,
     "fedfunds_change_3m": null,
-    "real_rate": 2.66,
-    "erp": -0.41,
+    "real_rate": 2.7,
+    "erp": -0.45,
     "put_call": null,
     "jobless_claims": 194000.0,
     "fed_assets": 6753604.0
@@ -1035,6 +1035,10 @@
       {
         "date": "2026-10-22",
         "value": 4.96
+      },
+      {
+        "date": "2026-10-23",
+        "value": 5.0
       }
     ],
     "hy_spread": [
@@ -1404,6 +1408,10 @@
       },
       {
         "date": "2026-10-22",
+        "value": 0.31
+      },
+      {
+        "date": "2026-10-23",
         "value": 0.31
       }
     ],

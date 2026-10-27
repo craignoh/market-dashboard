@@ -1,6 +1,6 @@
 {
   "updated_at": "2026-10-27",
-  "updated_kst": "2026-10-28 03:40 KST",
+  "updated_kst": "2026-10-28 05:23 KST",
   "snapshot": {
     "nasdaq": 26169.38,
     "sp500": 7676.77,
@@ -11,9 +11,9 @@
     "hy_spread": 3.3,
     "ig_spread": 0.9,
     "ted_spread": 0.09,
-    "yield_curve": 0.31,
+    "yield_curve": 0.32,
     "fear_greed": {
-      "value": 32,
+      "value": 33,
       "classification": "fear",
       "source": "cnn",
       "components": {
@@ -23,7 +23,7 @@
         "풋콜비율": 69.6,
         "정크본드": 65.2,
         "변동성단기": 49.2,
-        "안전자산": 20.4
+        "안전자산": 22.2
       }
     },
     "usdkrw": 1325.06,
@@ -1031,6 +1031,10 @@
       {
         "date": "2026-10-23",
         "value": 5.0
+      },
+      {
+        "date": "2026-10-26",
+        "value": 5.0
       }
     ],
     "hy_spread": [
@@ -1401,6 +1405,10 @@
       {
         "date": "2026-10-23",
         "value": 0.31
+      },
+      {
+        "date": "2026-10-26",
+        "value": 0.32
       }
     ],
     "fear_greed": [
@@ -1621,12 +1629,12 @@
       },
       {
         "date": "2026-10-27",
-        "value": 32,
+        "value": 33,
         "classification": ""
       },
       {
         "date": "2026-10-27",
-        "value": 32,
+        "value": 33,
         "classification": ""
       }
     ]

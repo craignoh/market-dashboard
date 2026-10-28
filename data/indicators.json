@@ -1,19 +1,19 @@
 {
   "updated_at": "2026-10-28",
-  "updated_kst": "2026-10-29 03:47 KST",
+  "updated_kst": "2026-10-29 05:45 KST",
   "snapshot": {
     "nasdaq": 26477.81,
     "sp500": 7722.6,
     "djia": 52377.57,
     "vix": 17.52,
-    "ten_yr": 5.0,
+    "ten_yr": 4.99,
     "fed_rate": 3.75,
     "hy_spread": 3.18,
     "ig_spread": 0.88,
     "ted_spread": 0.09,
-    "yield_curve": 0.32,
+    "yield_curve": 0.29,
     "fear_greed": {
-      "value": 34,
+      "value": 36,
       "classification": "fear",
       "source": "cnn",
       "components": {
@@ -23,15 +23,15 @@
         "풋콜비율": 69.6,
         "정크본드": 71.1,
         "변동성단기": 55.2,
-        "안전자산": 22.2
+        "안전자산": 16.7
       }
     },
     "usdkrw": 1325.06,
-    "t10y_change_3m": 0.32,
-    "t10y_change_1m": -0.24,
+    "t10y_change_3m": 0.31,
+    "t10y_change_1m": -0.25,
     "fedfunds_change_3m": null,
-    "real_rate": 2.7,
-    "erp": -0.45,
+    "real_rate": 2.69,
+    "erp": -0.44,
     "put_call": null,
     "jobless_claims": 194000.0,
     "fed_assets": 6753604.0
@@ -52,7 +52,7 @@
     "fg_vs_ma10": -7.1,
     "fg_slope": -5.508
   },
-  "risk_score": 15,
+  "risk_score": 12,
   "risk_label": "안전 — 리스크 낮음",
   "buy_score": 0,
   "buy_signals": [],
@@ -1025,6 +1025,10 @@
       {
         "date": "2026-10-26",
         "value": 5.0
+      },
+      {
+        "date": "2026-10-27",
+        "value": 4.99
       }
     ],
     "hy_spread": [
@@ -1407,6 +1411,10 @@
       {
         "date": "2026-10-26",
         "value": 0.32
+      },
+      {
+        "date": "2026-10-27",
+        "value": 0.29
       }
     ],
     "fear_greed": [
@@ -1627,12 +1635,12 @@
       },
       {
         "date": "2026-10-28",
-        "value": 34,
+        "value": 36,
         "classification": ""
       },
       {
         "date": "2026-10-28",
-        "value": 34,
+        "value": 36,
         "classification": ""
       }
     ]

@@ -1,20 +1,20 @@
 {
   "updated_at": "2026-10-30",
-  "updated_kst": "2026-10-31 03:34 KST",
+  "updated_kst": "2026-10-31 05:20 KST",
   "snapshot": {
     "nasdaq": 26184.72,
     "sp500": 7743.98,
     "djia": 52342.56,
     "vix": 17.2,
-    "ten_yr": 5.05,
+    "ten_yr": 4.98,
     "fed_rate": 3.75,
     "hy_spread": 3.26,
     "ig_spread": 0.89,
     "ted_spread": 0.09,
-    "yield_curve": 0.38,
+    "yield_curve": 0.37,
     "fear_greed": {
-      "value": 23,
-      "classification": "extreme fear",
+      "value": 26,
+      "classification": "fear",
       "source": "cnn",
       "components": {
         "모멘텀": 15.8,
@@ -23,15 +23,15 @@
         "풋콜비율": 69.6,
         "정크본드": 67.2,
         "변동성단기": 57.7,
-        "안전자산": 33.3
+        "안전자산": 31.5
       }
     },
     "usdkrw": 1325.06,
-    "t10y_change_3m": 0.35,
-    "t10y_change_1m": -0.24,
+    "t10y_change_3m": 0.28,
+    "t10y_change_1m": -0.31,
     "fedfunds_change_3m": null,
-    "real_rate": 2.75,
-    "erp": -0.5,
+    "real_rate": 2.68,
+    "erp": -0.43,
     "put_call": null,
     "jobless_claims": 194000.0,
     "fed_assets": 6745635.0
@@ -54,13 +54,8 @@
   },
   "risk_score": 15,
   "risk_label": "안전 — 리스크 낮음",
-  "buy_score": 12,
-  "buy_signals": [
-    {
-      "label": "Fear&Greed 23 — Extreme Fear 구간",
-      "strength": "medium"
-    }
-  ],
+  "buy_score": 0,
+  "buy_signals": [],
   "trade_signal": "중립",
   "trade_color": "blue",
   "trade_desc": "시장 안정 — 급락 매수 기회 아님",
@@ -1042,6 +1037,10 @@
       {
         "date": "2026-10-28",
         "value": 5.05
+      },
+      {
+        "date": "2026-10-29",
+        "value": 4.98
       }
     ],
     "hy_spread": [
@@ -1436,6 +1435,10 @@
       {
         "date": "2026-10-28",
         "value": 0.38
+      },
+      {
+        "date": "2026-10-29",
+        "value": 0.37
       }
     ],
     "fear_greed": [
@@ -1656,12 +1659,12 @@
       },
       {
         "date": "2026-10-30",
-        "value": 23,
+        "value": 26,
         "classification": ""
       },
       {
         "date": "2026-10-30",
-        "value": 23,
+        "value": 26,
         "classification": ""
       }
     ]

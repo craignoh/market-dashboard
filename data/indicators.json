@@ -1,9 +1,9 @@
 {
   "updated_at": "2026-11-03",
-  "updated_kst": "2026-11-04 02:41 KST",
+  "updated_kst": "2026-11-04 05:04 KST",
   "snapshot": {
     "nasdaq": 25164.36,
-    "sp500": 7580.07,
+    "sp500": 7541.4,
     "djia": 51983.98,
     "vix": 21.15,
     "ten_yr": 4.94,
@@ -13,12 +13,12 @@
     "ted_spread": 0.09,
     "yield_curve": 0.38,
     "fear_greed": {
-      "value": 20,
+      "value": 19,
       "classification": "extreme fear",
       "source": "cnn",
       "components": {
         "모멘텀": 0,
-        "주식강도": 14.4,
+        "주식강도": 12.1,
         "변동성폭": 56.3,
         "풋콜비율": 69.6,
         "정크본드": 58.7,
@@ -37,10 +37,10 @@
     "fed_assets": 6745635.0
   },
   "technicals": {
-    "rsi_sp500": 34.08,
+    "rsi_sp500": 32.4,
     "rsi_nasdaq": 26.86,
-    "ma200_sp500": 3.7,
-    "ma50_sp500": -1.52,
+    "ma200_sp500": 3.13,
+    "ma50_sp500": -1.99,
     "ma200_nasdaq": 0.4,
     "vix_ma20": 17.282,
     "vix_vs_ma20": 22.38,
@@ -52,12 +52,12 @@
     "fg_vs_ma10": -36.74,
     "fg_slope": -24.03
   },
-  "risk_score": 22,
-  "risk_label": "안전 — 리스크 낮음",
+  "risk_score": 32,
+  "risk_label": "주의 — 일부 지표 이상",
   "buy_score": 30,
   "buy_signals": [
     {
-      "label": "S&P500 RSI 34.08 — 약한 과매도",
+      "label": "S&P500 RSI 32.4 — 약한 과매도",
       "strength": "weak"
     },
     {
@@ -65,13 +65,13 @@
       "strength": "medium"
     },
     {
-      "label": "Fear&Greed 20 — Extreme Fear 구간",
+      "label": "Fear&Greed 19 — Extreme Fear 구간",
       "strength": "medium"
     }
   ],
-  "trade_signal": "중립",
-  "trade_color": "blue",
-  "trade_desc": "시장 안정 — 급락 매수 기회 아님",
+  "trade_signal": "주의 관찰",
+  "trade_color": "amber",
+  "trade_desc": "불확실 구간 — 지표 추이 모니터링",
   "sell_score": 8,
   "sell_signals": [
     {
@@ -512,10 +512,6 @@
     ],
     "sp500": [
       {
-        "date": "2026-09-14",
-        "value": 7619.98
-      },
-      {
         "date": "2026-09-15",
         "value": 7585.73
       },
@@ -650,6 +646,10 @@
       {
         "date": "2026-10-30",
         "value": 7580.07
+      },
+      {
+        "date": "2026-11-02",
+        "value": 7541.4
       }
     ],
     "djia": [
@@ -1626,12 +1626,12 @@
       },
       {
         "date": "2026-11-03",
-        "value": 20,
+        "value": 19,
         "classification": ""
       },
       {
         "date": "2026-11-03",
-        "value": 20,
+        "value": 19,
         "classification": ""
       }
     ]

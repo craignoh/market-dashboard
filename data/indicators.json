@@ -1,28 +1,28 @@
 {
   "updated_at": "2026-11-03",
-  "updated_kst": "2026-11-03 16:44 KST",
+  "updated_kst": "2026-11-04 02:41 KST",
   "snapshot": {
     "nasdaq": 25164.36,
     "sp500": 7580.07,
     "djia": 51983.98,
-    "vix": 19.42,
+    "vix": 21.15,
     "ten_yr": 4.94,
     "fed_rate": 3.88,
-    "hy_spread": 3.44,
+    "hy_spread": 3.43,
     "ig_spread": 0.94,
     "ted_spread": 0.09,
     "yield_curve": 0.38,
     "fear_greed": {
-      "value": 23,
+      "value": 20,
       "classification": "extreme fear",
       "source": "cnn",
       "components": {
         "모멘텀": 0,
         "주식강도": 14.4,
-        "변동성폭": 66.2,
+        "변동성폭": 56.3,
         "풋콜비율": 69.6,
-        "정크본드": 58.2,
-        "변동성단기": 44.9,
+        "정크본드": 58.7,
+        "변동성단기": 35.8,
         "안전자산": 33.3
       }
     },
@@ -42,12 +42,12 @@
     "ma200_sp500": 3.7,
     "ma50_sp500": -1.52,
     "ma200_nasdaq": 0.4,
-    "vix_ma20": 17.0005,
-    "vix_vs_ma20": 14.23,
-    "vix_slope": 2.809,
-    "hy_ma20": 3.2275,
-    "hy_vs_ma20": 6.58,
-    "hy_slope": 1.191,
+    "vix_ma20": 17.282,
+    "vix_vs_ma20": 22.38,
+    "vix_slope": 3.783,
+    "hy_ma20": 3.243,
+    "hy_vs_ma20": 5.77,
+    "hy_slope": 1.233,
     "fg_ma10": 41.1,
     "fg_vs_ma10": -36.74,
     "fg_slope": -24.03
@@ -65,7 +65,7 @@
       "strength": "medium"
     },
     {
-      "label": "Fear&Greed 23 — Extreme Fear 구간",
+      "label": "Fear&Greed 20 — Extreme Fear 구간",
       "strength": "medium"
     }
   ],
@@ -75,7 +75,7 @@
   "sell_score": 8,
   "sell_signals": [
     {
-      "label": "HY스프레드 3.44% — 과도한 낙관 구간",
+      "label": "HY스프레드 3.43% — 과도한 낙관 구간",
       "strength": "medium"
     }
   ],
@@ -914,6 +914,10 @@
       {
         "date": "2026-10-30",
         "value": 19.42
+      },
+      {
+        "date": "2026-11-02",
+        "value": 21.15
       }
     ],
     "tnx": [
@@ -1154,6 +1158,10 @@
       {
         "date": "2026-10-30",
         "value": 3.44
+      },
+      {
+        "date": "2026-11-02",
+        "value": 3.43
       }
     ],
     "ig_spread": [
@@ -1275,6 +1283,10 @@
       },
       {
         "date": "2026-10-30",
+        "value": 0.94
+      },
+      {
+        "date": "2026-11-02",
         "value": 0.94
       }
     ],
@@ -1609,17 +1621,17 @@
       },
       {
         "date": "2026-11-02",
-        "value": 23,
+        "value": 19,
         "classification": ""
       },
       {
         "date": "2026-11-03",
-        "value": 23,
+        "value": 20,
         "classification": ""
       },
       {
         "date": "2026-11-03",
-        "value": 23,
+        "value": 20,
         "classification": ""
       }
     ]

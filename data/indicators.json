@@ -1,28 +1,28 @@
 {
   "updated_at": "2026-11-05",
-  "updated_kst": "2026-11-05 16:49 KST",
+  "updated_kst": "2026-11-06 02:58 KST",
   "snapshot": {
     "nasdaq": 25736.51,
     "sp500": 7568.92,
     "djia": 53356.12,
-    "vix": 20.83,
+    "vix": 16.61,
     "ten_yr": 4.95,
     "fed_rate": 3.88,
-    "hy_spread": 3.4,
-    "ig_spread": 0.93,
+    "hy_spread": 3.32,
+    "ig_spread": 0.91,
     "ted_spread": 0.09,
     "yield_curve": 0.34,
     "fear_greed": {
-      "value": 27,
-      "classification": "fear",
+      "value": 20,
+      "classification": "extreme fear",
       "source": "cnn",
       "components": {
         "모멘텀": 3.1,
         "주식강도": 21.3,
-        "변동성폭": 58.1,
+        "변동성폭": 82.1,
         "풋콜비율": 69.6,
-        "정크본드": 60.2,
-        "변동성단기": 39.6,
+        "정크본드": 64.2,
+        "변동성단기": 66.8,
         "안전자산": 25.9
       }
     },
@@ -33,7 +33,7 @@
     "real_rate": 2.65,
     "erp": -0.4,
     "put_call": null,
-    "jobless_claims": 194000.0,
+    "jobless_claims": 189000.0,
     "fed_assets": 6745635.0
   },
   "technicals": {
@@ -42,23 +42,27 @@
     "ma200_sp500": 3.46,
     "ma50_sp500": -1.61,
     "ma200_nasdaq": 2.59,
-    "vix_ma20": 17.573,
-    "vix_vs_ma20": 18.53,
-    "vix_slope": 5.064,
-    "hy_ma20": 3.2615,
-    "hy_vs_ma20": 4.25,
-    "hy_slope": 1.652,
+    "vix_ma20": 17.6495,
+    "vix_vs_ma20": -5.89,
+    "vix_slope": 5.342,
+    "hy_ma20": 3.273,
+    "hy_vs_ma20": 1.44,
+    "hy_slope": 1.979,
     "fg_ma10": 39.1,
     "fg_vs_ma10": 27.88,
     "fg_slope": -19.048
   },
-  "risk_score": 22,
+  "risk_score": 15,
   "risk_label": "안전 — 리스크 낮음",
-  "buy_score": 8,
+  "buy_score": 20,
   "buy_signals": [
     {
       "label": "S&P500 RSI 39.15 — 약한 과매도",
       "strength": "weak"
+    },
+    {
+      "label": "Fear&Greed 20 — Extreme Fear 구간",
+      "strength": "medium"
     }
   ],
   "trade_signal": "중립",
@@ -67,7 +71,7 @@
   "sell_score": 8,
   "sell_signals": [
     {
-      "label": "HY스프레드 3.4% — 과도한 낙관 구간",
+      "label": "HY스프레드 3.32% — 과도한 낙관 구간",
       "strength": "medium"
     }
   ],
@@ -910,6 +914,10 @@
       {
         "date": "2026-11-03",
         "value": 20.83
+      },
+      {
+        "date": "2026-11-04",
+        "value": 16.61
       }
     ],
     "tnx": [
@@ -1166,6 +1174,10 @@
       {
         "date": "2026-11-03",
         "value": 3.4
+      },
+      {
+        "date": "2026-11-04",
+        "value": 3.32
       }
     ],
     "ig_spread": [
@@ -1296,6 +1308,10 @@
       {
         "date": "2026-11-03",
         "value": 0.93
+      },
+      {
+        "date": "2026-11-04",
+        "value": 0.91
       }
     ],
     "yield_curve": [
@@ -1637,17 +1653,17 @@
       },
       {
         "date": "2026-11-04",
-        "value": 27,
+        "value": 34,
         "classification": ""
       },
       {
         "date": "2026-11-05",
-        "value": 27,
+        "value": 20,
         "classification": ""
       },
       {
         "date": "2026-11-05",
-        "value": 27,
+        "value": 20,
         "classification": ""
       }
     ]

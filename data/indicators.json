@@ -1,6 +1,6 @@
 {
   "updated_at": "2026-11-06",
-  "updated_kst": "2026-11-07 02:18 KST",
+  "updated_kst": "2026-11-07 04:57 KST",
   "snapshot": {
     "nasdaq": 24315.0,
     "sp500": 7353.73,
@@ -13,7 +13,7 @@
     "ted_spread": 0.09,
     "yield_curve": 0.32,
     "fear_greed": {
-      "value": 25,
+      "value": 23,
       "classification": "extreme fear",
       "source": "cnn",
       "components": {
@@ -54,11 +54,15 @@
   },
   "risk_score": 29,
   "risk_label": "안전 — 리스크 낮음",
-  "buy_score": 20,
+  "buy_score": 32,
   "buy_signals": [
     {
       "label": "S&P500 RSI 35.25 — 약한 과매도",
       "strength": "weak"
+    },
+    {
+      "label": "Fear&Greed 23 — Extreme Fear 구간",
+      "strength": "medium"
     },
     {
       "label": "VIX, 20일선 대비 +54.09% — 공포 급증 구간",
@@ -1650,12 +1654,12 @@
       },
       {
         "date": "2026-11-06",
-        "value": 25,
+        "value": 23,
         "classification": ""
       },
       {
         "date": "2026-11-06",
-        "value": 25,
+        "value": 23,
         "classification": ""
       }
     ]

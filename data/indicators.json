@@ -1,6 +1,6 @@
 {
   "updated_at": "2026-11-09",
-  "updated_kst": "2026-11-09 16:46 KST",
+  "updated_kst": "2026-11-10 05:34 KST",
   "snapshot": {
     "nasdaq": 24579.42,
     "sp500": 7353.73,
@@ -8,20 +8,20 @@
     "vix": 28.18,
     "ten_yr": 4.84,
     "fed_rate": 3.88,
-    "hy_spread": 3.48,
+    "hy_spread": 3.42,
     "ig_spread": 0.93,
     "ted_spread": 0.09,
     "yield_curve": 0.38,
     "fear_greed": {
-      "value": 22,
-      "classification": "extreme fear",
+      "value": 32,
+      "classification": "fear",
       "source": "cnn",
       "components": {
         "모멘텀": 0.0,
         "주식강도": 16.0,
         "변동성폭": 16.3,
         "풋콜비율": 69.6,
-        "정크본드": 56.2,
+        "정크본드": 59.2,
         "변동성단기": 3.8,
         "안전자산": 33.3
       }
@@ -45,24 +45,20 @@
     "vix_ma20": 18.288,
     "vix_vs_ma20": 54.09,
     "vix_slope": 8.89,
-    "hy_ma20": 3.2895,
-    "hy_vs_ma20": 5.79,
-    "hy_slope": 2.461,
+    "hy_ma20": 3.305,
+    "hy_vs_ma20": 3.48,
+    "hy_slope": 2.401,
     "fg_ma10": 32.1,
     "fg_vs_ma10": -9.66,
     "fg_slope": -17.903
   },
   "risk_score": 29,
   "risk_label": "안전 — 리스크 낮음",
-  "buy_score": 42,
+  "buy_score": 30,
   "buy_signals": [
     {
       "label": "S&P500 RSI 35.25 — 약한 과매도",
       "strength": "weak"
-    },
-    {
-      "label": "Fear&Greed 22 — Extreme Fear 구간",
-      "strength": "medium"
     },
     {
       "label": "VIX, 20일선 대비 +54.09% — 공포 급증 구간",
@@ -79,7 +75,7 @@
   "sell_score": 8,
   "sell_signals": [
     {
-      "label": "HY스프레드 3.48% — 과도한 낙관 구간",
+      "label": "HY스프레드 3.42% — 과도한 낙관 구간",
       "strength": "medium"
     }
   ],
@@ -1152,6 +1148,10 @@
       {
         "date": "2026-11-05",
         "value": 3.48
+      },
+      {
+        "date": "2026-11-06",
+        "value": 3.42
       }
     ],
     "ig_spread": [
@@ -1274,6 +1274,10 @@
       {
         "date": "2026-11-05",
         "value": 0.93
+      },
+      {
+        "date": "2026-11-06",
+        "value": 0.93
       }
     ],
     "yield_curve": [
@@ -1395,11 +1399,6 @@
       }
     ],
     "fear_greed": [
-      {
-        "date": "2026-09-08",
-        "value": 39,
-        "classification": ""
-      },
       {
         "date": "2026-09-09",
         "value": 38,
@@ -1612,12 +1611,17 @@
       },
       {
         "date": "2026-11-06",
-        "value": 22,
+        "value": 24,
         "classification": ""
       },
       {
-        "date": "2026-11-06",
-        "value": 22,
+        "date": "2026-11-09",
+        "value": 32,
+        "classification": ""
+      },
+      {
+        "date": "2026-11-09",
+        "value": 32,
         "classification": ""
       }
     ]

@@ -1,11 +1,11 @@
 {
   "updated_at": "2026-11-11",
-  "updated_kst": "2026-11-11 16:37 KST",
+  "updated_kst": "2026-11-12 02:49 KST",
   "snapshot": {
     "nasdaq": 25065.87,
     "sp500": 7520.93,
     "djia": 52231.89,
-    "vix": 19.92,
+    "vix": 19.46,
     "ten_yr": 4.88,
     "fed_rate": 3.88,
     "hy_spread": 3.34,
@@ -13,16 +13,16 @@
     "ted_spread": 0.09,
     "yield_curve": 0.32,
     "fear_greed": {
-      "value": 33,
+      "value": 38,
       "classification": "fear",
       "source": "cnn",
       "components": {
         "모멘텀": 17.4,
         "주식강도": 22.3,
-        "변동성폭": 63.3,
+        "변동성폭": 65.9,
         "풋콜비율": 69.6,
         "정크본드": 63.2,
-        "변동성단기": 57.5,
+        "변동성단기": 61.5,
         "안전자산": 22.2
       }
     },
@@ -42,9 +42,9 @@
     "ma200_sp500": 2.59,
     "ma50_sp500": -1.98,
     "ma200_nasdaq": -0.19,
-    "vix_ma20": 19.0635,
-    "vix_vs_ma20": 4.49,
-    "vix_slope": 10.308,
+    "vix_ma20": 19.273,
+    "vix_vs_ma20": 0.97,
+    "vix_slope": 9.674,
     "hy_ma20": 3.3165,
     "hy_vs_ma20": 0.71,
     "hy_slope": 2.266,
@@ -52,7 +52,7 @@
     "fg_vs_ma10": -8.81,
     "fg_slope": -14.286
   },
-  "risk_score": 22,
+  "risk_score": 15,
   "risk_label": "안전 — 리스크 낮음",
   "buy_score": 18,
   "buy_signals": [
@@ -68,20 +68,16 @@
   "trade_signal": "중립",
   "trade_color": "blue",
   "trade_desc": "시장 안정 — 급락 매수 기회 아님",
-  "sell_score": 20,
+  "sell_score": 8,
   "sell_signals": [
     {
       "label": "HY스프레드 3.34% — 과도한 낙관 구간",
       "strength": "medium"
-    },
-    {
-      "label": "VIX 20일선 기울기 +10.308% — 저VIX에서 상승 전환 (경계)",
-      "strength": "medium"
     }
   ],
-  "sell_signal": "주의 관찰",
-  "sell_color": "amber",
-  "sell_desc": "일부 과열 조짐 — 추가 매수보다 보유 관리 집중",
+  "sell_signal": "홀딩",
+  "sell_color": "blue",
+  "sell_desc": "과열 신호 없음 — 현 포지션 유지",
   "watchlist": [
     {
       "ticker": "SOXL",
@@ -909,6 +905,10 @@
       {
         "date": "2026-11-09",
         "value": 19.92
+      },
+      {
+        "date": "2026-11-10",
+        "value": 19.46
       }
     ],
     "tnx": [
@@ -1620,17 +1620,17 @@
       },
       {
         "date": "2026-11-10",
-        "value": 33,
+        "value": 37,
         "classification": ""
       },
       {
         "date": "2026-11-11",
-        "value": 33,
+        "value": 38,
         "classification": ""
       },
       {
         "date": "2026-11-11",
-        "value": 33,
+        "value": 38,
         "classification": ""
       }
     ]

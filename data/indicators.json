@@ -1,28 +1,28 @@
 {
   "updated_at": "2026-11-12",
-  "updated_kst": "2026-11-12 17:04 KST",
+  "updated_kst": "2026-11-13 03:03 KST",
   "snapshot": {
     "nasdaq": 25466.19,
-    "sp500": 7520.93,
+    "sp500": 7619.38,
     "djia": 52486.49,
-    "vix": 19.46,
+    "vix": 17.49,
     "ten_yr": 4.88,
     "fed_rate": 3.88,
-    "hy_spread": 3.34,
-    "ig_spread": 0.91,
+    "hy_spread": 3.3,
+    "ig_spread": 0.9,
     "ted_spread": 0.09,
     "yield_curve": 0.32,
     "fear_greed": {
-      "value": 37,
+      "value": 44,
       "classification": "fear",
       "source": "cnn",
       "components": {
-        "모멘텀": 17.4,
-        "주식강도": 22.3,
-        "변동성폭": 65.9,
+        "모멘텀": 27.5,
+        "주식강도": 33.5,
+        "변동성폭": 77.1,
         "풋콜비율": 69.6,
-        "정크본드": 63.2,
-        "변동성단기": 61.5,
+        "정크본드": 65.2,
+        "변동성단기": 73.4,
         "안전자산": 22.2
       }
     },
@@ -33,33 +33,29 @@
     "real_rate": 2.58,
     "erp": -0.33,
     "put_call": null,
-    "jobless_claims": 189000.0,
+    "jobless_claims": 200000.0,
     "fed_assets": 6748145.0
   },
   "technicals": {
-    "rsi_sp500": 39.85,
+    "rsi_sp500": 48.11,
     "rsi_nasdaq": 45.11,
-    "ma200_sp500": 2.59,
-    "ma50_sp500": -1.98,
+    "ma200_sp500": 3.89,
+    "ma50_sp500": -0.69,
     "ma200_nasdaq": 1.37,
-    "vix_ma20": 19.273,
-    "vix_vs_ma20": 0.97,
-    "vix_slope": 9.674,
-    "hy_ma20": 3.3165,
-    "hy_vs_ma20": 0.71,
-    "hy_slope": 2.266,
+    "vix_ma20": 19.304,
+    "vix_vs_ma20": -9.4,
+    "vix_slope": 9.374,
+    "hy_ma20": 3.3235,
+    "hy_vs_ma20": -0.71,
+    "hy_slope": 1.901,
     "fg_ma10": 30.9,
     "fg_vs_ma10": -9.39,
     "fg_slope": -10.435
   },
-  "risk_score": 15,
+  "risk_score": 8,
   "risk_label": "안전 — 리스크 낮음",
-  "buy_score": 18,
+  "buy_score": 10,
   "buy_signals": [
-    {
-      "label": "S&P500 RSI 39.85 — 약한 과매도",
-      "strength": "weak"
-    },
     {
       "label": "Fear&Greed 10일 이평 30.9 — 공포 추세 (역발상 구간)",
       "strength": "medium"
@@ -71,7 +67,7 @@
   "sell_score": 8,
   "sell_signals": [
     {
-      "label": "HY스프레드 3.34% — 과도한 낙관 구간",
+      "label": "HY스프레드 3.3% — 과도한 낙관 구간",
       "strength": "medium"
     }
   ],
@@ -492,10 +488,6 @@
     ],
     "sp500": [
       {
-        "date": "2026-09-23",
-        "value": 7706.03
-      },
-      {
         "date": "2026-09-24",
         "value": 7704.13
       },
@@ -630,6 +622,10 @@
       {
         "date": "2026-11-10",
         "value": 7520.93
+      },
+      {
+        "date": "2026-11-11",
+        "value": 7619.38
       }
     ],
     "djia": [
@@ -902,6 +898,10 @@
       {
         "date": "2026-11-10",
         "value": 19.46
+      },
+      {
+        "date": "2026-11-11",
+        "value": 17.49
       }
     ],
     "tnx": [
@@ -1150,6 +1150,10 @@
       {
         "date": "2026-11-09",
         "value": 3.34
+      },
+      {
+        "date": "2026-11-11",
+        "value": 3.3
       }
     ],
     "ig_spread": [
@@ -1276,6 +1280,10 @@
       {
         "date": "2026-11-09",
         "value": 0.91
+      },
+      {
+        "date": "2026-11-11",
+        "value": 0.9
       }
     ],
     "yield_curve": [
@@ -1613,17 +1621,17 @@
       },
       {
         "date": "2026-11-11",
-        "value": 37,
+        "value": 36,
         "classification": ""
       },
       {
         "date": "2026-11-12",
-        "value": 37,
+        "value": 44,
         "classification": ""
       },
       {
         "date": "2026-11-12",
-        "value": 37,
+        "value": 44,
         "classification": ""
       }
     ]

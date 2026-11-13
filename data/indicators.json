@@ -1,17 +1,17 @@
 {
   "updated_at": "2026-11-13",
-  "updated_kst": "2026-11-14 05:28 KST",
+  "updated_kst": "2026-11-14 06:47 KST",
   "snapshot": {
     "nasdaq": 25366.09,
     "sp500": 7592.4,
     "djia": 52297.09,
     "vix": 18.7,
-    "ten_yr": 4.98,
+    "ten_yr": 5.1,
     "fed_rate": 3.88,
     "hy_spread": 3.2,
     "ig_spread": 0.89,
     "ted_spread": 0.09,
-    "yield_curve": 0.25,
+    "yield_curve": 0.24,
     "fear_greed": {
       "value": 39,
       "classification": "fear",
@@ -23,15 +23,15 @@
         "풋콜비율": 69.6,
         "정크본드": 70.1,
         "변동성단기": 66.9,
-        "안전자산": 9.3
+        "안전자산": 7.4
       }
     },
     "usdkrw": 1361.89,
-    "t10y_change_3m": 0.26,
-    "t10y_change_1m": -0.21,
+    "t10y_change_3m": 0.38,
+    "t10y_change_1m": -0.09,
     "fedfunds_change_3m": null,
-    "real_rate": 2.68,
-    "erp": -0.43,
+    "real_rate": 2.8,
+    "erp": -0.55,
     "put_call": null,
     "jobless_claims": 200000.0,
     "fed_assets": 6758867.0
@@ -1021,6 +1021,10 @@
       {
         "date": "2026-11-10",
         "value": 4.98
+      },
+      {
+        "date": "2026-11-12",
+        "value": 5.1
       }
     ],
     "hy_spread": [
@@ -1403,6 +1407,10 @@
       {
         "date": "2026-11-10",
         "value": 0.25
+      },
+      {
+        "date": "2026-11-12",
+        "value": 0.24
       }
     ],
     "fear_greed": [

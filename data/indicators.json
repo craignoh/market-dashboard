@@ -1,6 +1,6 @@
 {
-  "updated_at": "2026-11-14",
-  "updated_kst": "2026-11-15 06:53 KST",
+  "updated_at": "2026-11-15",
+  "updated_kst": "2026-11-15 16:42 KST",
   "snapshot": {
     "nasdaq": 25136.27,
     "sp500": 7561.67,
@@ -28,7 +28,7 @@
     },
     "usdkrw": 1361.89,
     "t10y_change_3m": 0.38,
-    "t10y_change_1m": 0.0,
+    "t10y_change_1m": 0.01,
     "fedfunds_change_3m": null,
     "real_rate": 2.8,
     "erp": -0.55,
@@ -48,16 +48,16 @@
     "hy_ma20": 3.321,
     "hy_vs_ma20": -3.64,
     "hy_slope": 1.467,
-    "fg_ma10": 28.2,
-    "fg_vs_ma10": -53.9,
-    "fg_slope": -12.15
+    "fg_ma10": 24.2,
+    "fg_vs_ma10": -58.68,
+    "fg_slope": -25.077
   },
   "risk_score": 19,
   "risk_label": "안전 — 리스크 낮음",
   "buy_score": 10,
   "buy_signals": [
     {
-      "label": "Fear&Greed 10일 이평 28.2 — 공포 추세 (역발상 구간)",
+      "label": "Fear&Greed 10일 이평 24.2 — 공포 추세 (역발상 구간)",
       "strength": "medium"
     }
   ],
@@ -109,10 +109,10 @@
       "ma20_slope": -6.11,
       "bb_pos": 28.4,
       "vs_high52": -33.87,
-      "vs_low52": 20.17,
+      "vs_low52": 17.81,
       "vol_ratio": 100.1,
       "high52": 87.22,
-      "low52": 48,
+      "low52": 48.96,
       "ma200": null,
       "buy_score": 18,
       "sell_score": 0,
@@ -133,10 +133,10 @@
       "ma20_slope": -2.65,
       "bb_pos": 25.1,
       "vs_high52": -15.7,
-      "vs_low52": 20.18,
+      "vs_low52": 19.86,
       "vol_ratio": 78.4,
       "high52": 202,
-      "low52": 141.69,
+      "low52": 142.07,
       "ma200": null,
       "buy_score": 8,
       "sell_score": 0,
@@ -781,10 +781,6 @@
     ],
     "vix": [
       {
-        "date": "2026-09-30",
-        "value": 16.34
-      },
-      {
         "date": "2026-10-01",
         "value": 16.39
       },
@@ -911,10 +907,6 @@
     ],
     "tnx": [
       {
-        "date": "2026-09-30",
-        "value": 5.29
-      },
-      {
         "date": "2026-10-01",
         "value": 5.24
       },
@@ -1032,10 +1024,6 @@
       }
     ],
     "hy_spread": [
-      {
-        "date": "2026-09-30",
-        "value": 3.12
-      },
       {
         "date": "2026-10-01",
         "value": 3.24
@@ -1159,10 +1147,6 @@
     ],
     "ig_spread": [
       {
-        "date": "2026-09-30",
-        "value": 0.84
-      },
-      {
         "date": "2026-10-01",
         "value": 0.86
       },
@@ -1284,10 +1268,6 @@
       }
     ],
     "yield_curve": [
-      {
-        "date": "2026-09-30",
-        "value": 0.41
-      },
       {
         "date": "2026-10-01",
         "value": 0.46

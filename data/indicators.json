@@ -1,6 +1,6 @@
 {
-  "updated_at": "2026-11-15",
-  "updated_kst": "2026-11-16 07:21 KST",
+  "updated_at": "2026-11-16",
+  "updated_kst": "2026-11-16 16:48 KST",
   "snapshot": {
     "nasdaq": 25136.27,
     "sp500": 7561.67,
@@ -27,8 +27,8 @@
       }
     },
     "usdkrw": 1361.89,
-    "t10y_change_3m": 0.38,
-    "t10y_change_1m": 0.01,
+    "t10y_change_3m": 0.39,
+    "t10y_change_1m": -0.05,
     "fedfunds_change_3m": null,
     "real_rate": 2.8,
     "erp": -0.55,
@@ -48,16 +48,16 @@
     "hy_ma20": 3.321,
     "hy_vs_ma20": -3.64,
     "hy_slope": 1.467,
-    "fg_ma10": 24.2,
-    "fg_vs_ma10": -58.68,
-    "fg_slope": -25.077
+    "fg_ma10": 22.4,
+    "fg_vs_ma10": -55.36,
+    "fg_slope": -29.56
   },
   "risk_score": 19,
   "risk_label": "안전 — 리스크 낮음",
   "buy_score": 10,
   "buy_signals": [
     {
-      "label": "Fear&Greed 10일 이평 24.2 — 공포 추세 (역발상 구간)",
+      "label": "Fear&Greed 10일 이평 22.4 — 공포 추세 (역발상 구간)",
       "strength": "medium"
     }
   ],
@@ -109,10 +109,10 @@
       "ma20_slope": -6.11,
       "bb_pos": 28.4,
       "vs_high52": -33.87,
-      "vs_low52": 17.81,
+      "vs_low52": 17.31,
       "vol_ratio": 100.1,
       "high52": 87.22,
-      "low52": 48.96,
+      "low52": 49.17,
       "ma200": null,
       "buy_score": 18,
       "sell_score": 0,
@@ -133,10 +133,10 @@
       "ma20_slope": -2.65,
       "bb_pos": 25.1,
       "vs_high52": -15.7,
-      "vs_low52": 19.86,
+      "vs_low52": 19.39,
       "vol_ratio": 78.4,
       "high52": 202,
-      "low52": 142.07,
+      "low52": 142.62,
       "ma200": null,
       "buy_score": 8,
       "sell_score": 0,
@@ -245,10 +245,10 @@
       "vs_ma200": null,
       "ma20_slope": 1.17,
       "bb_pos": 83.5,
-      "vs_high52": -6.6,
+      "vs_high52": -6.22,
       "vs_low52": 12.2,
       "vol_ratio": 55.1,
-      "high52": 47.15,
+      "high52": 46.96,
       "low52": 39.25,
       "ma200": null,
       "buy_score": 0,
@@ -337,10 +337,10 @@
       "ma20_slope": -2.49,
       "bb_pos": 12.8,
       "vs_high52": -19.17,
-      "vs_low52": 8.81,
+      "vs_low52": 8.23,
       "vol_ratio": 199.8,
       "high52": 92.78,
-      "low52": 68.92,
+      "low52": 69.29,
       "ma200": null,
       "buy_score": 23,
       "sell_score": 0,
@@ -781,10 +781,6 @@
     ],
     "vix": [
       {
-        "date": "2026-10-01",
-        "value": 16.39
-      },
-      {
         "date": "2026-10-02",
         "value": 15.31
       },
@@ -907,10 +903,6 @@
     ],
     "tnx": [
       {
-        "date": "2026-10-01",
-        "value": 5.24
-      },
-      {
         "date": "2026-10-02",
         "value": 5.28
       },
@@ -1024,10 +1016,6 @@
       }
     ],
     "hy_spread": [
-      {
-        "date": "2026-10-01",
-        "value": 3.24
-      },
       {
         "date": "2026-10-02",
         "value": 3.1
@@ -1147,10 +1135,6 @@
     ],
     "ig_spread": [
       {
-        "date": "2026-10-01",
-        "value": 0.86
-      },
-      {
         "date": "2026-10-02",
         "value": 0.85
       },
@@ -1268,10 +1252,6 @@
       }
     ],
     "yield_curve": [
-      {
-        "date": "2026-10-01",
-        "value": 0.46
-      },
       {
         "date": "2026-10-02",
         "value": 0.45

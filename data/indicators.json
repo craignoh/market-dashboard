@@ -1,8 +1,8 @@
 {
   "updated_at": "2026-11-17",
-  "updated_kst": "2026-11-17 10:22 KST",
+  "updated_kst": "2026-11-17 17:56 KST",
   "snapshot": {
-    "nasdaq": 25136.27,
+    "nasdaq": 24509.76,
     "sp500": 7416.59,
     "djia": 51608.17,
     "vix": 19.3,
@@ -13,7 +13,7 @@
     "ted_spread": 0.09,
     "yield_curve": 0.27,
     "fear_greed": {
-      "value": 31,
+      "value": 30,
       "classification": "fear",
       "source": "cnn",
       "components": {
@@ -38,10 +38,10 @@
   },
   "technicals": {
     "rsi_sp500": 37.59,
-    "rsi_nasdaq": 40.8,
+    "rsi_nasdaq": 33.42,
     "ma200_sp500": 1.01,
     "ma50_sp500": -3.2,
-    "ma200_nasdaq": -0.0,
+    "ma200_nasdaq": -2.52,
     "vix_ma20": 19.3815,
     "vix_vs_ma20": -0.42,
     "vix_slope": 2.94,
@@ -90,7 +90,7 @@
       "bb_pos": 18.0,
       "vs_high52": -83.79,
       "vs_low52": 19.31,
-      "vol_ratio": 103.5,
+      "vol_ratio": 103.4,
       "high52": 300.77,
       "low52": 40.87,
       "ma200": null,
@@ -296,7 +296,7 @@
       "bb_pos": 5.3,
       "vs_high52": -20.86,
       "vs_low52": 0.0,
-      "vol_ratio": 104.9,
+      "vol_ratio": 104.2,
       "high52": 445.93,
       "low52": 352.93,
       "ma200": null,
@@ -360,10 +360,6 @@
   ],
   "history": {
     "nasdaq": [
-      {
-        "date": "2026-09-28",
-        "value": 26820.38
-      },
       {
         "date": "2026-09-29",
         "value": 26797.54
@@ -499,6 +495,10 @@
       {
         "date": "2026-11-13",
         "value": 25136.27
+      },
+      {
+        "date": "2026-11-16",
+        "value": 24509.76
       }
     ],
     "sp500": [
@@ -1381,11 +1381,6 @@
     ],
     "fear_greed": [
       {
-        "date": "2026-09-16",
-        "value": 27,
-        "classification": ""
-      },
-      {
         "date": "2026-09-17",
         "value": 29,
         "classification": ""
@@ -1597,12 +1592,17 @@
       },
       {
         "date": "2026-11-16",
-        "value": 31,
+        "value": 30,
         "classification": ""
       },
       {
-        "date": "2026-11-16",
-        "value": 31,
+        "date": "2026-11-17",
+        "value": 30,
+        "classification": ""
+      },
+      {
+        "date": "2026-11-17",
+        "value": 30,
         "classification": ""
       }
     ]

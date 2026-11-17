@@ -1,28 +1,28 @@
 {
   "updated_at": "2026-11-17",
-  "updated_kst": "2026-11-17 17:56 KST",
+  "updated_kst": "2026-11-18 04:02 KST",
   "snapshot": {
     "nasdaq": 24509.76,
     "sp500": 7416.59,
     "djia": 51608.17,
-    "vix": 19.3,
+    "vix": 22.91,
     "ten_yr": 5.15,
     "fed_rate": 3.88,
-    "hy_spread": 3.23,
-    "ig_spread": 0.89,
+    "hy_spread": 3.34,
+    "ig_spread": 0.9,
     "ted_spread": 0.09,
     "yield_curve": 0.27,
     "fear_greed": {
-      "value": 30,
-      "classification": "fear",
+      "value": 25,
+      "classification": "extreme fear",
       "source": "cnn",
       "components": {
         "모멘텀": 6.3,
         "주식강도": 19.2,
-        "변동성폭": 66.8,
+        "변동성폭": 46.3,
         "풋콜비율": 69.6,
-        "정크본드": 68.7,
-        "변동성단기": 63.1,
+        "정크본드": 63.2,
+        "변동성단기": 43.0,
         "안전자산": 13.0
       }
     },
@@ -42,12 +42,12 @@
     "ma200_sp500": 1.01,
     "ma50_sp500": -3.2,
     "ma200_nasdaq": -2.52,
-    "vix_ma20": 19.3815,
-    "vix_vs_ma20": -0.42,
-    "vix_slope": 2.94,
-    "hy_ma20": 3.3205,
-    "hy_vs_ma20": -2.73,
-    "hy_slope": 0.469,
+    "vix_ma20": 19.605,
+    "vix_vs_ma20": 16.86,
+    "vix_slope": 2.841,
+    "hy_ma20": 3.323,
+    "hy_vs_ma20": 0.51,
+    "hy_slope": 0.196,
     "fg_ma10": 21.1,
     "fg_vs_ma10": -43.13,
     "fg_slope": -31.715
@@ -71,7 +71,7 @@
   "sell_score": 8,
   "sell_signals": [
     {
-      "label": "HY스프레드 3.23% — 과도한 낙관 구간",
+      "label": "HY스프레드 3.34% — 과도한 낙관 구간",
       "strength": "medium"
     }
   ],
@@ -905,6 +905,10 @@
       {
         "date": "2026-11-13",
         "value": 19.3
+      },
+      {
+        "date": "2026-11-16",
+        "value": 22.91
       }
     ],
     "tnx": [
@@ -1141,6 +1145,10 @@
       {
         "date": "2026-11-13",
         "value": 3.23
+      },
+      {
+        "date": "2026-11-16",
+        "value": 3.34
       }
     ],
     "ig_spread": [
@@ -1263,6 +1271,10 @@
       {
         "date": "2026-11-13",
         "value": 0.89
+      },
+      {
+        "date": "2026-11-16",
+        "value": 0.9
       }
     ],
     "yield_curve": [
@@ -1592,17 +1604,17 @@
       },
       {
         "date": "2026-11-16",
-        "value": 30,
+        "value": 31,
         "classification": ""
       },
       {
         "date": "2026-11-17",
-        "value": 30,
+        "value": 25,
         "classification": ""
       },
       {
         "date": "2026-11-17",
-        "value": 30,
+        "value": 25,
         "classification": ""
       }
     ]

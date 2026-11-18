@@ -1,20 +1,20 @@
 {
   "updated_at": "2026-11-18",
-  "updated_kst": "2026-11-19 03:47 KST",
+  "updated_kst": "2026-11-19 06:20 KST",
   "snapshot": {
     "nasdaq": 24328.38,
     "sp500": 7340.53,
     "djia": 50759.42,
     "vix": 25.46,
-    "ten_yr": 5.12,
+    "ten_yr": 5.1,
     "fed_rate": 3.88,
     "hy_spread": 3.43,
     "ig_spread": 0.92,
     "ted_spread": 0.09,
-    "yield_curve": 0.29,
+    "yield_curve": 0.3,
     "fear_greed": {
-      "value": 26,
-      "classification": "fear",
+      "value": 24,
+      "classification": "extreme fear",
       "source": "cnn",
       "components": {
         "모멘텀": 0.1,
@@ -23,15 +23,15 @@
         "풋콜비율": 69.6,
         "정크본드": 58.7,
         "변동성단기": 30.2,
-        "안전자산": 16.7
+        "안전자산": 18.5
       }
     },
     "usdkrw": 1336.58,
-    "t10y_change_3m": 0.43,
-    "t10y_change_1m": -0.03,
+    "t10y_change_3m": 0.41,
+    "t10y_change_1m": -0.05,
     "fedfunds_change_3m": null,
-    "real_rate": 2.82,
-    "erp": -0.57,
+    "real_rate": 2.8,
+    "erp": -0.55,
     "put_call": null,
     "jobless_claims": 200000.0,
     "fed_assets": 6758867.0
@@ -52,22 +52,26 @@
     "fg_vs_ma10": -43.3,
     "fg_slope": -35.974
   },
-  "risk_score": 33,
-  "risk_label": "주의 — 일부 지표 이상",
-  "buy_score": 18,
+  "risk_score": 29,
+  "risk_label": "안전 — 리스크 낮음",
+  "buy_score": 30,
   "buy_signals": [
     {
       "label": "S&P500 RSI 34.33 — 약한 과매도",
       "strength": "weak"
     },
     {
+      "label": "Fear&Greed 24 — Extreme Fear 구간",
+      "strength": "medium"
+    },
+    {
       "label": "Fear&Greed 10일 이평 19.4 — 공포 추세 (역발상 구간)",
       "strength": "medium"
     }
   ],
-  "trade_signal": "주의 관찰",
-  "trade_color": "amber",
-  "trade_desc": "불확실 구간 — 지표 추이 모니터링",
+  "trade_signal": "중립",
+  "trade_color": "blue",
+  "trade_desc": "시장 안정 — 급락 매수 기회 아님",
   "sell_score": 8,
   "sell_signals": [
     {
@@ -1026,6 +1030,10 @@
       {
         "date": "2026-11-16",
         "value": 5.12
+      },
+      {
+        "date": "2026-11-17",
+        "value": 5.1
       }
     ],
     "hy_spread": [
@@ -1404,6 +1412,10 @@
       {
         "date": "2026-11-16",
         "value": 0.29
+      },
+      {
+        "date": "2026-11-17",
+        "value": 0.3
       }
     ],
     "fear_greed": [
@@ -1624,12 +1636,12 @@
       },
       {
         "date": "2026-11-18",
-        "value": 26,
+        "value": 24,
         "classification": ""
       },
       {
         "date": "2026-11-18",
-        "value": 26,
+        "value": 24,
         "classification": ""
       }
     ]

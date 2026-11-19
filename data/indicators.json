@@ -1,28 +1,28 @@
 {
   "updated_at": "2026-11-19",
-  "updated_kst": "2026-11-19 17:33 KST",
+  "updated_kst": "2026-11-20 03:58 KST",
   "snapshot": {
     "nasdaq": 24429.88,
     "sp500": 7323.63,
     "djia": 50198.17,
-    "vix": 25.46,
+    "vix": 24.56,
     "ten_yr": 5.1,
     "fed_rate": 3.88,
-    "hy_spread": 3.43,
-    "ig_spread": 0.92,
+    "hy_spread": 3.47,
+    "ig_spread": 0.93,
     "ted_spread": 0.09,
     "yield_curve": 0.3,
     "fear_greed": {
-      "value": 27,
-      "classification": "fear",
+      "value": 21,
+      "classification": "extreme fear",
       "source": "cnn",
       "components": {
         "모멘텀": 0.1,
         "주식강도": 15.0,
-        "변동성폭": 31.8,
+        "변동성폭": 36.9,
         "풋콜비율": 69.6,
-        "정크본드": 58.7,
-        "변동성단기": 30.2,
+        "정크본드": 56.7,
+        "변동성단기": 37.9,
         "안전자산": 18.5
       }
     },
@@ -33,7 +33,7 @@
     "real_rate": 2.8,
     "erp": -0.55,
     "put_call": null,
-    "jobless_claims": 200000.0,
+    "jobless_claims": 203000.0,
     "fed_assets": 6758867.0
   },
   "technicals": {
@@ -42,23 +42,27 @@
     "ma200_sp500": -0.31,
     "ma50_sp500": -4.25,
     "ma200_nasdaq": -2.87,
-    "vix_ma20": 20.0125,
-    "vix_vs_ma20": 27.22,
-    "vix_slope": 3.837,
-    "hy_ma20": 3.328,
-    "hy_vs_ma20": 3.06,
-    "hy_slope": 0.135,
+    "vix_ma20": 20.4065,
+    "vix_vs_ma20": 20.35,
+    "vix_slope": 5.711,
+    "hy_ma20": 3.338,
+    "hy_vs_ma20": 3.95,
+    "hy_slope": 0.361,
     "fg_ma10": 17.5,
     "fg_vs_ma10": -42.86,
     "fg_slope": -37.943
   },
-  "risk_score": 29,
+  "risk_score": 22,
   "risk_label": "안전 — 리스크 낮음",
-  "buy_score": 18,
+  "buy_score": 30,
   "buy_signals": [
     {
       "label": "S&P500 RSI 34.51 — 약한 과매도",
       "strength": "weak"
+    },
+    {
+      "label": "Fear&Greed 21 — Extreme Fear 구간",
+      "strength": "medium"
     },
     {
       "label": "Fear&Greed 10일 이평 17.5 — 공포 추세 (역발상 구간)",
@@ -71,7 +75,7 @@
   "sell_score": 8,
   "sell_signals": [
     {
-      "label": "HY스프레드 3.43% — 과도한 낙관 구간",
+      "label": "HY스프레드 3.47% — 과도한 낙관 구간",
       "strength": "medium"
     }
   ],
@@ -905,6 +909,10 @@
       {
         "date": "2026-11-17",
         "value": 25.46
+      },
+      {
+        "date": "2026-11-18",
+        "value": 24.56
       }
     ],
     "tnx": [
@@ -1157,6 +1165,10 @@
       {
         "date": "2026-11-17",
         "value": 3.43
+      },
+      {
+        "date": "2026-11-18",
+        "value": 3.47
       }
     ],
     "ig_spread": [
@@ -1287,6 +1299,10 @@
       {
         "date": "2026-11-17",
         "value": 0.92
+      },
+      {
+        "date": "2026-11-18",
+        "value": 0.93
       }
     ],
     "yield_curve": [
@@ -1624,17 +1640,17 @@
       },
       {
         "date": "2026-11-18",
-        "value": 24,
+        "value": 30,
         "classification": ""
       },
       {
         "date": "2026-11-19",
-        "value": 27,
+        "value": 21,
         "classification": ""
       },
       {
         "date": "2026-11-19",
-        "value": 27,
+        "value": 21,
         "classification": ""
       }
     ]

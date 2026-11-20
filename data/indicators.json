@@ -1,6 +1,6 @@
 {
   "updated_at": "2026-11-20",
-  "updated_kst": "2026-11-21 03:28 KST",
+  "updated_kst": "2026-11-21 06:01 KST",
   "snapshot": {
     "nasdaq": 23879.2,
     "sp500": 7175.83,
@@ -13,7 +13,7 @@
     "ted_spread": 0.09,
     "yield_curve": 0.27,
     "fear_greed": {
-      "value": 11,
+      "value": 10,
       "classification": "extreme fear",
       "source": "cnn",
       "components": {
@@ -61,7 +61,7 @@
       "strength": "weak"
     },
     {
-      "label": "Fear&Greed 11 — 극단 공포 (역발상 매수)",
+      "label": "Fear&Greed 10 — 극단 공포 (역발상 매수)",
       "strength": "strong"
     },
     {
@@ -1649,12 +1649,12 @@
       },
       {
         "date": "2026-11-20",
-        "value": 11,
+        "value": 10,
         "classification": ""
       },
       {
         "date": "2026-11-20",
-        "value": 11,
+        "value": 10,
         "classification": ""
       }
     ]

@@ -1,77 +1,85 @@
 {
   "updated_at": "2026-11-23",
-  "updated_kst": "2026-11-23 17:45 KST",
+  "updated_kst": "2026-11-24 07:00 KST",
   "snapshot": {
     "nasdaq": 23879.2,
-    "sp500": 7175.83,
+    "sp500": 6910.39,
     "djia": 48147.33,
-    "vix": 28.44,
-    "ten_yr": 5.04,
+    "vix": 35.89,
+    "ten_yr": 4.92,
     "fed_rate": 3.88,
-    "hy_spread": 3.52,
-    "ig_spread": 0.94,
+    "hy_spread": 3.76,
+    "ig_spread": 0.98,
     "ted_spread": 0.09,
-    "yield_curve": 0.28,
+    "yield_curve": 0.29,
     "fear_greed": {
-      "value": 10,
+      "value": 17,
       "classification": "extreme fear",
       "source": "cnn",
       "components": {
-        "모멘텀": 0.2,
-        "주식강도": 14.7,
-        "변동성폭": 14.8,
+        "모멘텀": 0.3,
+        "주식강도": 7.7,
+        "변동성폭": 0,
         "풋콜비율": 69.6,
-        "정크본드": 54.2,
-        "변동성단기": 17.6,
-        "안전자산": 14.8
+        "정크본드": 42.3,
+        "변동성단기": 3.9,
+        "안전자산": 16.7
       }
     },
-    "usdkrw": 1336.58,
-    "t10y_change_3m": 0.4,
-    "t10y_change_1m": 0.04,
+    "usdkrw": 1342.41,
+    "t10y_change_3m": 0.28,
+    "t10y_change_1m": -0.08,
     "fedfunds_change_3m": null,
-    "real_rate": 2.74,
-    "erp": -0.49,
+    "real_rate": 2.62,
+    "erp": -0.37,
     "put_call": null,
     "jobless_claims": 203000.0,
     "fed_assets": 6741452.0
   },
   "technicals": {
-    "rsi_sp500": 34.31,
+    "rsi_sp500": 29.17,
     "rsi_nasdaq": 36.05,
-    "ma200_sp500": -2.34,
-    "ma50_sp500": -6.08,
+    "ma200_sp500": -5.96,
+    "ma50_sp500": -9.37,
     "ma200_nasdaq": -5.08,
-    "vix_ma20": 20.877,
-    "vix_vs_ma20": 36.23,
-    "vix_slope": 7.525,
-    "hy_ma20": 3.344,
-    "hy_vs_ma20": 5.26,
-    "hy_slope": 0.587,
+    "vix_ma20": 21.699,
+    "vix_vs_ma20": 65.4,
+    "vix_slope": 11.957,
+    "hy_ma20": 3.363,
+    "hy_vs_ma20": 11.8,
+    "hy_slope": 1.28,
     "fg_ma10": 11.2,
     "fg_vs_ma10": -1.79,
     "fg_slope": -42.268
   },
-  "risk_score": 43,
-  "risk_label": "주의 — 일부 지표 이상",
-  "buy_score": 38,
+  "risk_score": 51,
+  "risk_label": "경고 — 복합 신호 감지",
+  "buy_score": 62,
   "buy_signals": [
     {
-      "label": "S&P500 RSI 34.31 — 약한 과매도",
-      "strength": "weak"
+      "label": "S&P500 RSI 29.17 — 과매도 구간",
+      "strength": "medium"
     },
     {
-      "label": "Fear&Greed 10 — 극단 공포 (역발상 매수)",
-      "strength": "strong"
+      "label": "Fear&Greed 17 — Extreme Fear 구간",
+      "strength": "medium"
+    },
+    {
+      "label": "VIX 35.89 — 공포 극점 근처 (역발상 기회)",
+      "strength": "medium"
+    },
+    {
+      "label": "VIX, 20일선 대비 +65.4% — 공포 급증 구간",
+      "strength": "medium"
     },
     {
       "label": "Fear&Greed 10일 이평 11.2 — 공포 추세 (역발상 구간)",
       "strength": "medium"
     }
   ],
-  "trade_signal": "주의 관찰",
-  "trade_color": "amber",
-  "trade_desc": "불확실 구간 — 지표 추이 모니터링",
+  "trade_signal": "매수 타이밍",
+  "trade_color": "green",
+  "trade_desc": "하락 확인 + 반등 조건 다수 충족 — 분할 매수 적극 검토",
   "sell_score": 0,
   "sell_signals": [],
   "sell_signal": "홀딩",
@@ -511,10 +519,6 @@
     ],
     "sp500": [
       {
-        "date": "2026-10-02",
-        "value": 7722.72
-      },
-      {
         "date": "2026-10-05",
         "value": 7773.95
       },
@@ -649,6 +653,10 @@
       {
         "date": "2026-11-19",
         "value": 7175.83
+      },
+      {
+        "date": "2026-11-20",
+        "value": 6910.39
       }
     ],
     "djia": [
@@ -913,6 +921,10 @@
       {
         "date": "2026-11-19",
         "value": 28.44
+      },
+      {
+        "date": "2026-11-20",
+        "value": 35.89
       }
     ],
     "tnx": [
@@ -1027,6 +1039,10 @@
       {
         "date": "2026-11-19",
         "value": 5.04
+      },
+      {
+        "date": "2026-11-20",
+        "value": 4.92
       }
     ],
     "hy_spread": [
@@ -1149,6 +1165,10 @@
       {
         "date": "2026-11-19",
         "value": 3.52
+      },
+      {
+        "date": "2026-11-20",
+        "value": 3.76
       }
     ],
     "ig_spread": [
@@ -1271,6 +1291,10 @@
       {
         "date": "2026-11-19",
         "value": 0.94
+      },
+      {
+        "date": "2026-11-20",
+        "value": 0.98
       }
     ],
     "yield_curve": [
@@ -1385,6 +1409,10 @@
       {
         "date": "2026-11-19",
         "value": 0.28
+      },
+      {
+        "date": "2026-11-20",
+        "value": 0.29
       }
     ],
     "fear_greed": [
@@ -1600,17 +1628,17 @@
       },
       {
         "date": "2026-11-20",
-        "value": 10,
+        "value": 19,
         "classification": ""
       },
       {
         "date": "2026-11-23",
-        "value": 10,
+        "value": 17,
         "classification": ""
       },
       {
         "date": "2026-11-23",
-        "value": 10,
+        "value": 17,
         "classification": ""
       }
     ]

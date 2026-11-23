@@ -1,6 +1,6 @@
 {
-  "updated_at": "2026-11-22",
-  "updated_kst": "2026-11-23 08:03 KST",
+  "updated_at": "2026-11-23",
+  "updated_kst": "2026-11-23 17:45 KST",
   "snapshot": {
     "nasdaq": 23879.2,
     "sp500": 7175.83,
@@ -27,7 +27,7 @@
       }
     },
     "usdkrw": 1336.58,
-    "t10y_change_3m": 0.34,
+    "t10y_change_3m": 0.4,
     "t10y_change_1m": 0.04,
     "fedfunds_change_3m": null,
     "real_rate": 2.74,
@@ -48,9 +48,9 @@
     "hy_ma20": 3.344,
     "hy_vs_ma20": 5.26,
     "hy_slope": 0.587,
-    "fg_ma10": 12.1,
-    "fg_vs_ma10": -9.09,
-    "fg_slope": -42.654
+    "fg_ma10": 11.2,
+    "fg_vs_ma10": -1.79,
+    "fg_slope": -42.268
   },
   "risk_score": 43,
   "risk_label": "주의 — 일부 지표 이상",
@@ -65,7 +65,7 @@
       "strength": "strong"
     },
     {
-      "label": "Fear&Greed 10일 이평 12.1 — 공포 추세 (역발상 구간)",
+      "label": "Fear&Greed 10일 이평 11.2 — 공포 추세 (역발상 구간)",
       "strength": "medium"
     }
   ],
@@ -795,10 +795,6 @@
     ],
     "vix": [
       {
-        "date": "2026-10-08",
-        "value": 15.41
-      },
-      {
         "date": "2026-10-09",
         "value": 14.84
       },
@@ -921,10 +917,6 @@
     ],
     "tnx": [
       {
-        "date": "2026-10-08",
-        "value": 5.22
-      },
-      {
         "date": "2026-10-09",
         "value": 5.24
       },
@@ -1038,10 +1030,6 @@
       }
     ],
     "hy_spread": [
-      {
-        "date": "2026-10-08",
-        "value": 3.15
-      },
       {
         "date": "2026-10-09",
         "value": 3.11
@@ -1165,10 +1153,6 @@
     ],
     "ig_spread": [
       {
-        "date": "2026-10-08",
-        "value": 0.82
-      },
-      {
         "date": "2026-10-09",
         "value": 0.83
       },
@@ -1291,10 +1275,6 @@
     ],
     "yield_curve": [
       {
-        "date": "2026-10-08",
-        "value": 0.47
-      },
-      {
         "date": "2026-10-09",
         "value": 0.44
       },
@@ -1408,11 +1388,6 @@
       }
     ],
     "fear_greed": [
-      {
-        "date": "2026-09-22",
-        "value": 35,
-        "classification": ""
-      },
       {
         "date": "2026-09-23",
         "value": 34,
@@ -1629,7 +1604,12 @@
         "classification": ""
       },
       {
-        "date": "2026-11-20",
+        "date": "2026-11-23",
+        "value": 10,
+        "classification": ""
+      },
+      {
+        "date": "2026-11-23",
         "value": 10,
         "classification": ""
       }

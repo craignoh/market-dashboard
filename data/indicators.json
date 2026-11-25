@@ -1,8 +1,8 @@
 {
   "updated_at": "2026-11-25",
-  "updated_kst": "2026-11-25 10:49 KST",
+  "updated_kst": "2026-11-25 18:42 KST",
   "snapshot": {
-    "nasdaq": 23879.2,
+    "nasdaq": 23733.54,
     "sp500": 7237.17,
     "djia": 50018.7,
     "vix": 26.62,
@@ -13,7 +13,7 @@
     "ted_spread": 0.09,
     "yield_curve": 0.29,
     "fear_greed": {
-      "value": 17,
+      "value": 16,
       "classification": "extreme fear",
       "source": "cnn",
       "components": {
@@ -38,10 +38,10 @@
   },
   "technicals": {
     "rsi_sp500": 40.86,
-    "rsi_nasdaq": 36.05,
+    "rsi_nasdaq": 37.2,
     "ma200_sp500": -1.54,
     "ma50_sp500": -4.99,
-    "ma200_nasdaq": -5.08,
+    "ma200_nasdaq": -5.69,
     "vix_ma20": 22.1105,
     "vix_vs_ma20": 20.4,
     "vix_slope": 12.78,
@@ -57,7 +57,7 @@
   "buy_score": 22,
   "buy_signals": [
     {
-      "label": "Fear&Greed 17 — Extreme Fear 구간",
+      "label": "Fear&Greed 16 — Extreme Fear 구간",
       "strength": "medium"
     },
     {
@@ -223,7 +223,7 @@
       "bb_pos": 20.5,
       "vs_high52": -13.35,
       "vs_low52": 3.35,
-      "vol_ratio": 85.9,
+      "vol_ratio": 85.7,
       "high52": 186.51,
       "low52": 156.37,
       "ma200": null,
@@ -288,7 +288,7 @@
       "bb_pos": 3.4,
       "vs_high52": -26.38,
       "vs_low52": 0.8,
-      "vol_ratio": 89.8,
+      "vol_ratio": 89.9,
       "high52": 442.09,
       "low52": 322.87,
       "ma200": null,
@@ -348,18 +348,6 @@
   ],
   "history": {
     "nasdaq": [
-      {
-        "date": "2026-10-02",
-        "value": 27190.86
-      },
-      {
-        "date": "2026-10-05",
-        "value": 27477.31
-      },
-      {
-        "date": "2026-10-06",
-        "value": 27599.89
-      },
       {
         "date": "2026-10-07",
         "value": 27538.69
@@ -487,6 +475,18 @@
       {
         "date": "2026-11-19",
         "value": 23879.2
+      },
+      {
+        "date": "2026-11-20",
+        "value": 22617.73
+      },
+      {
+        "date": "2026-11-23",
+        "value": 24089.56
+      },
+      {
+        "date": "2026-11-24",
+        "value": 23733.54
       }
     ],
     "sp500": [
@@ -1389,11 +1389,6 @@
     ],
     "fear_greed": [
       {
-        "date": "2026-09-24",
-        "value": 35,
-        "classification": ""
-      },
-      {
         "date": "2026-09-25",
         "value": 37,
         "classification": ""
@@ -1605,12 +1600,17 @@
       },
       {
         "date": "2026-11-24",
-        "value": 17,
+        "value": 16,
         "classification": ""
       },
       {
-        "date": "2026-11-24",
-        "value": 17,
+        "date": "2026-11-25",
+        "value": 16,
+        "classification": ""
+      },
+      {
+        "date": "2026-11-25",
+        "value": 16,
         "classification": ""
       }
     ]

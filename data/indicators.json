@@ -1,19 +1,19 @@
 {
   "updated_at": "2026-11-25",
-  "updated_kst": "2026-11-26 04:52 KST",
+  "updated_kst": "2026-11-26 07:22 KST",
   "snapshot": {
     "nasdaq": 23733.54,
     "sp500": 7201.09,
     "djia": 50018.7,
     "vix": 26.36,
-    "ten_yr": 4.92,
+    "ten_yr": 4.91,
     "fed_rate": 3.88,
     "hy_spread": 3.72,
     "ig_spread": 0.98,
     "ted_spread": 0.09,
-    "yield_curve": 0.29,
+    "yield_curve": 0.28,
     "fear_greed": {
-      "value": 16,
+      "value": 15,
       "classification": "extreme fear",
       "source": "cnn",
       "components": {
@@ -23,15 +23,15 @@
         "풋콜비율": 69.6,
         "정크본드": 44.3,
         "변동성단기": 52.6,
-        "안전자산": 16.7
+        "안전자산": 14.8
       }
     },
     "usdkrw": 1342.41,
-    "t10y_change_3m": 0.25,
-    "t10y_change_1m": -0.08,
+    "t10y_change_3m": 0.24,
+    "t10y_change_1m": -0.09,
     "fedfunds_change_3m": null,
-    "real_rate": 2.62,
-    "erp": -0.37,
+    "real_rate": 2.61,
+    "erp": -0.36,
     "put_call": null,
     "jobless_claims": 189000.0,
     "fed_assets": 6741452.0
@@ -61,7 +61,7 @@
       "strength": "weak"
     },
     {
-      "label": "Fear&Greed 16 — Extreme Fear 구간",
+      "label": "Fear&Greed 15 — Extreme Fear 구간",
       "strength": "medium"
     },
     {
@@ -1023,6 +1023,10 @@
       {
         "date": "2026-11-23",
         "value": 4.92
+      },
+      {
+        "date": "2026-11-24",
+        "value": 4.91
       }
     ],
     "hy_spread": [
@@ -1401,6 +1405,10 @@
       {
         "date": "2026-11-23",
         "value": 0.29
+      },
+      {
+        "date": "2026-11-24",
+        "value": 0.28
       }
     ],
     "fear_greed": [
@@ -1621,12 +1629,12 @@
       },
       {
         "date": "2026-11-25",
-        "value": 16,
+        "value": 15,
         "classification": ""
       },
       {
         "date": "2026-11-25",
-        "value": 16,
+        "value": 15,
         "classification": ""
       }
     ]

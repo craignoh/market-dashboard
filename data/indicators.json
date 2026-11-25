@@ -1,10 +1,10 @@
 {
-  "updated_at": "2026-11-24",
-  "updated_kst": "2026-11-25 08:01 KST",
+  "updated_at": "2026-11-25",
+  "updated_kst": "2026-11-25 09:19 KST",
   "snapshot": {
     "nasdaq": 23879.2,
     "sp500": 7237.17,
-    "djia": 49595.31,
+    "djia": 50018.7,
     "vix": 26.62,
     "ten_yr": 4.92,
     "fed_rate": 3.88,
@@ -27,7 +27,7 @@
       }
     },
     "usdkrw": 1342.41,
-    "t10y_change_3m": 0.26,
+    "t10y_change_3m": 0.25,
     "t10y_change_1m": -0.08,
     "fedfunds_change_3m": null,
     "real_rate": 2.62,
@@ -48,9 +48,9 @@
     "hy_ma20": 3.3795,
     "hy_vs_ma20": 7.41,
     "hy_slope": 1.7,
-    "fg_ma10": 11.0,
-    "fg_vs_ma10": 0.0,
-    "fg_slope": -37.143
+    "fg_ma10": 11.3,
+    "fg_vs_ma10": 15.04,
+    "fg_slope": -27.097
   },
   "risk_score": 43,
   "risk_label": "주의 — 일부 지표 이상",
@@ -61,7 +61,7 @@
       "strength": "medium"
     },
     {
-      "label": "Fear&Greed 10일 이평 11.0 — 공포 추세 (역발상 구간)",
+      "label": "Fear&Greed 10일 이평 11.3 — 공포 추세 (역발상 구간)",
       "strength": "medium"
     }
   ],
@@ -632,10 +632,6 @@
     ],
     "djia": [
       {
-        "date": "2026-10-06",
-        "value": 51521.28
-      },
-      {
         "date": "2026-10-07",
         "value": 51179.87
       },
@@ -770,6 +766,10 @@
       {
         "date": "2026-11-23",
         "value": 49595.31
+      },
+      {
+        "date": "2026-11-24",
+        "value": 50018.7
       }
     ],
     "vix": [

@@ -1,8 +1,8 @@
 {
   "updated_at": "2026-11-26",
-  "updated_kst": "2026-11-26 10:24 KST",
+  "updated_kst": "2026-11-26 18:17 KST",
   "snapshot": {
-    "nasdaq": 23733.54,
+    "nasdaq": 23585.8,
     "sp500": 7201.09,
     "djia": 50182.95,
     "vix": 26.36,
@@ -38,10 +38,10 @@
   },
   "technicals": {
     "rsi_sp500": 35.91,
-    "rsi_nasdaq": 37.2,
+    "rsi_nasdaq": 44.44,
     "ma200_sp500": -2.04,
     "ma50_sp500": -5.37,
-    "ma200_nasdaq": -5.69,
+    "ma200_nasdaq": -6.29,
     "vix_ma20": 22.5525,
     "vix_vs_ma20": 16.88,
     "vix_slope": 12.692,
@@ -262,7 +262,7 @@
       "bb_pos": 42.8,
       "vs_high52": -3.96,
       "vs_low52": 8.03,
-      "vol_ratio": 86.3,
+      "vol_ratio": 85.5,
       "high52": 122.33,
       "low52": 108.76,
       "ma200": null,
@@ -283,7 +283,7 @@
       "bb_pos": 11.3,
       "vs_high52": -25.93,
       "vs_low52": 1.42,
-      "vol_ratio": 158.9,
+      "vol_ratio": 157.9,
       "high52": 442.09,
       "low52": 322.87,
       "ma200": null,
@@ -341,10 +341,6 @@
   ],
   "history": {
     "nasdaq": [
-      {
-        "date": "2026-10-07",
-        "value": 27538.69
-      },
       {
         "date": "2026-10-08",
         "value": 27193.34
@@ -480,6 +476,10 @@
       {
         "date": "2026-11-24",
         "value": 23733.54
+      },
+      {
+        "date": "2026-11-25",
+        "value": 23585.8
       }
     ],
     "sp500": [
@@ -1402,11 +1402,6 @@
     ],
     "fear_greed": [
       {
-        "date": "2026-09-25",
-        "value": 37,
-        "classification": ""
-      },
-      {
         "date": "2026-09-28",
         "value": 32,
         "classification": ""
@@ -1618,11 +1613,16 @@
       },
       {
         "date": "2026-11-25",
-        "value": 15,
+        "value": 16,
         "classification": ""
       },
       {
-        "date": "2026-11-25",
+        "date": "2026-11-26",
+        "value": 16,
+        "classification": ""
+      },
+      {
+        "date": "2026-11-26",
         "value": 15,
         "classification": ""
       }

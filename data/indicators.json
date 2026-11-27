@@ -1,6 +1,6 @@
 {
-  "updated_at": "2026-11-26",
-  "updated_kst": "2026-11-27 07:15 KST",
+  "updated_at": "2026-11-27",
+  "updated_kst": "2026-11-27 09:15 KST",
   "snapshot": {
     "nasdaq": 23585.8,
     "sp500": 7201.09,
@@ -27,8 +27,8 @@
       }
     },
     "usdkrw": 1342.41,
-    "t10y_change_3m": 0.18,
-    "t10y_change_1m": -0.08,
+    "t10y_change_3m": 0.16,
+    "t10y_change_1m": -0.14,
     "fedfunds_change_3m": null,
     "real_rate": 2.61,
     "erp": -0.36,
@@ -49,12 +49,12 @@
     "hy_vs_ma20": 9.2,
     "hy_slope": 2.359,
     "fg_ma10": 11.4,
-    "fg_vs_ma10": -3.51,
-    "fg_slope": -17.391
+    "fg_vs_ma10": 5.26,
+    "fg_slope": -5.785
   },
   "risk_score": 43,
   "risk_label": "주의 — 일부 지표 이상",
-  "buy_score": 30,
+  "buy_score": 20,
   "buy_signals": [
     {
       "label": "S&P500 RSI 35.91 — 약한 과매도",
@@ -62,10 +62,6 @@
     },
     {
       "label": "Fear&Greed 15 — Extreme Fear 구간",
-      "strength": "medium"
-    },
-    {
-      "label": "Fear&Greed 10일 이평 11.4 — 공포 추세 (역발상 구간)",
       "strength": "medium"
     }
   ],
@@ -281,10 +277,10 @@
       "vs_ma200": null,
       "ma20_slope": -2.82,
       "bb_pos": 11.3,
-      "vs_high52": -25.93,
+      "vs_high52": -24.77,
       "vs_low52": 1.42,
       "vol_ratio": 157.9,
-      "high52": 442.09,
+      "high52": 435.26,
       "low52": 322.87,
       "ma200": null,
       "buy_score": 40,
@@ -768,10 +764,6 @@
     ],
     "vix": [
       {
-        "date": "2026-10-12",
-        "value": 15.21
-      },
-      {
         "date": "2026-10-13",
         "value": 15.27
       },
@@ -1020,10 +1012,6 @@
     ],
     "hy_spread": [
       {
-        "date": "2026-10-12",
-        "value": 3.11
-      },
-      {
         "date": "2026-10-13",
         "value": 3.16
       },
@@ -1149,10 +1137,6 @@
       }
     ],
     "ig_spread": [
-      {
-        "date": "2026-10-12",
-        "value": 0.83
-      },
       {
         "date": "2026-10-13",
         "value": 0.83

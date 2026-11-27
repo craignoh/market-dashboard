@@ -1,6 +1,6 @@
 {
   "updated_at": "2026-11-27",
-  "updated_kst": "2026-11-27 10:23 KST",
+  "updated_kst": "2026-11-27 18:33 KST",
   "snapshot": {
     "nasdaq": 23585.8,
     "sp500": 7201.09,
@@ -13,7 +13,7 @@
     "ted_spread": 0.09,
     "yield_curve": 0.28,
     "fear_greed": {
-      "value": 15,
+      "value": 18,
       "classification": "extreme fear",
       "source": "cnn",
       "components": {
@@ -61,7 +61,7 @@
       "strength": "weak"
     },
     {
-      "label": "Fear&Greed 15 — Extreme Fear 구간",
+      "label": "Fear&Greed 18 — Extreme Fear 구간",
       "strength": "medium"
     }
   ],
@@ -1386,11 +1386,6 @@
     ],
     "fear_greed": [
       {
-        "date": "2026-09-28",
-        "value": 32,
-        "classification": ""
-      },
-      {
         "date": "2026-09-29",
         "value": 31,
         "classification": ""
@@ -1597,17 +1592,22 @@
       },
       {
         "date": "2026-11-25",
-        "value": 16,
+        "value": 18,
         "classification": ""
       },
       {
         "date": "2026-11-26",
-        "value": 16,
+        "value": 18,
         "classification": ""
       },
       {
-        "date": "2026-11-26",
-        "value": 15,
+        "date": "2026-11-27",
+        "value": 18,
+        "classification": ""
+      },
+      {
+        "date": "2026-11-27",
+        "value": 18,
         "classification": ""
       }
     ]

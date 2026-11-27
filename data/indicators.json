@@ -1,28 +1,28 @@
 {
   "updated_at": "2026-11-27",
-  "updated_kst": "2026-11-27 18:33 KST",
+  "updated_kst": "2026-11-28 04:26 KST",
   "snapshot": {
     "nasdaq": 23585.8,
-    "sp500": 7201.09,
+    "sp500": 7182.78,
     "djia": 50182.95,
-    "vix": 26.36,
+    "vix": 26.8,
     "ten_yr": 4.91,
     "fed_rate": 3.88,
-    "hy_spread": 3.72,
-    "ig_spread": 0.98,
+    "hy_spread": 3.77,
+    "ig_spread": 0.99,
     "ted_spread": 0.09,
     "yield_curve": 0.28,
     "fear_greed": {
-      "value": 18,
+      "value": 25,
       "classification": "extreme fear",
       "source": "cnn",
       "components": {
-        "모멘텀": 22.8,
-        "주식강도": 16.9,
-        "변동성폭": 42.5,
+        "모멘텀": 21.6,
+        "주식강도": 27.8,
+        "변동성폭": 40.5,
         "풋콜비율": 69.6,
-        "정크본드": 44.3,
-        "변동성단기": 52.6,
+        "정크본드": 41.8,
+        "변동성단기": 55.5,
         "안전자산": 14.8
       }
     },
@@ -37,34 +37,25 @@
     "fed_assets": 6741452.0
   },
   "technicals": {
-    "rsi_sp500": 35.91,
+    "rsi_sp500": 43.95,
     "rsi_nasdaq": 44.44,
-    "ma200_sp500": -2.04,
-    "ma50_sp500": -5.37,
+    "ma200_sp500": -2.31,
+    "ma50_sp500": -5.52,
     "ma200_nasdaq": -6.29,
-    "vix_ma20": 22.5525,
-    "vix_vs_ma20": 16.88,
-    "vix_slope": 12.692,
-    "hy_ma20": 3.4065,
-    "hy_vs_ma20": 9.2,
-    "hy_slope": 2.359,
+    "vix_ma20": 23.6015,
+    "vix_vs_ma20": 13.55,
+    "vix_slope": 13.05,
+    "hy_ma20": 3.4635,
+    "hy_vs_ma20": 8.85,
+    "hy_slope": 3.574,
     "fg_ma10": 11.4,
     "fg_vs_ma10": 5.26,
     "fg_slope": -5.785
   },
-  "risk_score": 43,
+  "risk_score": 33,
   "risk_label": "주의 — 일부 지표 이상",
-  "buy_score": 20,
-  "buy_signals": [
-    {
-      "label": "S&P500 RSI 35.91 — 약한 과매도",
-      "strength": "weak"
-    },
-    {
-      "label": "Fear&Greed 18 — Extreme Fear 구간",
-      "strength": "medium"
-    }
-  ],
+  "buy_score": 0,
+  "buy_signals": [],
   "trade_signal": "주의 관찰",
   "trade_color": "amber",
   "trade_desc": "불확실 구간 — 지표 추이 모니터링",
@@ -480,10 +471,6 @@
     ],
     "sp500": [
       {
-        "date": "2026-10-07",
-        "value": 7801.77
-      },
-      {
         "date": "2026-10-08",
         "value": 7765.36
       },
@@ -618,6 +605,10 @@
       {
         "date": "2026-11-24",
         "value": 7201.09
+      },
+      {
+        "date": "2026-11-25",
+        "value": 7182.78
       }
     ],
     "djia": [
@@ -886,6 +877,14 @@
       {
         "date": "2026-11-24",
         "value": 26.36
+      },
+      {
+        "date": "2026-11-25",
+        "value": 28.29
+      },
+      {
+        "date": "2026-11-26",
+        "value": 26.8
       }
     ],
     "tnx": [
@@ -1134,6 +1133,14 @@
       {
         "date": "2026-11-24",
         "value": 3.72
+      },
+      {
+        "date": "2026-11-25",
+        "value": 3.77
+      },
+      {
+        "date": "2026-11-26",
+        "value": 3.77
       }
     ],
     "ig_spread": [
@@ -1260,6 +1267,14 @@
       {
         "date": "2026-11-24",
         "value": 0.98
+      },
+      {
+        "date": "2026-11-25",
+        "value": 0.99
+      },
+      {
+        "date": "2026-11-26",
+        "value": 0.99
       }
     ],
     "yield_curve": [
@@ -1592,22 +1607,22 @@
       },
       {
         "date": "2026-11-25",
-        "value": 18,
+        "value": 21,
         "classification": ""
       },
       {
         "date": "2026-11-26",
-        "value": 18,
+        "value": 21,
         "classification": ""
       },
       {
         "date": "2026-11-27",
-        "value": 18,
+        "value": 25,
         "classification": ""
       },
       {
         "date": "2026-11-27",
-        "value": 18,
+        "value": 25,
         "classification": ""
       }
     ]
